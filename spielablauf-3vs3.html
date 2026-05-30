@@ -5,12 +5,250 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spielablauf 3vs3 - Basketball Lernapp</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Slider-Container */
+        .slider-wrapper {
+            position: relative;
+            max-width: 900px;
+            margin: 2rem auto;
+            overflow: hidden;
+        }
+
+        .slides-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            background: #2d2a26;
+            border-radius: 24px;
+            padding: 2rem;
+            border: 2px solid #ff8c00;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .slide h2 {
+            color: #ffaa33;
+            font-size: 1.8rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .slide p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container für das Spielfeld-Visual */
+        .visual-container {
+            position: relative;
+            width: 100%; /* Größerer Bereich */
+            max-width: 800px;
+            margin: 0 auto;
+            aspect-ratio: 16 / 10;
+            background-image: url('assets/GanzesFeld.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 12px;
+            background-color: #fff; /* Weißer Untergrund für die Grafik */
+            border: 4px solid #333;
+            overflow: hidden;
+        }
+
+        /* Navigation Buttons */
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .nav-btn-circle {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .nav-btn-circle:hover {
+            background: #ffaa33;
+            transform: scale(1.1);
+        }
+
+        .nav-btn-circle:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        /* --- CSS Markierungen (orientiert an Querformat, Korb rechts) --- */
+        .marker {
+            position: absolute;
+            background: #e63946;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+        .dot { width: 18px; height: 18px; }
+        .pulse { animation: pulse-ring 2s infinite; }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0px rgba(230, 57, 70, 0.7); }
+            100% { box-shadow: 0 0 0 20px rgba(230, 57, 70, 0); }
+        }
+
+        .arrow-line {
+            position: absolute;
+            height: 5px;
+            background: #e63946;
+            transform-origin: left center;
+            z-index: 4;
+        }
+        .arrow-line::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -7px;
+            border: 10px solid transparent;
+            border-left-color: #e63946;
+        }
+
+        .zone-highlight {
+            position: absolute;
+            border: 3px dashed #ff8c00;
+            background: rgba(255, 140, 0, 0.15);
+            z-index: 3;
+        }
+
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+            color: #ff8c00;
+            padding: 10px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 2rem;
+            border: 2px solid #ff8c00;
+            border-radius: 8px;
+            z-index: 10;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>⚡ Spielablauf 3vs3</h1>
-        <p>Regeln, Einwurf, Angriff & Verteidigung im 3vs3. Lerne den Ablauf Schritt für Schritt.</p>
+        <p style="text-align: center;">Klicke auf die Pfeile, um den Ablauf Schritt für Schritt zu lernen.</p>
+
+        <div class="slider-wrapper">
+            <div class="slides-container" id="slides">
+                <!-- 1. Spielbeginn -->
+                <div class="slide">
+                    <h2>1. Spielbeginn (Check-Ball)</h2>
+                    <p>Kein Sprungball! Ein Münzwurf entscheidet. Das Spiel startet mit dem <strong>Check-Ball</strong> oben an der 3-Punkte-Linie.</p>
+                    <div class="visual-container">
+                        <!-- Check-Ball Position (oben an der 3er Linie, rechter Korb) -->
+                        <div class="marker dot pulse" style="top: 50%; left: 67%;"></div>
+                    </div>
+                </div>
+
+                <!-- 2. Einwurf -->
+                <div class="slide">
+                    <h2>2. Nach einem Treffer</h2>
+                    <p>Nach einem Korb geht es sofort weiter! Der Ball wird <strong>direkt unter dem Korb</strong> aufgenommen und muss nach außen gedribbelt oder gepasst werden.</p>
+                    <div class="visual-container">
+                        <!-- Position direkt unter dem rechten Korb -->
+                        <div class="marker dot" style="top: 50%; left: 93%;"></div>
+                        <!-- Pfeil nach außen -->
+                        <div class="arrow-line" style="top: 50%; left: 93%; width: 100px; transform: rotate(180deg);"></div>
+                    </div>
+                </div>
+
+                <!-- 3. Clearing -->
+                <div class="slide">
+                    <h2>3. "Clearing" (Rausspielen)</h2>
+                    <p>Wenn die Verteidigung den Ball gewinnt (Rebound/Steal), müssen sie ihn erst hinter die <strong>3-Punkte-Linie</strong> bringen, bevor sie angreifen dürfen.</p>
+                    <div class="visual-container">
+                        <!-- Markierung der 3er Linie Zone (rechter Korb) -->
+                        <div class="zone-highlight" style="top: 10%; left: 10%; width: 57%; height: 80%; border-radius: 50% 0 0 50%;"></div>
+                        <div class="marker dot" style="top: 50%; left: 55%;"></div>
+                    </div>
+                </div>
+
+                <!-- 4. Fouls -->
+                <div class="slide">
+                    <h2>4. Fouls & Freiwürfe</h2>
+                    <p>Ab dem 7. Teamfoul gibt es automatisch <strong>zwei Freiwürfe</strong>. Es gibt kein "Foul-Out" für einzelne Spieler.</p>
+                    <div class="visual-container">
+                        <!-- Freiwurflinie rechter Korb -->
+                        <div class="marker dot" style="top: 50%; left: 78%;"></div>
+                    </div>
+                </div>
+
+                <!-- 5. Spielende -->
+                <div class="slide">
+                    <h2>5. Spielende</h2>
+                    <p>Das Spiel endet bei <strong>21 Punkten</strong> oder nach <strong>10 Minuten</strong>. Bei Gleichstand gewinnt in der Verlängerung, wer zuerst 2 Punkte erzielt.</p>
+                    <div class="visual-container">
+                        <div class="overlay-text">Ziel: 21</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slider-nav">
+            <button class="nav-btn-circle" id="prevBtn" disabled>❮</button>
+            <button class="nav-btn-circle" id="nextBtn">❯</button>
+        </div>
+
         <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
     </div>
+
+    <script>
+        const slides = document.getElementById('slides');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        const totalSlides = 5;
+
+        function updateSlider() {
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === totalSlides - 1;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < totalSlides - 1) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+    </script>
 </body>
 </html>
