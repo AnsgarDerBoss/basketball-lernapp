@@ -9,16 +9,18 @@
         /* Slider-Container */
         .slider-wrapper {
             position: relative;
-            max-width: 900px;
-            margin: 2rem auto;
+            max-width: 850px;
+            margin: 1rem auto;
             overflow: hidden;
         }
 
+        /* Bereich, der alle Slides nebeneinander hält */
         .slides-container {
             display: flex;
             transition: transform 0.5s ease-in-out;
         }
 
+        /* Einzelne Inhaltskarte */
         .slide {
             min-width: 100%;
             background: #2d2a26;
@@ -51,21 +53,21 @@
         /* Container für das Spielfeld-Visual */
         .visual-container {
             position: relative;
-            width: 100%; /* Größerer Bereich */
-            max-width: 800px;
+            width: 100%;
+            max-width: 450px;
             margin: 0 auto;
-            aspect-ratio: 16 / 10;
-            background-image: url('assets/GanzesFeld.png');
+            aspect-ratio: 1 / 1; /* Hält das Feld quadratisch */
+            background-image: url('assets/HalbesFeld.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
             border-radius: 12px;
-            background-color: #fff; /* Weißer Untergrund für die Grafik */
+            background-color: #ffffff;
             border: 4px solid #333;
             overflow: hidden;
         }
 
-        /* Navigation Buttons */
+        /* Steuerung (Pfeile unten) */
         .slider-nav {
             display: flex;
             justify-content: center;
@@ -98,23 +100,24 @@
             cursor: not-allowed;
         }
 
-        /* --- CSS Markierungen (orientiert an Querformat, Korb rechts) --- */
+        /* --- BASIS-STYLES FÜR GRAFISCHE ELEMENTE --- */
         .marker {
             position: absolute;
             background: #e63946;
             border: 2px solid #fff;
             border-radius: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%); /* Sorgt dafür, dass der Punkt genau auf der Koordinate sitzt */
             z-index: 5;
         }
-        .dot { width: 18px; height: 18px; }
-        .pulse { animation: pulse-ring 2s infinite; }
+        .dot { width: 18px; height: 18px; } /* Größe der roten Punkte */
+        .pulse { animation: pulse-ring 1.5s infinite; }
 
         @keyframes pulse-ring {
             0% { box-shadow: 0 0 0 0px rgba(230, 57, 70, 0.7); }
             100% { box-shadow: 0 0 0 20px rgba(230, 57, 70, 0); }
         }
 
+        /* Pfeil-Linie: Länge wird über 'width' gesteuert, Richtung über 'rotate' */
         .arrow-line {
             position: absolute;
             height: 5px;
@@ -122,6 +125,7 @@
             transform-origin: left center;
             z-index: 4;
         }
+        /* Pfeil-Spitze: Erzeugt das Dreieck am Ende der Linie */
         .arrow-line::after {
             content: '';
             position: absolute;
@@ -131,6 +135,7 @@
             border-left-color: #e63946;
         }
 
+        /* Hervorgehobene Flächen: Nutzt border-radius für Rundungen */
         .zone-highlight {
             position: absolute;
             border: 3px dashed #ff8c00;
@@ -138,6 +143,7 @@
             z-index: 3;
         }
 
+        /* Text-Box über dem Feld (z.B. Spielende) */
         .overlay-text {
             position: absolute;
             top: 50%;
@@ -145,71 +151,86 @@
             transform: translate(-50%, -50%);
             background: #000;
             color: #ff8c00;
-            padding: 10px 20px;
+            padding: 15px 20px;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 2rem;
+            font-size: 1.3rem;
             border: 2px solid #ff8c00;
             border-radius: 8px;
             z-index: 10;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>⚡ Spielablauf 3vs3</h1>
-        <p style="text-align: center;">Klicke auf die Pfeile, um den Ablauf Schritt für Schritt zu lernen.</p>
 
         <div class="slider-wrapper">
             <div class="slides-container" id="slides">
                 <!-- 1. Spielbeginn -->
                 <div class="slide">
-                    <h2>1. Spielbeginn (Check-Ball)</h2>
-                    <p>Kein Sprungball! Ein Münzwurf entscheidet. Das Spiel startet mit dem <strong>Check-Ball</strong> oben an der 3-Punkte-Linie.</p>
+                    <h2>1. Spielbeginn & Check-Ball-Prozedur</h2>
+                    <p>Das Spiel startet nicht mit einem Sprungball, sondern mit einem Münzwurf um den ersten Ballbesitz. Jede Spielphase beginnt mit einem <strong>Check-Ball</strong> an der Spitze der 3-Punkte-Linie. Dabei übergibt der Verteidiger den Ball dem Angreifer. Erst wenn der Angreifer den Ball berührt, ist er "live", die Spielzeit läuft und die 12-sekündige Wurfuhr beginnt.</p>
                     <div class="visual-container">
-                        <!-- Check-Ball Position (oben an der 3er Linie, rechter Korb) -->
-                        <div class="marker dot pulse" style="top: 50%; left: 67%;"></div>
+                        <!-- PUNKT: Startposition Check-Ball (oben am Bogen) -->
+                        <div class="marker dot pulse" style="top: 14%; left: 50%;"></div>
                     </div>
                 </div>
 
                 <!-- 2. Einwurf -->
                 <div class="slide">
-                    <h2>2. Nach einem Treffer</h2>
-                    <p>Nach einem Korb geht es sofort weiter! Der Ball wird <strong>direkt unter dem Korb</strong> aufgenommen und muss nach außen gedribbelt oder gepasst werden.</p>
+                    <h2>2. Spielfluss: "Keep on playing"</h2>
+                    <p>Nach einem Treffer läuft das Spiel ohne Unterbrechung weiter. Das Team, das den Korb kassiert hat, nimmt den Ball direkt <strong>unter dem Korb</strong> auf. Bevor ein neuer Angriff gestartet werden darf, muss der Ball hinter die 3-Punkte-Linie gedribbelt oder gepasst werden. Verteidiger dürfen den Ballführenden innerhalb der Zone dabei nicht aktiv stören.</p>
                     <div class="visual-container">
-                        <!-- Position direkt unter dem rechten Korb -->
-                        <div class="marker dot" style="top: 50%; left: 93%;"></div>
-                        <!-- Pfeil nach außen -->
-                        <div class="arrow-line" style="top: 50%; left: 93%; width: 100px; transform: rotate(180deg);"></div>
+                        <!-- PUNKT: Ballaufnahme nach Korb -->
+                        <div class="marker dot" style="top: 88%; left: 50%;"></div>
+                        <!-- PFEILE: Wege nach dem Korb (nach oben/außen) -->
+                        <div class="arrow-line" style="top: 88%; left: 50%; width: 72%; transform: rotate(-90deg);"></div>
+                        <div class="arrow-line" style="top: 88%; left: 50%; width: 50%; transform: rotate(-135deg);"></div>
+                        <div class="arrow-line" style="top: 88%; left: 50%; width: 50%; transform: rotate(-45deg);"></div>
                     </div>
                 </div>
 
                 <!-- 3. Clearing -->
                 <div class="slide">
-                    <h2>3. "Clearing" (Rausspielen)</h2>
-                    <p>Wenn die Verteidigung den Ball gewinnt (Rebound/Steal), müssen sie ihn erst hinter die <strong>3-Punkte-Linie</strong> bringen, bevor sie angreifen dürfen.</p>
+                    <h2>3. Die "Clearing"-Regel bei Ballbesitzwechsel</h2>
+                    <p>Bei einem Ballbesitzwechsel durch Steal oder Rebound muss der Ball erst "gecleart" werden. Das bedeutet, der Spieler muss mit <strong>beiden Füßen</strong> hinter die 3-Punkte-Linie gelangen oder den Ball nach draußen passen. Ein Korb zählt nur, wenn der Ball zuvor den Bereich außerhalb des Bogens erreicht hat, ansonsten wechselt der Ballbesitz zum Gegner.</p>
                     <div class="visual-container">
-                        <!-- Markierung der 3er Linie Zone (rechter Korb) -->
-                        <div class="zone-highlight" style="top: 10%; left: 10%; width: 57%; height: 80%; border-radius: 50% 0 0 50%;"></div>
-                        <div class="marker dot" style="top: 50%; left: 55%;"></div>
+                        <!-- ZONE: Markierung des Bereichs innerhalb des Bogens -->
+                        <div class="zone-highlight" style="bottom: 2%; left: 10%; width: 82%; height: 58%; border-radius: 50% 50% 0 0;"></div>
+                        <!-- PUNKT: Position des Rebounds (unten am Korb) -->
+                        <div class="marker dot" style="top: 80%; left: 50%;"></div>
+                        <!-- PFEILE: Wege zum Rausspielen nach Rebound -->
+                        <div class="arrow-line" style="top: 80%; left: 50%; width: 55%; transform: rotate(-120deg);"></div>
+                        <div class="arrow-line" style="top: 80%; left: 50%; width: 55%; transform: rotate(-60deg);"></div>
                     </div>
                 </div>
 
                 <!-- 4. Fouls -->
                 <div class="slide">
-                    <h2>4. Fouls & Freiwürfe</h2>
-                    <p>Ab dem 7. Teamfoul gibt es automatisch <strong>zwei Freiwürfe</strong>. Es gibt kein "Foul-Out" für einzelne Spieler.</p>
+                    <h2>4. Foul-Limit & Team-Bonus-Regeln</h2>
+                    <p>Im 3x3 gibt es kein individuelles Ausscheiden nach Fouls. Entscheidend sind die Teamfouls: Ab dem 7. Teamfoul erhält der Gegner immer zwei Freiwürfe. Ab dem 10. Teamfoul gibt es zwei Freiwürfe plus Ballbesitz. Freiwürfe werden von der Freiwurflinie am oberen Rand der markierten Zone (dem "Key") ausgeführt.</p>
                     <div class="visual-container">
-                        <!-- Freiwurflinie rechter Korb -->
-                        <div class="marker dot" style="top: 50%; left: 78%;"></div>
+                        <!-- PUNKT: Ausführung Freiwurf -->
+                        <div class="marker dot" style="top: 58%; left: 50%;"></div>
                     </div>
                 </div>
 
                 <!-- 5. Spielende -->
                 <div class="slide">
-                    <h2>5. Spielende</h2>
-                    <p>Das Spiel endet bei <strong>21 Punkten</strong> oder nach <strong>10 Minuten</strong>. Bei Gleichstand gewinnt in der Verlängerung, wer zuerst 2 Punkte erzielt.</p>
+                    <h2>5. Spielende: Die 21-Punkte-Grenze</h2>
+                    <p>Ein Spiel endet nach 10 Minuten oder sobald ein Team <strong>21 Punkte</strong> erreicht hat. Bei Gleichstand folgt eine Verlängerung ohne Zeitlimit. Hier gewinnt die Mannschaft, die zuerst <strong>2 weitere Punkte</strong> erzielt. Ein Distanzwurf (der im 3x3 zwei Punkte zählt) kann das Spiel in der Overtime also mit nur einem Treffer sofort beenden.</p>
                     <div class="visual-container">
-                        <div class="overlay-text">Ziel: 21</div>
+                        <!-- OVERLAY: Textbox für die End-Resultate -->
+                        <div class="overlay-text">
+                            <strong>ZIEL: 21 PUNKTE</strong><br>
+                            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #444;">
+                            <span style="font-size: 1rem; color: #bbb; line-height: 1.4; display: block;">
+                                Zeitlimit: 10 Min.<br>
+                                Bei Gleichstand (Overtime):<br>
+                                Wer zuerst +2 Pkt macht, gewinnt!
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,6 +251,7 @@
         let currentIndex = 0;
         const totalSlides = 5;
 
+        /* Berechnet die Verschiebung des Sliders basierend auf dem Index */
         function updateSlider() {
             slides.style.transform = `translateX(-${currentIndex * 100}%)`;
             prevBtn.disabled = currentIndex === 0;
