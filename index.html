@@ -48,13 +48,17 @@
             font-weight: 500;
         }
 
-        /* Navigationsleiste - später werden hier Links zu den Modulen sein */
+        /* Navigationsleiste - jetzt mit echten Links */
         .nav-modules {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 1rem;
             margin: 2rem 0;
+        }
+
+        .nav-modules a {
+            text-decoration: none;
         }
 
         .nav-btn {
@@ -178,13 +182,13 @@
             <div class="subheadline">Lerne taktische Spielzüge – visuell, interaktiv & in deinem eigenen Tempo</div>
         </header>
 
-        <!-- Navigation: Hier kommen später die echten Verlinkungen rein -->
+        <!-- Navigation: Jetzt mit Links zu den eigenen HTML-Dateien -->
         <div class="nav-modules">
-            <button class="nav-btn">📋 Taktik 3vs3</button>
-            <button class="nav-btn">📋 Taktik 5vs5</button>
-            <button class="nav-btn">⚡ Spielablauf 3vs3</button>
-            <button class="nav-btn">⚡ Spielablauf 5vs5</button>
-            <button class="nav-btn">🎮 Taktik‑Simulation</button>
+            <a href="taktik-3vs3.html"><button class="nav-btn">📋 Taktik 3vs3</button></a>
+            <a href="taktik-5vs5.html"><button class="nav-btn">📋 Taktik 5vs5</button></a>
+            <a href="spielablauf-3vs3.html"><button class="nav-btn">⚡ Spielablauf 3vs3</button></a>
+            <a href="spielablauf-5vs5.html"><button class="nav-btn">⚡ Spielablauf 5vs5</button></a>
+            <a href="simulation.html"><button class="nav-btn">🎮 Taktik‑Simulation</button></a>
         </div>
 
         <div class="content-area">
