@@ -18,13 +18,47 @@
             color: #f5f5f5;
             line-height: 1.5;
             min-height: 100vh;
+            overflow-x: hidden; /* Verhindert horizontales Scrollen durch den großen Ball */
+        }
+
+        /* Wrapper für das neue Zwei-Spalten-Layout */
+        .main-layout {
+            display: flex;
+            max-width: 100%;
+            margin: 0;
+            padding: 2rem 2rem 2rem 4%; /* Startet viel weiter links */
+            gap: -5rem;
+            align-items: flex-start;
         }
 
         /* Hauptcontainer für den Inhalt */
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 1.5rem;
+            flex: 1; /* Nimmt den verfügbaren Platz links ein */
+            max-width: 1600px; /* Block massiv verbreitert nach rechts */
+            margin: 0;
+        }
+
+        /* Rechte Sidebar für den rotierenden Basketball */
+        .sidebar-right {
+            flex: 0 0 300px; /* Kleinerer Flex-Basis-Wert, damit der Ball Platz zum Überlappen hat */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: sticky;
+            top: 10rem; /* Den Basketball ein Stück weiter nach unten verschoben */
+        }
+
+        .rotating-ball {
+            width: 650px; /* Viel größerer Ball */
+            max-width: none; /* Hebt die Beschränkung auf */
+            filter: drop-shadow(0 0 30px rgba(255, 140, 0, 0.5));
+            animation: spinBall 25s linear infinite;
+            transform: translateX(40%); /* Schiebt den Ball weit nach rechts aus dem Bild */
+        }
+
+        @keyframes spinBall {
+            from { transform: translateX(40%) rotate(0deg); }
+            to { transform: translateX(40%) rotate(360deg); }
         }
 
         /* --- Header & Navigation --- */
@@ -94,21 +128,44 @@
 
         .welcome-message {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
-        .welcome-message h2 {
-            font-size: 1.8rem;
+        /* --- Zeilen-Layout mit Labels links --- */
+        .row-wrapper {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: stretch;
+        }
+
+        .side-label {
+            flex: 0 0 120px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             color: #ff8c00;
-            margin-bottom: 1rem;
+            border-right: 3px solid #ff8c00;
+            padding-right: 1.5rem;
         }
 
-        /* Grid für die zukünftigen Lernkarten (Taktik & Spielablauf) */
         .card-grid {
+            flex: 1;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 1.5rem;
             margin-top: 1rem;
+        }
+
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .card {
@@ -137,14 +194,34 @@
             font-size: 0.95rem;
         }
 
-        .tag {
-            display: inline-block;
-            background-color: #ff8c00;
-            color: #1e1e1e;
-            padding: 0.2rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
+        /* --- Effekt für die Highlight-Karte (Anwendung) --- */
+        .highlight-card {
+            position: relative;
+            overflow: hidden; /* Verhindert, dass der Glanz über den Rand hinausragt */
+        }
+
+        .highlight-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(
+                110deg,
+                transparent 0%,
+                rgba(77, 184, 255, 0.1) 35%,
+                rgba(255, 255, 255, 0.5) 50%,
+                rgba(77, 184, 255, 0.1) 65%,
+                transparent 100%
+            );
+            animation: shine 6s infinite ease-in-out; /* Verlangsamt auf 6 Sekunden für einen sanfteren Übergang */
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-150%) skewX(-25deg); }
+            40% { transform: translateX(150%) skewX(-25deg); }
+            100% { transform: translateX(150%) skewX(-25deg); }
         }
 
         /* --- Footer --- */
@@ -172,55 +249,107 @@
                 padding: 0.5rem 1rem;
                 font-size: 0.9rem;
             }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-layout {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            .sidebar-right {
+                display: none; /* Auf Handys verstecken, um Platz zu sparen */
+            }
+            .row-wrapper {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .side-label {
+                flex: none;
+                justify-content: flex-start;
+                text-align: left;
+                border-right: none;
+                border-bottom: 3px solid #ff8c00;
+                padding-right: 0;
+                padding-bottom: 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🏀 Basketball Taktik Trainer</h1>
-            <div class="subheadline">Lerne taktische Spielzüge – visuell, interaktiv & in deinem eigenen Tempo</div>
-        </header>
+    <div class="main-layout">
+        <div class="container">
+            <header>
+                <h1>🏀 Basketball Taktik Trainer</h1>
+                <div class="subheadline">Lerne taktische Spielzüge – visuell, interaktiv & in deinem eigenen Tempo</div>
+            </header>
 
-        <!-- Navigation: Jetzt mit Links zu den eigenen HTML-Dateien -->
-        <div class="nav-modules">
-            <a href="taktik-3vs3.html"><button class="nav-btn">📋 Taktik 3vs3</button></a>
-            <a href="taktik-5vs5.html"><button class="nav-btn">📋 Taktik 5vs5</button></a>
-            <a href="spielablauf-3vs3.html"><button class="nav-btn">⚡ Spielablauf 3vs3</button></a>
-            <a href="spielablauf-5vs5.html"><button class="nav-btn">⚡ Spielablauf 5vs5</button></a>
-            <a href="simulation.html"><button class="nav-btn">🎮 Taktik‑Simulation</button></a>
-        </div>
+            <div class="content-area">
+                <div class="welcome-message">
+                    <h2>Dein interaktiver Taktikraum</h2>
+                    <p>Wähle ein Modul aus, um Regeln und Taktiken zu lernen oder dein Wissen in der Anwendung zu testen.</p>
+                </div>
 
-        <div class="content-area">
-            <div class="welcome-message">
-                <h2>Dein interaktiver Taktikraum</h2>
-                <p>Wähle oben ein Modul aus, um Spielzüge zu lernen, Laufwege zu verstehen oder in einer Simulation dein Wissen anzuwenden.<br>
-                Jeder Bereich bietet dir direktes Feedback – perfekt für die „Trockenübung vor dem Praxiseinsatz“.</p>
+                <!-- Zeile: Regeln -->
+                <div class="row-wrapper">
+                    <div class="side-label">Regeln</div>
+                    <div class="card-grid">
+                        <a href="spielablauf-3vs3.html" class="card-link">
+                            <div class="card">
+                                <h3>Spielablauf 3vs3</h3>
+                                <p>Spezifische Regeln, Check-Ball und Clearing im 3x3 Basketball.</p>
+                            </div>
+                        </a>
+                        <a href="spielablauf-5vs5.html" class="card-link">
+                            <div class="card">
+                                <h3>Spielablauf 5vs5</h3>
+                                <p>Vom Sprungball bis zur Wurfuhr – klassische 5-gegen-5 Regeln.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Zeile: Taktik -->
+                <div class="row-wrapper">
+                    <div class="side-label" style="color: #ffd966; border-color: #ffd966;">Taktik</div>
+                    <div class="card-grid">
+                        <a href="taktik-3vs3.html" class="card-link">
+                            <div class="card">
+                                <h3>Taktik 3vs3</h3>
+                                <p>Raumaufteilung und schnelle Spielzüge für das Spiel auf einen Korb.</p>
+                            </div>
+                        </a>
+                        <a href="taktik-5vs5.html" class="card-link">
+                            <div class="card">
+                                <h3>Taktik 5vs5</h3>
+                                <p>Komplexe Spielsysteme wie Pick & Roll und Team-Verteidigung.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Zeile: Anwendung -->
+                <div class="row-wrapper" style="margin-top: 2rem;">
+                    <div class="side-label" style="color: #4db8ff; border-color: #4db8ff;">Anwendung</div>
+                    <div class="card-grid" style="grid-template-columns: 1fr;">
+                        <a href="simulation.html" class="card-link">
+                            <div class="card highlight-card" style="border-left-color: #4db8ff; background: #262d35;">
+                                <h3>Taktik Anwendung</h3>
+                                <p>Triff Entscheidungen in Spielsituationen und sieh die Ergebnisse in Animationen.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
             </div>
 
-            <!-- Vorschau auf die Lernkarten (später wird dieser Bereich dynamisch) -->
-            <div class="card-grid">
-                <div class="card">
-                    <div class="tag">Grundlagen</div>
-                    <h3>Freilaufen & Passwege</h3>
-                    <p>Lerne, wie du dich ohne Ball bewegen musst, um Räume zu schaffen und angespielt zu werden. Visuelle Beispiele helfen dir, die Konzepte zu verinnerlichen.</p>
-                </div>
-                <div class="card">
-                    <div class="tag">Taktik</div>
-                    <h3>Give & Go</h3>
-                    <p>Der klassische Spielzug: Pass abgeben, sofort zum Korb schneiden und wieder angespielt werden. Simuliere den Ablauf auf unserer Taktiktafel.</p>
-                </div>
-                <div class="card">
-                    <div class="tag">Simulation</div>
-                    <h3>Entscheidungstraining</h3>
-                    <p>Mehrere Szenarien warten auf dich. Triff die richtige taktische Entscheidung und erhalte sofort Feedback – wie im echten Spiel.</p>
-                </div>
-            </div>
+            <footer>
+                <p>Basketball Lernapp – Theorie trifft Praxis | Barrierefrei, kontrastreich & für alle Spielniveaus geeignet</p>
+            </footer>
         </div>
 
-        <footer>
-            <p>Basketball Lernapp – Theorie trifft Praxis | Barrierefrei, kontrastreich & für alle Spielniveaus geeignet</p>
-        </footer>
+        <!-- Die neue Sidebar für den rotierenden Basketball -->
+        <div class="sidebar-right">
+            <img src="assets/basketball.png" alt="Basketball" class="rotating-ball">
+        </div>
     </div>
 </body>
 </html>
