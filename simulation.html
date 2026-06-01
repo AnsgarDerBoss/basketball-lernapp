@@ -5,11 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taktik-Simulation - Basketball Lernapp</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* --- Spezifische Styles für die Simulation --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Tieferes Blau statt Grün, um den "Anwendungs"-Bereich zu kennzeichnen */
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            color: #f5f5f5;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1vh;
+            animation: slideInFromRight 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 98%;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            border-radius: 40px;
+            padding: 1rem 5rem 3rem 5rem;
+            border: 2px solid #4db8ff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(77, 184, 255, 0.15);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #4db8ff;
+            text-shadow: 0 0 20px rgba(77, 184, 255, 0.4);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+
+        /* Platzhalter für das Interface */
+        .sim-interface-mockup {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(77, 184, 255, 0.3);
+            border-radius: 24px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sim-interface-mockup::before {
+            content: 'SIMULATIONS-MODUL';
+            color: rgba(77, 184, 255, 0.2);
+            font-weight: 900;
+            font-size: 2rem;
+            letter-spacing: 10px;
+        }
+
+        .back-link {
+            display: inline-block;
+            text-decoration: none;
+            color: #4db8ff;
+            font-weight: bold;
+            border: 2px solid #4db8ff;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: #4db8ff;
+            color: #0f172a;
+            box-shadow: 0 0 20px rgba(77, 184, 255, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>🎮 Taktik-Simulation</h1>
-        <p>Hier kannst du Entscheidungen treffen und siehst sofort die Auswirkung auf Laufwege und Positionen. Ein Multiple-Choice-Entscheidungsbaum wird dich durch verschiedene Spielsituationen führen.</p>
+        <h1>Taktik-Simulation</h1>
+        <p class="intro-text">
+            Analysiere die Situation auf dem Feld, triff taktische Entscheidungen und beobachte die Konsequenzen in Echtzeit.
+        </p>
+
+        <div class="sim-interface-mockup">
+            <!-- Hier wird später die interaktive Simulation eingebettet -->
+        </div>
+
         <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
     </div>
 </body>

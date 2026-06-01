@@ -12,6 +12,23 @@ body {
     line-height: 1.5;
     min-height: 100vh;
     padding: 1.5rem;
+    overflow-x: hidden; /* Verhindert Scrollbalken während der Animation */
+}
+
+/* Animation: Ball schießt nach links */
+@keyframes ballFlyLeft {
+    0% { transform: translateX(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateX(-200vw) rotate(-1080deg); opacity: 0; }
+}
+
+.ball-animation-out {
+    animation: ballFlyLeft 0.8s cubic-bezier(0.45, 0, 0.55, 1) forwards !important;
+}
+
+/* Animation: Neue Seite kommt von rechts */
+@keyframes slideInFromRight {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
 }
 
 .container {
