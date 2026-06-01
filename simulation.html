@@ -16,14 +16,23 @@
             margin: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 1vh;
-            animation: slideInFromRight 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            align-items: flex-start;
+            padding: 2rem;
+        }
+
+        /* Wrapper für Button und Container nebeneinander */
+        .simulation-wrapper {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
         }
 
         .container {
-            max-width: 1200px;
-            width: 98%;
+            flex: 1;
+            max-width: 1100px;
             min-height: 97vh;
             display: flex;
             flex-direction: column;
@@ -34,6 +43,8 @@
             border: 2px solid #4db8ff;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(77, 184, 255, 0.15);
             text-align: center;
+            opacity: 0;
+            animation: slideInFromRight 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
         }
 
         h1 {
@@ -75,15 +86,71 @@
             letter-spacing: 10px;
         }
 
+        /* Bereich für die interaktiven Quadrate */
+        .selection-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            text-align: left;
+            padding: 0 2rem;
+        }
+
+        .selection-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            cursor: pointer;
+            group: hover;
+        }
+
+        .square-btn {
+            width: 50px;
+            height: 50px;
+            background: #4db8ff;
+            border-radius: 12px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(77, 184, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #020617;
+        }
+
+        .selection-item:hover .square-btn {
+            transform: scale(1.1);
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Das Kreuz erscheint nur, wenn das Item die Klasse 'active' hat */
+        .selection-item.active .square-btn::after {
+            content: '✕';
+            font-weight: bold;
+        }
+
+        .selection-text {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+
         .back-link {
-            display: inline-block;
             text-decoration: none;
             color: #4db8ff;
             font-weight: bold;
             border: 2px solid #4db8ff;
-            padding: 0.8rem 2rem;
+            padding: 1.2rem 4.5rem;
+            font-size: 1.3rem;
             border-radius: 50px;
             transition: all 0.3s ease;
+            white-space: nowrap;
+            align-self: flex-start;
+            position: sticky;
+            top: 2rem;
+            opacity: 0;
+            animation: flyInFromTop 1s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
         }
 
         .back-link:hover {
@@ -92,20 +159,65 @@
             box-shadow: 0 0 20px rgba(77, 184, 255, 0.6);
             transform: translateY(-2px);
         }
+
+        @keyframes flyInFromTop {
+            0% { transform: translateY(-150%); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        @media (max-width: 900px) {
+            .simulation-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+            .back-link {
+                position: static;
+                margin-bottom: 1rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Taktik-Simulation</h1>
-        <p class="intro-text">
-            Analysiere die Situation auf dem Feld, triff taktische Entscheidungen und beobachte die Konsequenzen in Echtzeit.
-        </p>
+    <div class="simulation-wrapper">
+        <a href="index.html" class="back-link">← Zurück</a>
 
-        <div class="sim-interface-mockup">
-            <!-- Hier wird später die interaktive Simulation eingebettet -->
+        <div class="container">
+            <h1>Taktik-Simulation</h1>
+            <p class="intro-text">
+                Analysiere die Situation auf dem Feld, triff taktische Entscheidungen und beobachte die Konsequenzen in Echtzeit.
+            </p>
+
+            <div class="sim-interface-mockup">
+                <!-- Hier wird später die interaktive Simulation eingebettet -->
+            </div>
+
+            <div class="selection-area">
+                <div class="selection-item">
+                    <div class="square-btn"></div>
+                    <p class="selection-text">Das ist der erste Testsatz für eine taktische Option.</p>
+                </div>
+                <div class="selection-item">
+                    <div class="square-btn"></div>
+                    <p class="selection-text">Hier folgt ein weiterer Testsatz zur Auswahl.</p>
+                </div>
+                <div class="selection-item">
+                    <div class="square-btn"></div>
+                    <p class="selection-text">Und hier ist der dritte Testsatz für die Simulation.</p>
+                </div>
+            </div>
         </div>
-
-        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
     </div>
+
+    <script>
+        // Logik für die exklusive Auswahl (nur ein Kreuz gleichzeitig)
+        const selectionItems = document.querySelectorAll('.selection-item');
+        
+        selectionItems.forEach(item => {
+            item.addEventListener('click', () => {
+                selectionItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+    </script>
 </body>
 </html>

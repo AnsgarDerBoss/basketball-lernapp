@@ -75,6 +75,8 @@
             margin-bottom: 0.2rem;
             color: #00f2ff;
             text-shadow: 0 0 15px rgba(0, 242, 255, 0.6);
+            opacity: 0;
+            animation: flyInFromLeft 1s cubic-bezier(0.23, 1, 0.32, 1) forwards;
         }
 
         .subheadline {
@@ -226,6 +228,11 @@
             0% { transform: translateX(-150%) skewX(-25deg); }
             75% { transform: translateX(150%) skewX(-25deg); } /* Die Bewegung dauert nun 75% der Zeit (langsamer) */
             100% { transform: translateX(150%) skewX(-25deg); }
+        }
+
+        @keyframes flyInFromLeft {
+            0% { transform: translateX(-100vw); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
         }
 
         /* --- Footer --- */
