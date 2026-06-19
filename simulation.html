@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -61,7 +62,8 @@
             pointer-events: none;
             user-select: none;
             margin-left: 1rem;
-            opacity: 0; /* Wird durch Animation auf 1 gesetzt */
+            opacity: 0;
+            /* Wird durch Animation auf 1 gesetzt */
             animation: flyInFromRight 1s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
         }
 
@@ -117,25 +119,50 @@
         /* Spieler-Marker */
         .player {
             position: absolute;
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
             color: white;
             transition: all 0.5s ease-in-out;
             cursor: pointer;
             z-index: 10;
         }
-        .offense { background: #e63946; border: 2px solid white; }
-        .defense { background: #1d4ed8; border: 2px solid white; }
-        .ball { 
-            width: 15px; height: 15px; background: #ff8c00; 
-            border-radius: 50%; position: absolute; z-index: 11;
-            box-shadow: 0 0 10px #ff8c00;
+
+        .offense {
+            background: #0041cc;
+            border: 2px solid white;
+        }
+
+        /* Team A: Blau */
+        .defense {
+            background: #dc2626;
+            border: 2px solid white;
+        }
+
+        /* Team B: Rot */
+
+        /* Ballführender Spieler Hervorhebung */
+        .player.has-ball {
+            box-shadow: 0 0 0 3px #F08A24, 0 0 15px 5px rgba(240, 138, 36, 0.7);
+            border-color: #F08A24 !important;
+            transform: scale(1.15);
+            z-index: 12;
+        }
+
+        .ball {
+            width: 15px;
+            height: 15px;
+            background: #F08A24;
+            /* Ball: Orange-gelb */
+            border-radius: 50%;
+            position: absolute;
+            z-index: 11;
+            box-shadow: 0 0 10px #F08A24;
             transition: all 0.5s ease-in-out;
         }
 
@@ -189,8 +216,15 @@
             align-self: center;
         }
 
-        .action-btn.ready { opacity: 1; pointer-events: auto; }
-        .action-btn:hover { background: #fff; transform: translateY(-3px); }
+        .action-btn.ready {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .action-btn:hover {
+            background: #fff;
+            transform: translateY(-3px);
+        }
 
         .selection-item:hover .square-btn {
             transform: scale(1.1);
@@ -220,13 +254,27 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes flyInFromRight {
-            0% { transform: translateX(50px); opacity: 0; }
-            100% { transform: translateX(0); opacity: 1; }
+            0% {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
         .back-link {
@@ -254,8 +302,15 @@
         }
 
         @keyframes flyInFromTop {
-            0% { transform: translateY(-150%); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+            0% {
+                transform: translateY(-150%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
         @media (max-width: 900px) {
@@ -263,6 +318,7 @@
                 flex-direction: column;
                 align-items: center;
             }
+
             .back-link {
                 position: static;
                 margin-bottom: 1rem;
@@ -270,6 +326,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="simulation-wrapper">
         <a href="index.html" class="back-link">← Zurück</a>
@@ -279,7 +336,7 @@
                 <div class="intro-flex">
                     <div class="intro-column">
                         <strong>Mission:</strong><br>
-                        Knacke die Verteidigung! Du bist Rot (Angriff).
+                        Knacke die Verteidigung! Du bist Team A (Blau) im Angriff.
                     </div>
                     <div class="intro-column">
                         <strong>Ausgangslage:</strong><br>
@@ -294,14 +351,14 @@
 
             <div class="sim-interface-mockup">
                 <!-- Angriff auf den linken Korb -->
-                <!-- Offense (Rot) -->
-                <div class="player offense" id="p1" style="top: 55%; left: 55%;">1</div>
+                <!-- Offense Team A (Blau) -->
+                <div class="player offense has-ball" id="p1" style="top: 55%; left: 55%;">1</div>
                 <div class="player offense" id="p5" style="top: 45%; left: 50%;">5</div>
                 <div class="player offense" id="p2" style="top: 15%; left: 15%;">2</div>
                 <div class="player offense" id="p3" style="top: 85%; left: 15%;">3</div>
                 <div class="player offense" id="p4" style="top: 50%; left: 5%;">4</div>
-                
-                <!-- Defense (Blau) -->
+
+                <!-- Defense Team B (Rot) -->
                 <div class="player defense" id="d1" style="top: 55%; left: 50%;">D1</div>
                 <div class="player defense" id="d5" style="top: 45%; left: 55%;">D5</div>
                 <div class="player defense" id="d2" style="top: 22%; left: 18%;">D2</div>
@@ -315,15 +372,20 @@
             <div class="selection-area">
                 <div class="selection-item" id="opt1">
                     <div class="square-btn"></div>
-                    <p class="selection-text"><strong>Option A (Sehr gut):</strong> Nutze den Block und spiele den "Pocket Pass" zum abrollenden Center (5). Achte darauf, wie die Verteidiger D2 und D3 versuchen zu helfen.</p>
+                    <p class="selection-text"><strong>Option A (Sehr gut):</strong> Nutze den Block und spiele den
+                        "Pocket Pass" zum abrollenden Center (5). Achte darauf, wie die Verteidiger D2 und D3 versuchen
+                        zu helfen.</p>
                 </div>
                 <div class="selection-item" id="opt2">
                     <div class="square-btn"></div>
-                    <p class="selection-text"><strong>Option B (Sicher):</strong> Dribble weit nach außen, um Platz zu schaffen, und passe zum Mitspieler (3) in der Ecke. Ein sicherer Pass, der den Angriff neu aufbaut.</p>
+                    <p class="selection-text"><strong>Option B (Sicher):</strong> Dribble weit nach außen, um Platz zu
+                        schaffen, und passe zum Mitspieler (3) in der Ecke. Ein sicherer Pass, der den Angriff neu
+                        aufbaut.</p>
                 </div>
                 <div class="selection-item" id="opt3">
                     <div class="square-btn"></div>
-                    <p class="selection-text"><strong>Option C (Schlecht):</strong> Versuche mit Tempo an D1 vorbeizuziehen. Achte darauf, wie die Verteidigung den Weg zum Korb zumacht.</p>
+                    <p class="selection-text"><strong>Option C (Schlecht):</strong> Versuche mit Tempo an D1
+                        vorbeizuziehen. Achte darauf, wie die Verteidigung den Weg zum Korb zumacht.</p>
                 </div>
             </div>
 
@@ -354,6 +416,14 @@
         const d3 = document.getElementById('d3'); // Verteidiger 3 hinzugefügt
         const ball = document.getElementById('ball');
 
+        // Funktion zum Markieren des ballführenden Spielers
+        function setBallHandler(player) {
+            document.querySelectorAll('.player').forEach(p => p.classList.remove('has-ball'));
+            if (player) {
+                player.classList.add('has-ball');
+            }
+        }
+
         // Initial-Positionen speichern für Reset
         const initialPos = {
             p1: { top: '55%', left: '55%' },
@@ -381,7 +451,7 @@
                 resetSim();
                 return;
             }
-            
+
             runSimulation(selectedOption);
         });
 
@@ -393,17 +463,19 @@
             if (option === 'opt1') {
                 // Option A: Pocket Pass (Sehr gut)
                 // Phase 1: P1 macht nur einen minimalen Schritt, D5 rückt näher an P1 (Hedge)
-                p1.style.left = '53%'; 
+                p1.style.left = '53%';
                 ball.style.left = '54%';
                 d5.style.top = '50%'; // D5 geht näher an P1 heran
-                
+
                 setTimeout(() => {
-                    // Phase 2: Der kurze, schnelle Pocket Pass zu P5
+                    // Phase 2: Der kurze, schnelle Pocket Pass zu P5 (Ball verlässt P1)
+                    setBallHandler(null);
                     ball.style.left = '50%';
                     ball.style.top = '45%';
-                    
+
                     setTimeout(() => {
-                        // Phase 3: P5 rollt zum Korb, D2 und D3 ziehen sich zusammen (Help Defense)
+                        // Phase 3: P5 rollt zum Korb, D2 und D3 ziehen sich zusammen (Help Defense) (Ball kommt bei P5 an)
+                        setBallHandler(p5);
                         p5.style.transitionDuration = '1.5s';
                         ball.style.transitionDuration = '1.5s';
                         d2.style.transitionDuration = '1.5s';
@@ -419,7 +491,8 @@
                         d3.style.top = '62%';
 
                         setTimeout(() => {
-                            // Phase 4: Der eigentliche Wurf zum Korb
+                            // Phase 4: Der eigentliche Wurf zum Korb (Ball verlässt P5)
+                            setBallHandler(null);
                             ball.style.transitionDuration = '0.5s';
                             ball.style.left = '6.5%';
                             ball.style.top = '48.5%';
@@ -441,15 +514,18 @@
                 p3.style.left = '25%'; // P3 bewegt sich zur Mitte
                 p3.style.top = '75%';
 
-                setTimeout(() => { 
-                    // Während der Ball fliegt...
-                    ball.style.left = '26%'; 
+                setTimeout(() => {
+                    // Während der Ball fliegt... (Ball verlässt P1)
+                    setBallHandler(null);
+                    ball.style.left = '26%';
                     ball.style.top = '76%';
                     // ...reagiert D3 und stellt sich zwischen P3 und Korb
-                    d3.style.left = '23%'; 
+                    d3.style.left = '23%';
                     d3.style.top = '72%';
-                    
+
                     setTimeout(() => {
+                        // Ball kommt bei P3 an
+                        setBallHandler(p3);
                         showFeedback("Gute Entscheidung. Du hast den Druck herausgenommen und suchst den freien Mitspieler.", "#eab308");
                         finishSim();
                     }, 600); // Warten bis Pass und D3 angekommen sind
@@ -458,19 +534,20 @@
             } else if (option === 'opt3') {
                 // Option C: Drive (Schlecht)
                 // Phase 1: P1 versucht an D1 vorbeizuziehen, D5 reagiert SOFORT
-                p1.style.left = '48%'; 
+                p1.style.left = '48%';
                 p1.style.top = '53%';
                 ball.style.left = '49%';
                 ball.style.top = '54%';
                 d1.style.left = '47%';
                 d5.style.left = '46%';
                 d5.style.top = '52%';
-                
+
                 setTimeout(() => {
-                    // Phase 2: Die Falle schnappt zu und der Ball wird übernommen
+                    // Phase 2: Die Falle schnappt zu und der Ball wird übernommen (Ball wird von D1 gestohlen)
+                    setBallHandler(d1);
                     d1.style.left = '46%';
-                    ball.style.left = '45%'; 
-                    
+                    ball.style.left = '45%';
+
                     setTimeout(() => {
                         showFeedback("Ballverlust! D1 und D5 haben den Weg zum Korb zugestellt und dir den Ball abgenommen.", "#ef4444");
                         finishSim();
@@ -500,6 +577,9 @@
         }
 
         function resetSim() {
+            // Ballführenden Spieler zurücksetzen
+            setBallHandler(p1);
+
             // Positionen zurücksetzen
             p1.style.left = initialPos.p1.left;
             p1.style.top = initialPos.p1.top;
@@ -527,7 +607,7 @@
             selectedOption = null;
             actionBtn.textContent = 'Bitte Option wählen';
             actionBtn.classList.remove('ready');
-            
+
             // Animationen kurz ausschalten für harten Reset
             const all = [p1, p5, d1, d5, p3, d2, d3, ball];
             all.forEach(el => el.style.transition = 'none');
@@ -536,4 +616,5 @@
         }
     </script>
 </body>
+
 </html>
