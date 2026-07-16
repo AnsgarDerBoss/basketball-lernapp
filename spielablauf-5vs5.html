@@ -5,12 +5,289 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spielablauf 5vs5 - Basketball Lernapp</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Slider-Container */
+        .slider-wrapper {
+            position: relative;
+            max-width: 850px;
+            margin: 1rem auto;
+            overflow: hidden;
+        }
+
+        /* Bereich, der alle Slides nebeneinander hält */
+        .slides-container {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        /* Einzelne Inhaltskarte */
+        .slide {
+            min-width: 100%;
+            background: #2d2a26;
+            border-radius: 24px;
+            padding: 2rem;
+            border: 2px solid #ff8c00;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        .slide h2 {
+            color: #ffaa33;
+            font-size: 1.8rem;
+            margin: 0;
+            text-align: center;
+        }
+
+        .slide p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #e0e0e0;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Container für das Spielfeld-Visual */
+        .visual-container {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            aspect-ratio: 2 / 1; /* Hält das Feld im Format 1:2 */
+            background-image: url('assets/GanzesFeld.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 12px;
+            background-color: #ffffff;
+            border: 4px solid #333;
+            overflow: hidden;
+        }
+
+        /* Steuerung (Pfeile unten) */
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .nav-btn-circle {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .nav-btn-circle:hover {
+            background: #ffaa33;
+            transform: scale(1.1);
+        }
+
+        .nav-btn-circle:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+
+        /* --- BASIS-STYLES FÜR GRAFISCHE ELEMENTE --- */
+        .marker {
+            position: absolute;
+            background: #e63946;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            transform: translate(-50%, -50%); /* Sorgt dafür, dass der Punkt genau auf der Koordinate sitzt */
+            z-index: 5;
+        }
+        .dot { width: 18px; height: 18px; } /* Größe der roten Punkte */
+        .pulse { animation: pulse-ring 1.5s infinite; }
+
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0px rgba(230, 57, 70, 0.7); }
+            100% { box-shadow: 0 0 0 20px rgba(230, 57, 70, 0); }
+        }
+
+        /* Pfeil-Linie: Länge wird über 'width' gesteuert, Richtung über 'rotate' */
+        .arrow-line {
+            position: absolute;
+            height: 5px;
+            background: #e63946;
+            transform-origin: left center;
+            z-index: 4;
+        }
+        /* Pfeil-Spitze: Erzeugt das Dreieck am Ende der Linie */
+        .arrow-line::after {
+            content: '';
+            position: absolute;
+            right: -8px;
+            top: -7px;
+            border: 10px solid transparent;
+            border-left-color: #e63946;
+        }
+
+        /* Hervorgehobene Flächen: Nutzt border-radius für Rundungen */
+        .zone-highlight {
+            position: absolute;
+            border: 3px dashed #ff8c00;
+            background: rgba(255, 140, 0, 0.15);
+            z-index: 3;
+        }
+
+        /* Text-Box über dem Feld (z.B. Spielende) */
+        .overlay-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #000;
+            color: #ff8c00;
+            padding: 10px 14px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.05rem;
+            border: 2px solid #ff8c00;
+            border-radius: 8px;
+            z-index: 10;
+            text-align: center;
+            max-width: 280px;
+            width: auto;
+            line-height: 1.3;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>⚡ Spielablauf 5vs5</h1>
-        <p>Vom Sprungball bis zur Wurfuhr – der vollständige Spielablauf im 5vs5. Ideal für Einsteiger und Fortgeschrittene.</p>
+
+        <div class="slider-wrapper"> 
+            <div class="slides-container" id="slides"> 
+
+                <!-- 1. Spielbeginn und Sprungball -->
+                <div class="slide">
+                    <h2> Spielbeginn und Sprungball</h2>
+                    <p> Das Spiel beginnt mit einem <strong> Sprungball</strong>, bei dem zwei gegnerische Spieler im Mittelkreis versuchen, den vom Schiedsrichter hochgeworfenen Ball für ihr Team zu gewinnen. Der Spieler, der den Ball zuerst berührt, gibt ihn an einen Mitspieler weiter, um den Angriff einzuleiten.</p>
+                    <div class="visual-container">    
+                        <!-- Punkt: Startposition Sprungball (Mitte des Spielfelds)-->
+                        <div class="marker dot pulse" style="top: 50%; left: 50%;"></div>
+                        <!-- Pfeil: Spieler gewinnt Ball für seine Mannschaft -->
+                        <div class="arrow-line" style="top: 50%; left: 50%; width: 75px; transform: rotate(0deg);"> </div>
+                        <!-- Pfeil: Spieler gewinnt Ball für seine Mannschaft -->
+                        <div class="arrow-line" style="top: 50%; left: 50%; width: 75px; transform: rotate(180deg);"> </div>
+                    </div>
+                </div>
+        
+                <!-- 2. Angriff und Wurfuhr -->
+                <div class="slide">
+                    <h2> Angriff und Wurfuhr</h2>
+                    <p> Nach dem Sprungball beginnt das angreifende Team, den Ball in Richtung des gegnerischen Korbs zu bewegen. Die <strong>Wurfuhr</strong> (Shot Clock) gibt dem Team <strong>24 Sekunden</strong> Zeit, um einen Wurfversuch zu starten. Das Team muss innerhalb dieser Zeit einen Wurf abgeben, sonst verliert es den Ballbesitz.</p>
+                    <div class="visual-container">
+                        <!-- Punkt: Startposition Angriff (Mitte des Spielfelds) -->
+                        <div class="marker dot" style="top: 50%; left: 50%;"></div>
+                        <!-- Pfeil: Angriffslinie -->
+                        <div class="arrow-line" style="top: 49%; left: 50%; width: 175px; transform: rotate(0deg);"> </div>
+                    </div>
+                </div> 
+                
+                <!-- 3. Einwurf und 5-Sekundenregel -->
+                <div class="slide">
+                    <h2> Einwurf und 5-Sekundenregel</h2>
+                    <p>Ein Einwurf erfolgt von der Grundlinie oder der Seitenlinie und muss innerhalb von <strong>5 Sekunden</strong> durchgeführt werden. </p>
+                    <div class="visual-container">
+                        <!-- Pfeile: zeigen die Einwurfmöglichkeiten -->
+                        <div class="arrow-line" style="top:1%; left: 60%; width: 85px; transform: rotate(90deg);"> </div>
+                        <div class="arrow-line" style="top: 49%; left: 97%; width: 110px; transform: rotate(180deg);"> </div>
+                    </div>
+                </div>  
+
+                <!-- 4. 8-Sekundenregel--> 
+                <div class="slide">
+                    <h2> 8-Sekundenregel</h2>
+                    <p>Bekommt eine Mannschaft den Ball, muss sie es schaffen ihn innerhalb von <strong>8 Sekunden</strong> aus der eigenen Hälfte in das Spielfeld des Gegners zu befördern.</p>
+                    <div class="visual-container">
+                        <!-- Punkt: Startposition Angriff aus eigener Hälfte -->
+                        <div class="marker dot" style="top: 50%; left: 75%;"></div>
+                        <!-- Pfeil: Umschaltspiel -->
+                        <div class="arrow-line" style="top: 50%; left: 75%; width: 175px; transform: rotate(180deg);"> </div>
+                        <!-- Zone: Gegnerische Hälfe -->
+                        <div class="zone-highlight" style="bottom: 1%; left: 2%; width: 48%; height: 99%;"></div>
+                    </div>
+                </div> 
+
+                <!-- 5. 3-Sekundenregel -->
+                <div class="slide">
+                    <h2> 3-Sekundenregel</h2>
+                    <p>Bei einem Angriff dürfen sich die angreifenden Spieler maximal <strong>3 Sekunden</strong> lang in der <strong>gegnerischen Zone</strong> befinden. Dabei spielt es keine Rolle, ob sie in Ballbesitz sind oder nicht.</p>
+                    <div class="visual-container">
+                        <!-- Zone: Gegnerische Zone -->
+                        <div class="zone-highlight" style="bottom: 34%; left: 3%; width: 20%; height: 32%;"></div>
+                    </div>
+                </div>
+
+                <!-- 6. Spielende -->
+                <div class="slide">
+                    <h2>Spielende</h2>
+                    <p>Ein Spiel dauert insgesamt <strong>40 Minuten</strong> und ist in 4 Viertel a 10 Minuten eingeteilt (FIBA). Die Mannschaft mit den <strong>meisten Punkten gewinnt</strong>. Bei Gleichstand kommt es zu einer Verlänergung (Overtime) von 5 Minuten.</p>
+                    <div class="visual-container">
+                        <!-- OVERLAY: Textbox für die End-Resultate -->
+                        <div class="overlay-text">
+                            <strong>ZIEL: Die meisten PUNKTE</strong><br>
+                            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #444;">
+                            <span style="font-size: 1rem; color: #bbb; line-height: 1.4; display: block;">
+                                Zeitlimit: 40 Min.<br>
+                                Bei Gleichstand (Overtime):<br>
+                                Wer nach 5 Minuten mehr Punkte hat, gewinnt!
+                            </span>
+                        </div>
+                    </div>
+                </div> 
+
+            </div>  
+        </div>       
+
+        <div class="slider-nav">
+            <button class="nav-btn-circle" id="prevBtn" disabled>❮</button>
+            <button class="nav-btn-circle" id="nextBtn">❯</button>
+        </div>         
+
         <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
     </div>
+
+    <script>
+        const slides = document.getElementById('slides');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        const totalSlides = 6;
+
+        /* Berechnet die Verschiebung des Sliders basierend auf dem Index */
+        function updateSlider() {
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex === totalSlides - 1;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < totalSlides - 1) {
+                currentIndex++;
+                updateSlider();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateSlider();
+            }
+        });
+    </script>
 </body>
 </html>
