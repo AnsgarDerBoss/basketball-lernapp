@@ -567,14 +567,14 @@ actionBtn.addEventListener('click', () => {
             feedbackBox.style.display = "block";
         }
 
-        function finishSim() {
-            setTimeout(() => {
-                actionBtn.textContent = 'Zurücksetzen';
-                actionBtn.style.opacity = "1";
-                actionBtn.style.pointerEvents = "auto";
-                actionBtn.classList.add('ready');
-            }, 1000);
-        }
+function finishSim() {
+    setTimeout(() => {
+        actionBtn.textContent = 'Weiter zu Frage 2';
+        actionBtn.style.opacity = "1";
+        actionBtn.style.pointerEvents = "auto";
+        actionBtn.classList.add('ready');
+    }, 1000);
+}
 
         function resetSim() {
             // Ballführenden Spieler zurücksetzen
