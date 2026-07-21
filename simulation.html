@@ -446,14 +446,14 @@
             });
         });
 
-        actionBtn.addEventListener('click', () => {
-            if (actionBtn.textContent === 'Zurücksetzen') {
-                resetSim();
-                return;
-            }
+actionBtn.addEventListener('click', () => {
+    if (actionBtn.textContent === 'Weiter zu Frage 2') {
+        window.location.href = 'simulation2.html';
+        return;
+    }
 
-            runSimulation(selectedOption);
-        });
+    runSimulation(selectedOption);
+});
 
         function runSimulation(option) {
             actionBtn.classList.remove('ready');
