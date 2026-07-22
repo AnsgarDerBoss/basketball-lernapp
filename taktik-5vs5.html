@@ -1299,14 +1299,14 @@
             'data-drag-part': 'line'
         });
         const start = svgEl('circle', {
-            class: 'route-handle', cx: x1, cy: y1, r: 2.25,
+            class: 'route-handle', cx: x1, cy: y1, r: 1.5,
             'data-drag-part': 'start'
         });
         const end = svgEl('circle', {
-            class: 'route-handle', cx: x2, cy: y2, r: 2.25,
+            class: 'route-handle', cx: x2, cy: y2, r: 1.5,
             'data-drag-part': 'end'
         });
-        const labelBg = svgEl('circle', { class: 'route-label-bg', r: 3.1 });
+        const labelBg = svgEl('circle', { class: 'route-label-bg', r: 2.4 });
         const label = svgEl('text', { class: 'route-label' });
         label.textContent = `${type === 'move' ? 'L' : 'P'}${index}`;
 
