@@ -3,14 +3,879 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taktik 3vs3 - Basketball Lernapp</title>
+    <title>Taktik 3vs3 – Basketball Lernapp</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        :root {
+            --orange: #ff8c00;
+            --orange-light: #ffaa33;
+            --card: #2d2a26;
+            --card-soft: #3a352f;
+            --text: #e8e8e8;
+            --muted: #bdbdbd;
+            --green: #22c55e;
+            --red: #ef4444;
+            --blue: #2563eb;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .chapter-header {
+            max-width: 900px;
+            margin: 0 auto 1rem;
+            text-align: center;
+        }
+
+        .chapter-header p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.55;
+            margin: 0.5rem auto 0;
+            max-width: 760px;
+        }
+
+        .progress-wrap {
+            max-width: 900px;
+            margin: 1rem auto 1.25rem;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            color: var(--muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-track {
+            height: 12px;
+            background: #4a4641;
+            border-radius: 999px;
+            overflow: hidden;
+            border: 1px solid #605a54;
+        }
+
+        .progress-bar {
+            width: 0;
+            height: 100%;
+            background: linear-gradient(90deg, var(--orange), var(--orange-light));
+            transition: width 0.35s ease;
+        }
+
+        .slider-wrapper {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .slides-container {
+            display: flex;
+            align-items: flex-start;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            background: var(--card);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 2px solid var(--orange);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 1.35rem;
+        }
+
+        .slide-header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-align: center;
+        }
+
+        .slide h2 {
+            color: var(--orange-light);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .category-badge {
+            border-radius: 999px;
+            padding: 0.35rem 0.8rem;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .category-badge.offense {
+            color: #dbeafe;
+            background: rgba(37, 99, 235, 0.28);
+            border: 1px solid #60a5fa;
+        }
+
+        .category-badge.defense {
+            color: #fee2e2;
+            background: rgba(220, 38, 38, 0.25);
+            border: 1px solid #f87171;
+        }
+
+        .theory-card,
+        .task-card {
+            background: var(--card-soft);
+            border-radius: 18px;
+            padding: 1.25rem;
+            border: 1px solid #5b544d;
+        }
+
+        .theory-card h3,
+        .task-card h3 {
+            color: var(--orange-light);
+            margin: 0 0 0.65rem;
+            font-size: 1.15rem;
+        }
+
+        .theory-card p,
+        .task-card p {
+            font-size: 1.05rem;
+            line-height: 1.65;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.4fr);
+            gap: 1.25rem;
+            align-items: stretch;
+        }
+
+        .visual-container {
+            position: relative;
+            width: 100%;
+            min-height: 310px;
+            background-image: url('assets/HalbesFeld.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            border-radius: 14px;
+            background-color: #fff;
+            border: 4px solid #333;
+            overflow: hidden;
+        }
+
+        .player-dot {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 800;
+            font-size: 0.85rem;
+            border: 2px solid #fff;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+        }
+
+        .player-dot.blue { background: #0041cc; }
+        .player-dot.red { background: #dc2626; }
+
+        .movement-arrow {
+            position: absolute;
+            height: 5px;
+            background: var(--orange);
+            transform-origin: left center;
+            z-index: 4;
+        }
+
+        .movement-arrow::after {
+            content: '';
+            position: absolute;
+            right: -9px;
+            top: -7px;
+            border: 10px solid transparent;
+            border-left-color: var(--orange);
+        }
+
+        .space-zone {
+            position: absolute;
+            border: 3px dashed var(--orange);
+            background: rgba(255, 140, 0, 0.14);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .cloze-line {
+            font-size: 1.08rem;
+            line-height: 2.15;
+            color: var(--text);
+            margin-top: 0.9rem;
+        }
+
+        .blank {
+            display: inline-flex;
+            min-width: 125px;
+            min-height: 38px;
+            padding: 0.25rem 0.7rem;
+            margin: 0 0.2rem;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 2px dashed var(--orange);
+            background: #211f1c;
+            color: #fff;
+            font-weight: 800;
+            cursor: pointer;
+            vertical-align: middle;
+            transition: 0.2s;
+        }
+
+        .blank:hover {
+            background: #34302b;
+        }
+
+        .blank.filled {
+            border-style: solid;
+            background: rgba(255, 140, 0, 0.14);
+        }
+
+        .blank.correct {
+            border-color: var(--green);
+            background: rgba(34, 197, 94, 0.15);
+        }
+
+        .blank.incorrect {
+            border-color: var(--red);
+            background: rgba(239, 68, 68, 0.15);
+        }
+
+        .word-bank-title {
+            color: var(--muted);
+            margin: 1rem 0 0.55rem;
+            font-size: 0.95rem;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.65rem;
+        }
+
+        .word-chip {
+            border: 2px solid var(--orange);
+            background: #201e1b;
+            color: #fff;
+            border-radius: 999px;
+            padding: 0.6rem 1rem;
+            font-weight: 750;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .word-chip:hover:not(:disabled) {
+            background: var(--orange);
+            transform: translateY(-2px);
+        }
+
+        .word-chip:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .task-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.1rem;
+        }
+
+        .task-btn {
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .check-btn {
+            background: var(--orange);
+            color: #fff;
+        }
+
+        .check-btn:hover { background: var(--orange-light); }
+
+        .reset-btn {
+            background: #5b554f;
+            color: #fff;
+        }
+
+        .reset-btn:hover { background: #6e675f; }
+
+        .feedback {
+            display: none;
+            margin-top: 0.9rem;
+            padding: 0.85rem 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            line-height: 1.45;
+        }
+
+        .feedback.success {
+            display: block;
+            color: #bbf7d0;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid var(--green);
+        }
+
+        .feedback.error {
+            display: block;
+            color: #fecaca;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--red);
+        }
+
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem auto 0;
+        }
+
+        .nav-btn-circle {
+            background: var(--orange);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+
+        .nav-btn-circle:hover:not(:disabled) {
+            background: var(--orange-light);
+            transform: scale(1.1);
+        }
+
+        .nav-btn-circle:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .slide-counter {
+            min-width: 110px;
+            text-align: center;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .completion-box {
+            display: none;
+            max-width: 900px;
+            margin: 1.5rem auto 0;
+            padding: 1.25rem;
+            text-align: center;
+            color: #bbf7d0;
+            background: rgba(34, 197, 94, 0.12);
+            border: 2px solid var(--green);
+            border-radius: 18px;
+            font-weight: 700;
+        }
+
+        .completion-box.show { display: block; }
+
+        @media (max-width: 760px) {
+            .slide { padding: 1.25rem; }
+            .activity-grid { grid-template-columns: 1fr; }
+            .visual-container { min-height: 270px; }
+            .blank { min-width: 105px; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>🏀 Taktik 3vs3</h1>
-        <p>Hier lernst du taktische Spielzüge für das 3-gegen-3. Später kommen Lernkarten, Animationen und interaktive Beispiele.</p>
+        <div class="chapter-header">
+            <h1>🏀 Taktik im 3vs3</h1>
+            <p>
+                Lies zuerst die kurze Theorie. Ergänze danach den Lückentext mithilfe der Wortbank.
+                Klicke ein Wort an, um es in die nächste freie Lücke einzusetzen. Ein Klick auf eine gefüllte Lücke entfernt das Wort wieder.
+            </p>
+        </div>
+
+        <div class="progress-wrap">
+            <div class="progress-top">
+                <span id="progressText">0 von 6 Aufgaben gelöst</span>
+                <span id="sectionText">Offense</span>
+            </div>
+            <div class="progress-track" aria-label="Lernfortschritt">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+
+        <div class="slider-wrapper">
+            <div class="slides-container" id="slides">
+
+                <!-- 1. Isolation -->
+                <section class="slide" data-category="Offense">
+                    <div class="slide-header">
+                        <span class="category-badge offense">Offense</span>
+                        <h2>1. Isolation</h2>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Kurz erklärt</h3>
+                        <p>
+                            Es wird Spielsituationen geben, in denen du als Angreifer erkennst, dass du mehr Zeit mit unserer Lernanwendung verbracht hast als dein Gegner. Nutze deinen Vorteil auf dem Spielfeld: Isolation bedeutet, dass deine Mitspieler dir Raum geben und du dadurch in einer taktisch erzwungenen Eins-gegen-eins-Situation bist. Zeig, was du kannst!
+                        </p>
+                    </div>
+
+                    <div class="activity-grid">
+                        <div class="visual-container" aria-label="Isolation mit viel freiem Raum">
+                            <div class="space-zone" style="top: 21%; left: 27%; width: 46%; height: 55%;"></div>
+                            <div class="player-dot blue" style="top: 51%; left: 48%;">1</div>
+                            <div class="player-dot red" style="top: 51%; left: 59%;">D1</div>
+                            <div class="player-dot blue" style="top: 18%; left: 18%;">2</div>
+                            <div class="player-dot blue" style="top: 18%; left: 82%;">3</div>
+                        </div>
+
+                        <div class="task-card">
+                            <h3>Setze die passenden Wörter ein</h3>
+                            <p class="cloze-line">
+                                Bei einer Isolation geben die Mitspieler dem Ballführer viel
+                                <button class="blank" type="button" data-answer="Raum">_____</button>.
+                                Dadurch entsteht eine
+                                <button class="blank" type="button" data-answer="Eins-gegen-eins-Situation">_____</button>,
+                                in der der Angreifer seinen persönlichen Vorteil nutzen kann.
+                            </p>
+                            <p class="word-bank-title">Wortbank:</p>
+                            <div class="word-bank">
+                                <button class="word-chip" type="button" data-word="Raum">Raum</button>
+                                <button class="word-chip" type="button" data-word="Eins-gegen-eins-Situation">Eins-gegen-eins-Situation</button>
+                                <button class="word-chip" type="button" data-word="Block">Block</button>
+                                <button class="word-chip" type="button" data-word="Zone">Zone</button>
+                            </div>
+                            <div class="task-actions">
+                                <button class="task-btn check-btn" type="button">Antwort prüfen</button>
+                                <button class="task-btn reset-btn" type="button">Lücken leeren</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. Cuts -->
+                <section class="slide" data-category="Offense">
+                    <div class="slide-header">
+                        <span class="category-badge offense">Offense</span>
+                        <h2>2. Cuts</h2>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Kurz erklärt</h3>
+                        <p>
+                            Als Angreifer solltest du am besten nicht nur herumstehen. Erkenne bestimmte Lücken und freie Zonen in der Verteidigung deines Gegners und sprinte auf kontrollierten Laufwegen durch die Abwehr, um dich freizulaufen. Ein guter Cut erfolgt schnell, überraschend und im richtigen Moment, damit du anspielbar wirst, Punkte erzielen kannst oder die Verteidiger verwirrst.
+                        </p>
+                    </div>
+
+                    <div class="activity-grid">
+                        <div class="visual-container" aria-label="Schneller Cut zum Korb">
+                            <div class="player-dot blue" style="top: 28%; left: 24%;">2</div>
+                            <div class="player-dot red" style="top: 32%; left: 36%;">D2</div>
+                            <div class="movement-arrow" style="top: 29%; left: 27%; width: 48%; transform: rotate(57deg);"></div>
+                            <div class="player-dot blue" style="top: 22%; left: 73%;">1</div>
+                        </div>
+
+                        <div class="task-card">
+                            <h3>Setze die passenden Wörter ein</h3>
+                            <p class="cloze-line">
+                                Ein Cut ist ein kontrollierter
+                                <button class="blank" type="button" data-answer="Laufweg">_____</button>
+                                ohne Ball. Er sollte schnell und
+                                <button class="blank" type="button" data-answer="überraschend">_____</button>
+                                erfolgen, damit der Spieler frei und anspielbar wird.
+                            </p>
+                            <p class="word-bank-title">Wortbank:</p>
+                            <div class="word-bank">
+                                <button class="word-chip" type="button" data-word="Laufweg">Laufweg</button>
+                                <button class="word-chip" type="button" data-word="überraschend">überraschend</button>
+                                <button class="word-chip" type="button" data-word="Freiwurf">Freiwurf</button>
+                                <button class="word-chip" type="button" data-word="langsam">langsam</button>
+                            </div>
+                            <div class="task-actions">
+                                <button class="task-btn check-btn" type="button">Antwort prüfen</button>
+                                <button class="task-btn reset-btn" type="button">Lücken leeren</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. Pässe -->
+                <section class="slide" data-category="Offense">
+                    <div class="slide-header">
+                        <span class="category-badge offense">Offense</span>
+                        <h2>3. Pässe</h2>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Kurz erklärt</h3>
+                        <p>
+                            Egal ob Brustpass mit Druck, Bodenpass mit Präzision oder ein kreativer, scharfer Pass aus der eigenen Hälfte: Pässe und schnelle Ballbewegungen sind essenziell, um die Verteidigung zu verwirren und Lücken entstehen zu lassen. Spiele aufmerksam und bleib nach deinem Pass niemals still stehen.
+                        </p>
+                    </div>
+
+                    <div class="activity-grid">
+                        <div class="visual-container" aria-label="Schnelle Ballbewegung zwischen drei Spielern">
+                            <div class="player-dot blue" style="top: 25%; left: 23%;">1</div>
+                            <div class="player-dot blue" style="top: 25%; left: 76%;">2</div>
+                            <div class="player-dot blue" style="top: 70%; left: 50%;">3</div>
+                            <div class="movement-arrow" style="top: 25%; left: 27%; width: 43%; transform: rotate(0deg);"></div>
+                            <div class="movement-arrow" style="top: 29%; left: 73%; width: 42%; transform: rotate(126deg);"></div>
+                        </div>
+
+                        <div class="task-card">
+                            <h3>Setze die passenden Wörter ein</h3>
+                            <p class="cloze-line">
+                                Schnelle Ballbewegungen können die Verteidigung
+                                <button class="blank" type="button" data-answer="verwirren">_____</button>
+                                und freie Räume erzeugen. Nach einem Pass sollte der Spieler nicht
+                                <button class="blank" type="button" data-answer="stehen bleiben">_____</button>,
+                                sondern eine neue Position suchen.
+                            </p>
+                            <p class="word-bank-title">Wortbank:</p>
+                            <div class="word-bank">
+                                <button class="word-chip" type="button" data-word="verwirren">verwirren</button>
+                                <button class="word-chip" type="button" data-word="stehen bleiben">stehen bleiben</button>
+                                <button class="word-chip" type="button" data-word="foulen">foulen</button>
+                                <button class="word-chip" type="button" data-word="verlangsamen">verlangsamen</button>
+                            </div>
+                            <div class="task-actions">
+                                <button class="task-btn check-btn" type="button">Antwort prüfen</button>
+                                <button class="task-btn reset-btn" type="button">Lücken leeren</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. Mann-Deckung -->
+                <section class="slide" data-category="Defense">
+                    <div class="slide-header">
+                        <span class="category-badge defense">Defense</span>
+                        <h2>4. Mann-Deckung</h2>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Kurz erklärt</h3>
+                        <p>
+                            Die einfachste Verteidigungsform ist die Mann-Deckung: Jeder Verteidiger bekommt einen Angreifer zugeordnet und behält ihn ständig im Auge. Bleib an ihm, kleb an ihm und lass dich von keinem Block oder keiner Ablenkung von ihm abbringen. Halte dabei Abstand, bleib seitlich beweglich und vermeide unnötige Fouls.
+                        </p>
+                    </div>
+
+                    <div class="activity-grid">
+                        <div class="visual-container" aria-label="Drei Verteidiger decken jeweils einen Angreifer">
+                            <div class="player-dot blue" style="top: 22%; left: 25%;">1</div>
+                            <div class="player-dot red" style="top: 29%; left: 31%;">D1</div>
+                            <div class="player-dot blue" style="top: 22%; left: 74%;">2</div>
+                            <div class="player-dot red" style="top: 29%; left: 68%;">D2</div>
+                            <div class="player-dot blue" style="top: 67%; left: 50%;">3</div>
+                            <div class="player-dot red" style="top: 59%; left: 50%;">D3</div>
+                        </div>
+
+                        <div class="task-card">
+                            <h3>Setze die passenden Wörter ein</h3>
+                            <p class="cloze-line">
+                                Bei der Mann-Deckung ist jedem Verteidiger ein bestimmter
+                                <button class="blank" type="button" data-answer="Angreifer">_____</button>
+                                zugeordnet. Der Verteidiger bleibt seitlich beweglich, hält angemessenen
+                                <button class="blank" type="button" data-answer="Abstand">_____</button>
+                                und vermeidet Fouls.
+                            </p>
+                            <p class="word-bank-title">Wortbank:</p>
+                            <div class="word-bank">
+                                <button class="word-chip" type="button" data-word="Angreifer">Angreifer</button>
+                                <button class="word-chip" type="button" data-word="Abstand">Abstand</button>
+                                <button class="word-chip" type="button" data-word="Korb">Korb</button>
+                                <button class="word-chip" type="button" data-word="Ballbesitz">Ballbesitz</button>
+                            </div>
+                            <div class="task-actions">
+                                <button class="task-btn check-btn" type="button">Antwort prüfen</button>
+                                <button class="task-btn reset-btn" type="button">Lücken leeren</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. Close-out -->
+                <section class="slide" data-category="Defense">
+                    <div class="slide-header">
+                        <span class="category-badge defense">Defense</span>
+                        <h2>5. Close-out</h2>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Kurz erklärt</h3>
+                        <p>
+                            Wenn der Gegner zum Wurf oder Lay-up ansetzt, geht es in der Defense darum, den Abschluss so gut wie möglich zu erschweren. Laufe kontrolliert heran, strecke einen Arm nach oben und verhindere die Punkte ohne Foul. Dein Ziel ist Druck auf den Werfer mit möglichst wenig Körperkontakt.
+                        </p>
+                    </div>
+
+                    <div class="activity-grid">
+                        <div class="visual-container" aria-label="Verteidiger läuft kontrolliert zum Werfer">
+                            <div class="player-dot blue" style="top: 25%; left: 28%;">1</div>
+                            <div class="player-dot red" style="top: 63%; left: 55%;">D1</div>
+                            <div class="movement-arrow" style="top: 60%; left: 53%; width: 42%; transform: rotate(-135deg);"></div>
+                        </div>
+
+                        <div class="task-card">
+                            <h3>Setze die passenden Wörter ein</h3>
+                            <p class="cloze-line">
+                                Beim Close-out läuft der Verteidiger
+                                <button class="blank" type="button" data-answer="kontrolliert">_____</button>
+                                zum Werfer und streckt einen Arm nach oben. Er erzeugt Druck, sollte dabei aber möglichst wenig
+                                <button class="blank" type="button" data-answer="Körperkontakt">_____</button>
+                                verursachen.
+                            </p>
+                            <p class="word-bank-title">Wortbank:</p>
+                            <div class="word-bank">
+                                <button class="word-chip" type="button" data-word="kontrolliert">kontrolliert</button>
+                                <button class="word-chip" type="button" data-word="Körperkontakt">Körperkontakt</button>
+                                <button class="word-chip" type="button" data-word="rückwärts">rückwärts</button>
+                                <button class="word-chip" type="button" data-word="Ballbesitz">Ballbesitz</button>
+                            </div>
+                            <div class="task-actions">
+                                <button class="task-btn check-btn" type="button">Antwort prüfen</button>
+                                <button class="task-btn reset-btn" type="button">Lücken leeren</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. Box-out -->
+                <section class="slide" data-category="Defense">
+                    <div class="slide-header">
+                        <span class="category-badge defense">Defense</span>
+                        <h2>6. Box-out</h2>
+                    </div>
+
+                    <div class="theory-card">
+                        <h3>Kurz erklärt</h3>
+                        <p>
+                            Verfehlt der Gegner den Korb, stellst du dich mit regelkonformem Körpereinsatz zwischen ihn und den Ball. Dränge ihn wie eine Mauer vom Korb weg, halte deine Position und fange den Ball anschließend sicher mit beiden Händen. Herzlichen Glückwunsch: Dein erster Rebound mithilfe eines erfolgreichen Box-outs ist geschafft!
+                        </p>
+                    </div>
+
+                    <div class="activity-grid">
+                        <div class="visual-container" aria-label="Verteidiger positioniert sich zwischen Gegner und Korb">
+                            <div class="player-dot blue" style="top: 63%; left: 50%;">1</div>
+                            <div class="player-dot red" style="top: 72%; left: 50%;">D1</div>
+                            <div class="space-zone" style="top: 52%; left: 37%; width: 26%; height: 19%;"></div>
+                        </div>
+
+                        <div class="task-card">
+                            <h3>Setze die passenden Wörter ein</h3>
+                            <p class="cloze-line">
+                                Beim Box-out stellt sich der Verteidiger zwischen den Gegner und den
+                                <button class="blank" type="button" data-answer="Ball">_____</button>.
+                                Er hält seine Position und sichert den anschließenden
+                                <button class="blank" type="button" data-answer="Rebound">_____</button>
+                                möglichst mit beiden Händen.
+                            </p>
+                            <p class="word-bank-title">Wortbank:</p>
+                            <div class="word-bank">
+                                <button class="word-chip" type="button" data-word="Ball">Ball</button>
+                                <button class="word-chip" type="button" data-word="Rebound">Rebound</button>
+                                <button class="word-chip" type="button" data-word="Passweg">Passweg</button>
+                                <button class="word-chip" type="button" data-word="Freiwurf">Freiwurf</button>
+                            </div>
+                            <div class="task-actions">
+                                <button class="task-btn check-btn" type="button">Antwort prüfen</button>
+                                <button class="task-btn reset-btn" type="button">Lücken leeren</button>
+                            </div>
+                            <div class="feedback" aria-live="polite"></div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="slider-nav">
+            <button class="nav-btn-circle" id="prevBtn" type="button" disabled aria-label="Vorherige Aufgabe">❮</button>
+            <span class="slide-counter" id="slideCounter">Aufgabe 1 von 6</span>
+            <button class="nav-btn-circle" id="nextBtn" type="button" disabled aria-label="Nächste Aufgabe">❯</button>
+        </div>
+
+        <div class="completion-box" id="completionBox">
+            Stark! Du hast alle sechs Taktiken im 3vs3 bearbeitet und kannst jetzt mit dem nächsten Lernbereich weitermachen.
+        </div>
+
         <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
     </div>
+
+    <script>
+        const slides = document.getElementById('slides');
+        const slideElements = Array.from(document.querySelectorAll('.slide'));
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const sectionText = document.getElementById('sectionText');
+        const slideCounter = document.getElementById('slideCounter');
+        const completionBox = document.getElementById('completionBox');
+
+        let currentIndex = 0;
+        const solvedSlides = new Set();
+
+        function currentSlide() {
+            return slideElements[currentIndex];
+        }
+
+        function updateInterface() {
+            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = !solvedSlides.has(currentIndex) || currentIndex === slideElements.length - 1;
+
+            slideCounter.textContent = `Aufgabe ${currentIndex + 1} von ${slideElements.length}`;
+            sectionText.textContent = currentSlide().dataset.category;
+
+            const solvedCount = solvedSlides.size;
+            progressText.textContent = `${solvedCount} von ${slideElements.length} Aufgaben gelöst`;
+            progressBar.style.width = `${(solvedCount / slideElements.length) * 100}%`;
+
+            completionBox.classList.toggle('show', solvedCount === slideElements.length);
+        }
+
+        function findChip(slide, word) {
+            return Array.from(slide.querySelectorAll('.word-chip'))
+                .find(chip => chip.dataset.word === word && chip.disabled);
+        }
+
+        slideElements.forEach((slide, slideIndex) => {
+            const blanks = Array.from(slide.querySelectorAll('.blank'));
+            const chips = Array.from(slide.querySelectorAll('.word-chip'));
+            const checkBtn = slide.querySelector('.check-btn');
+            const resetBtn = slide.querySelector('.reset-btn');
+            const feedback = slide.querySelector('.feedback');
+
+            chips.forEach(chip => {
+                chip.addEventListener('click', () => {
+                    const emptyBlank = blanks.find(blank => !blank.dataset.value);
+                    if (!emptyBlank) {
+                        feedback.className = 'feedback error';
+                        feedback.textContent = 'Alle Lücken sind bereits gefüllt. Klicke auf eine Lücke, um ein Wort zu entfernen.';
+                        return;
+                    }
+
+                    emptyBlank.dataset.value = chip.dataset.word;
+                    emptyBlank.textContent = chip.dataset.word;
+                    emptyBlank.classList.add('filled');
+                    emptyBlank.classList.remove('correct', 'incorrect');
+                    chip.disabled = true;
+                    feedback.className = 'feedback';
+                    feedback.textContent = '';
+                });
+            });
+
+            blanks.forEach(blank => {
+                blank.addEventListener('click', () => {
+                    const word = blank.dataset.value;
+                    if (!word) return;
+
+                    const chip = findChip(slide, word);
+                    if (chip) chip.disabled = false;
+
+                    blank.dataset.value = '';
+                    blank.textContent = '_____';
+                    blank.classList.remove('filled', 'correct', 'incorrect');
+                    feedback.className = 'feedback';
+                    feedback.textContent = '';
+                });
+            });
+
+            checkBtn.addEventListener('click', () => {
+                const allFilled = blanks.every(blank => blank.dataset.value);
+
+                if (!allFilled) {
+                    feedback.className = 'feedback error';
+                    feedback.textContent = 'Fülle zuerst alle Lücken aus.';
+                    return;
+                }
+
+                let allCorrect = true;
+                blanks.forEach(blank => {
+                    const isCorrect = blank.dataset.value === blank.dataset.answer;
+                    blank.classList.toggle('correct', isCorrect);
+                    blank.classList.toggle('incorrect', !isCorrect);
+                    if (!isCorrect) allCorrect = false;
+                });
+
+                if (allCorrect) {
+                    solvedSlides.add(slideIndex);
+                    feedback.className = 'feedback success';
+                    feedback.textContent = slideIndex === slideElements.length - 1
+                        ? 'Richtig! Du hast damit alle Taktik-Aufgaben im 3vs3 gelöst.'
+                        : 'Richtig! Die Kernaussage der Taktik wurde korrekt ergänzt. Du kannst weitergehen.';
+                } else {
+                    feedback.className = 'feedback error';
+                    feedback.textContent = 'Noch nicht ganz richtig. Entferne die rot markierten Wörter und versuche es erneut.';
+                }
+
+                updateInterface();
+            });
+
+            resetBtn.addEventListener('click', () => {
+                blanks.forEach(blank => {
+                    blank.dataset.value = '';
+                    blank.textContent = '_____';
+                    blank.classList.remove('filled', 'correct', 'incorrect');
+                });
+
+                chips.forEach(chip => {
+                    chip.disabled = false;
+                });
+
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+
+                if (!solvedSlides.has(slideIndex)) {
+                    updateInterface();
+                }
+            });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentIndex < slideElements.length - 1 && solvedSlides.has(currentIndex)) {
+                currentIndex++;
+                updateInterface();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateInterface();
+            }
+        });
+
+        updateInterface();
+    </script>
 </body>
 </html>
