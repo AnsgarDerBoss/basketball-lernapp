@@ -511,13 +511,275 @@
             .step-bank { grid-template-columns: 1fr; }
             .sequence-board { grid-template-columns: 1fr; }
         }
-    </style>
+    
+
+        /* ========================================================
+           KREATIVES TAKTIKFELD – ersetzt die vorgegebenen Bilder
+           ======================================================== */
+        body > .container {
+            width: min(97vw, 1540px);
+            max-width: 1540px !important;
+        }
+
+        .chapter-header,
+        .progress-wrap,
+        .slider-wrapper,
+        .completion-box {
+            max-width: 1460px;
+        }
+
+        .slide {
+            padding: 2.6rem;
+        }
+
+        .activity-grid {
+            grid-template-columns: minmax(610px, 1.14fr) minmax(520px, 0.96fr);
+            gap: 1.5rem;
+        }
+
+        .visual-container.tactics-editor {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 1rem;
+            background: #25221f;
+            border: 2px solid #625b54;
+            border-radius: 20px;
+            overflow: visible;
+            align-self: start;
+        }
+
+        .board-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .board-toolbar-text {
+            display: flex;
+            flex-direction: column;
+            gap: 0.18rem;
+            color: var(--text);
+        }
+
+        .board-toolbar-text strong {
+            color: var(--orange-light);
+            font-size: 1.05rem;
+        }
+
+        .board-toolbar-text span {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .board-reset-btn {
+            flex: 0 0 auto;
+            border: 1px solid var(--orange);
+            border-radius: 10px;
+            background: transparent;
+            color: var(--orange-light);
+            padding: 0.58rem 0.75rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .board-reset-btn:hover {
+            color: #171412;
+            background: var(--orange-light);
+        }
+
+        .tactics-board-stage {
+            width: 100%;
+            max-width: 610px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 4px solid #171717;
+            background: #f4d49a;
+        }
+
+        .creative-court {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 10 / 16;
+            touch-action: none;
+            user-select: none;
+            background: #f4d49a;
+        }
+
+        .court-floor { fill: #efcc8c; }
+        .court-border,
+        .court-line,
+        .court-arc {
+            fill: none;
+            stroke: #3f352b;
+            stroke-width: 1.15;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .court-key {
+            fill: rgba(255, 255, 255, 0.18);
+            stroke: #3f352b;
+            stroke-width: 1.15;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .court-label {
+            fill: rgba(63, 53, 43, 0.62);
+            font-size: 3.2px;
+            font-family: Arial, sans-serif;
+            font-weight: 800;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+
+        .board-piece,
+        .route-line,
+        .route-handle {
+            cursor: grab;
+        }
+
+        .board-piece:active,
+        .route-line:active,
+        .route-handle:active {
+            cursor: grabbing;
+        }
+
+        .board-piece circle.player-main {
+            stroke: #ffffff;
+            stroke-width: 1.25;
+            filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+        }
+
+        .board-piece.offense circle.player-main { fill: #0647d8; }
+        .board-piece.defense circle.player-main { fill: #dc2626; }
+
+        .board-piece text {
+            fill: #ffffff;
+            font-size: 4px;
+            font-family: Arial, sans-serif;
+            font-weight: 900;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+        }
+
+        .board-ball .ball-main {
+            fill: #f58220;
+            stroke: #7c2d12;
+            stroke-width: 1;
+            filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+        }
+
+        .board-ball path {
+            fill: none;
+            stroke: #7c2d12;
+            stroke-width: 0.75;
+            pointer-events: none;
+        }
+
+        .route-line {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .route.move .route-line {
+            stroke: #f97316;
+            stroke-width: 4;
+        }
+
+        .route.pass .route-line {
+            stroke: #2563eb;
+            stroke-width: 3.5;
+            stroke-dasharray: 8 6;
+        }
+
+        .route-handle {
+            fill: #ffffff;
+            stroke-width: 1.5;
+            vector-effect: non-scaling-stroke;
+        }
+
+        .route.move .route-handle { stroke: #f97316; }
+        .route.pass .route-handle { stroke: #2563eb; }
+
+        .route-label-bg {
+            fill: rgba(32, 30, 27, 0.9);
+            stroke: #ffffff;
+            stroke-width: 0.45;
+            pointer-events: none;
+        }
+
+        .route-label {
+            fill: #ffffff;
+            font-size: 2.9px;
+            font-family: Arial, sans-serif;
+            font-weight: 900;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+        }
+
+        .board-help {
+            margin-top: 0.75rem;
+            padding: 0.7rem 0.8rem;
+            border-radius: 10px;
+            color: #f5e7cf;
+            background: rgba(255, 140, 0, 0.09);
+            border: 1px solid rgba(255, 170, 51, 0.45);
+            font-size: 0.86rem;
+            line-height: 1.45;
+        }
+
+        .creative-board-legend {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.5rem 0.75rem;
+            margin-top: 0.75rem;
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .creative-board-legend span {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .legend-ball {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #f58220;
+            border: 2px solid #7c2d12;
+            flex: 0 0 auto;
+        }
+
+        @media (max-width: 1180px) {
+            .activity-grid { grid-template-columns: 1fr; }
+            .visual-container.tactics-editor { max-width: 650px; }
+        }
+
+        @media (max-width: 640px) {
+            .slide { padding: 1rem; }
+            .board-toolbar { align-items: flex-start; flex-direction: column; }
+            .board-reset-btn { width: 100%; }
+            .creative-board-legend { grid-template-columns: 1fr; }
+        }
+</style>
 </head>
 <body>
 <div class="container">
 <div class="chapter-header">
 <h1>🧠 Taktik im 5vs5</h1>
-<p>Baue zu jeder Taktik den richtigen Spielzug zusammen. Lies die Erklärung, untersuche das Spielfeld von unten nach oben und ordne vier passende Handlungskarten. Eine Karte ist jeweils eine taktische Falle und gehört nicht in dein Playbook.</p>
+<p>Lies die Erklärung und entwirf auf dem freien Taktikfeld selbst eine passende Spielsituation. Du kannst fünf Angreifer, fünf Verteidiger, fünf Laufwege, fünf Passwege und den Ball frei platzieren. Anschließend ordnest du die vier richtigen Handlungsschritte und schließt die taktische Falle aus.</p>
 </div>
 <div class="progress-wrap">
 <div class="progress-top">
@@ -541,15 +803,13 @@
 <p>Erkenne nach einem Ballgewinn sofort, ob dein Team in Überzahl ist. Beim Fast-Break greift ihr mit hohem Tempo an, bevor sich die gegnerische Verteidigung vollständig aufstellen kann. Besetzt die Breite des Feldes, lauft freie Bahnen an und bringt den Ball mit schnellen, sicheren Pässen nach vorn.</p>
 </div>
 <div class="activity-grid">
-<div aria-label="Fast-Break mit drei Angreifern gegen zwei Verteidiger" class="visual-container"><svg aria-label="Fast-Break: drei Angreifer laufen von unten nach oben gegen zwei Verteidiger" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="fb-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="fb-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(50 148)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(24 136)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player offense" transform="translate(76 136)"><circle r="5.6"></circle><text x="0" y="1.8">3</text></g><g class="svg-player defense" transform="translate(42 72)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(59 62)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><path class="svg-move" d="M50 139 L50 43" marker-end="url(#fb-move)"></path><path class="svg-move" d="M24 127 Q24 82 31 43" marker-end="url(#fb-move)"></path><path class="svg-move" d="M76 127 Q76 82 69 43" marker-end="url(#fb-move)"></path><path class="svg-pass" d="M50 137 Q62 112 72 93" marker-end="url(#fb-pass)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 1. Der Fast-Break" class="visual-container tactics-editor" data-board-number="1"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card">
 <h3>Playbook-Builder</h3>
 <p class="task-intro">Wähle die vier richtigen Schritte in der passenden Reihenfolge.</p>
@@ -572,15 +832,13 @@
 <div class="slide-header"><span class="category-badge offense">Offense</span><h2>2. Pick and Roll</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Beim Pick and Roll stellt ein Mitspieler einen festen, regelkonformen Block am Verteidiger des Ballhandlers. Der Ballhandler läuft eng am Block vorbei und nutzt den entstandenen Raum. Anschließend rollt der Blocksteller zum Korb. Je nach Reaktion der Defense entsteht ein Drive, ein Wurf oder ein Pass zum abrollenden Spieler.</p></div>
 <div class="activity-grid">
-<div aria-label="Pick and Roll mit Ballhandler und Blocksteller" class="visual-container"><svg aria-label="Pick and Roll: Block, Nutzung des Blocks und Abrollen zum oberen Korb" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="pnr-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="pnr-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(69 122)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(54 111)"><circle r="5.6"></circle><text x="0" y="1.8">5</text></g><g class="svg-player defense" transform="translate(63 119)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(47 101)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><path class="svg-move" d="M68 116 Q61 102 50 96 Q42 88 41 72" marker-end="url(#pnr-move)"></path><path class="svg-move" d="M54 105 Q54 76 50 43" marker-end="url(#pnr-move)"></path><path class="svg-pass" d="M44 76 Q49 63 51 48" marker-end="url(#pnr-pass)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 2. Pick and Roll" class="visual-container tactics-editor" data-board-number="2"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Baue die Pick-and-Roll-Abfolge auf.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="rollen" type="button">Der Blocksteller rollt anschließend zum Korb</button>
 <button class="step-card" data-id="block" type="button">Der Mitspieler stellt einen festen, regelkonformen Block</button>
@@ -595,15 +853,13 @@
 <div class="slide-header"><span class="category-badge offense">Offense</span><h2>3. Give and Go</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Beim Give and Go passt du den Ball zu einem Mitspieler und bewegst dich sofort weiter. Du schneidest nach dem Pass entschlossen zum Korb, hältst Blickkontakt und erhältst den Ball im besten Fall direkt zurück. Entscheidend sind ein schneller Pass, gutes Timing und ein Laufweg, der die Verteidigung überrascht.</p></div>
 <div class="activity-grid">
-<div aria-label="Give and Go mit Pass und anschließendem Cut" class="visual-container"><svg aria-label="Give and Go: Pass, Cut zum oberen Korb und Rückpass" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="gng-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="gng-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(72 130)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(38 94)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player defense" transform="translate(64 124)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><path class="svg-pass" d="M68 126 L42 98" marker-end="url(#gng-pass)"></path><path class="svg-move" d="M70 123 Q60 91 51 47" marker-end="url(#gng-move)"></path><path class="svg-pass" d="M41 91 Q47 70 51 52" marker-end="url(#gng-pass)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 3. Give and Go" class="visual-container tactics-editor" data-board-number="3"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne den Pass-und-Lauf-Spielzug.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="cut" type="button">Nach dem Pass sofort Richtung Korb schneiden</button>
 <button class="step-card" data-id="dribbeln" type="button">Nach dem Pass stehen bleiben und zurückfordern</button>
@@ -618,15 +874,13 @@
 <div class="slide-header"><span class="category-badge offense">Offense</span><h2>4. Bewegung</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Motion bedeutet, dass die Spieler im Angriff nicht dauerhaft stehen bleiben. Beobachte den Ball, freie Räume und die Positionen der Verteidiger. Schneide zum Korb, besetze frei gewordene Bereiche und bewege dich nach jedem Pass weiter. So bleibt die Defense beschäftigt und dein Team wird schwerer auszurechnen.</p></div>
 <div class="activity-grid">
-<div aria-label="Mehrere Spieler wechseln ihre Positionen" class="visual-container"><svg aria-label="Motion-Offense: Spieler wechseln freie Räume auf dem vertikal ausgerichteten Feld" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="mot-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="mot-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(50 145)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(23 112)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player offense" transform="translate(77 112)"><circle r="5.6"></circle><text x="0" y="1.8">3</text></g><g class="svg-player offense" transform="translate(25 62)"><circle r="5.6"></circle><text x="0" y="1.8">4</text></g><g class="svg-player offense" transform="translate(75 62)"><circle r="5.6"></circle><text x="0" y="1.8">5</text></g><path class="svg-move" d="M23 104 Q36 88 45 79" marker-end="url(#mot-move)"></path><path class="svg-move" d="M77 104 Q64 88 55 79" marker-end="url(#mot-move)"></path><path class="svg-move" d="M25 55 Q37 43 48 40" marker-end="url(#mot-move)"></path><path class="svg-move" d="M75 55 Q63 43 52 40" marker-end="url(#mot-move)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 4. Bewegung" class="visual-container tactics-editor" data-board-number="4"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Baue eine sinnvolle Motion-Abfolge auf.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="weiter" type="button">Nach dem Pass sofort eine neue Position suchen</button>
 <button class="step-card" data-id="beobachten" type="button">Freie Räume, Mitspieler und Verteidiger beobachten</button>
@@ -641,15 +895,13 @@
 <div class="slide-header"><span class="category-badge offense">Offense</span><h2>5. Drive</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Bei einem Drive greifst du mit kontrolliertem Tempo eine Lücke in der Verteidigung an. Schütze den Ball mit deinem Körper und beobachte die Hilfeverteidigung. Bleibt der Weg frei, schließt du am Korb ab. Rückt ein Verteidiger zur Hilfe ein, spielst du den Ball rechtzeitig zu einem freien Mitspieler.</p></div>
 <div class="activity-grid">
-<div aria-label="Ballhandler greift eine Lücke in der Verteidigung an" class="visual-container"><svg aria-label="Drive: Ballhandler greift eine Lücke an und kann zum freien Mitspieler passen" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="drv-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="drv-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(68 137)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(23 55)"><circle r="5.6"></circle><text x="0" y="1.8">3</text></g><g class="svg-player defense" transform="translate(57 102)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(45 73)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><path class="svg-move" d="M66 130 Q60 105 53 82 Q51 64 50 45" marker-end="url(#drv-move)"></path><path class="svg-pass" d="M55 84 Q37 69 26 57" marker-end="url(#drv-pass)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 5. Drive" class="visual-container tactics-editor" data-board-number="5"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die Entscheidungen eines kontrollierten Drives.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="entscheidung" type="button">Rechtzeitig zwischen Wurf und Pass entscheiden</button>
 <button class="step-card" data-id="tempo" type="button">Die erkannte Lücke mit entschlossenem Tempo angreifen</button>
@@ -664,15 +916,13 @@
 <div class="slide-header"><span class="category-badge teamplay">Teamplay</span><h2>6. Kommunikation</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Klare Kommunikation verbindet Angriff und Verteidigung. Kurze, deutliche Ausrufe wie „Hilfe!“, „Block links!“, „Er steht frei!“ oder „Wirf!“ geben deinem Team wichtige Informationen. Sprecht frühzeitig und verständlich, damit alle Spieler reagieren, ihre Aufgaben abstimmen und gemeinsam bessere Entscheidungen treffen können.</p></div>
 <div class="activity-grid">
-<div aria-label="Team kommuniziert bei einem Block" class="visual-container"><svg aria-label="Kommunikation: Verteidiger warnen sich vor einem Block und fordern Hilfe" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="com-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="com-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(69 122)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(54 108)"><circle r="5.6"></circle><text x="0" y="1.8">5</text></g><g class="svg-player defense" transform="translate(63 119)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(45 92)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><rect class="speech" height="14" rx="5" width="38" x="9" y="44"></rect><text class="speech-text" x="28" y="53">BLOCK LINKS!</text><rect class="speech" height="14" rx="5" width="35" x="53" y="67"></rect><text class="speech-text" x="70.5" y="76">HILFE!</text><path class="svg-move" d="M45 87 Q52 91 57 100" marker-end="url(#com-move)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 6. Kommunikation" class="visual-container tactics-editor" data-board-number="6"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne eine wirksame Kommunikationskette.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="konkret" type="button">Eine konkrete Information geben: „Block von links!“</button>
 <button class="step-card" data-id="sehen" type="button">Die entstehende Spielsituation früh erkennen</button>
@@ -687,15 +937,13 @@
 <div class="slide-header"><span class="category-badge defense">Defense</span><h2>7. Hilfe</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Wird ein Verteidiger beim Drive ausgespielt, unterstützt ihn ein Mitspieler durch Help-Defense. Der helfende Verteidiger verlässt kurz seinen Gegenspieler, schließt den Weg zum Korb und erschwert den Abschluss. Gleichzeitig müssen die übrigen Verteidiger rotieren, freie Angreifer übernehmen und nach der Aktion wieder geordnet zurückkehren.</p></div>
 <div class="activity-grid">
-<div aria-label="Help-Defense stoppt einen Drive" class="visual-container"><svg aria-label="Help-Defense: Ein Verteidiger stoppt den Drive, während das Team rotiert" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="help-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="help-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(68 132)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player defense" transform="translate(74 124)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(31 76)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><g class="svg-player defense" transform="translate(25 52)"><circle r="5.6"></circle><text x="0" y="1.8">D3</text></g><path class="svg-move" d="M66 125 Q59 103 53 83" marker-end="url(#help-move)"></path><path class="svg-move" d="M34 76 Q44 78 52 84" marker-end="url(#help-move)"></path><path class="svg-move" d="M27 54 Q38 60 45 68" marker-end="url(#help-move)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 7. Hilfe" class="visual-container tactics-editor" data-board-number="7"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die Help-Defense vom Problem bis zur Rückkehr.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="stoppen" type="button">Den Drive gemeinsam stoppen oder den Abschluss erschweren</button>
 <button class="step-card" data-id="helfen" type="button">Ein Mitspieler rückt kontrolliert in den Fahrweg</button>
@@ -710,15 +958,13 @@
 <div class="slide-header"><span class="category-badge defense">Defense</span><h2>8. Zonenverteidigung</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Bei der Zonenverteidigung deckt jeder Verteidiger einen bestimmten Raum statt dauerhaft nur einen Gegenspieler. Das Team verschiebt sich gemeinsam zur Ballseite, übernimmt eindringende Angreifer und sichert gefährliche Bereiche. Entscheidend sind Absprachen, geschlossene Laufwege und schnelles Zurückverschieben nach Pässen auf die andere Seite.</p></div>
 <div class="activity-grid">
-<div aria-label="Fünf Verteidiger verteilen sich in Zonen" class="visual-container"><svg aria-label="Zonenverteidigung: fünf Verteidiger verschieben sich gemeinsam zur Ballseite" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="zone-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="zone-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<path class="svg-zone" d="M17 45 Q50 25 83 45 L83 105 Q50 120 17 105 Z"></path><g class="svg-player defense" transform="translate(35 58)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(65 58)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><g class="svg-player defense" transform="translate(25 91)"><circle r="5.6"></circle><text x="0" y="1.8">D3</text></g><g class="svg-player defense" transform="translate(75 91)"><circle r="5.6"></circle><text x="0" y="1.8">D4</text></g><g class="svg-player defense" transform="translate(50 101)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><g class="svg-player offense ball-handler" transform="translate(83 133)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><path class="svg-move" d="M35 58 Q50 66 63 72" marker-end="url(#zone-move)"></path><path class="svg-move" d="M50 101 Q63 105 72 112" marker-end="url(#zone-move)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 8. Zonenverteidigung" class="visual-container tactics-editor" data-board-number="8"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die gemeinsame Bewegung einer Zone.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="verschieben" type="button">Alle Verteidiger verschieben sich gemeinsam zur Ballseite</button>
 <button class="step-card" data-id="bereich" type="button">Jeder Verteidiger hält zunächst seinen Zuständigkeitsbereich</button>
@@ -733,15 +979,13 @@
 <div class="slide-header"><span class="category-badge defense">Defense</span><h2>9. Steal</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Ein Steal entsteht, wenn du dem Gegner den Ball kontrolliert und ohne Foul abnimmst. Beobachte Ball, Passwege und ungenaue Zuspiele. Greife nur im passenden Moment an, denn ein überhasteter Versuch öffnet den Weg zum Korb oder führt zu einem Foul. Nach dem Ballgewinn schaltest du sofort auf Angriff um.</p></div>
 <div class="activity-grid">
-<div aria-label="Verteidiger liest einen Pass und fängt ihn ab" class="visual-container"><svg aria-label="Steal: Verteidiger liest den Passweg und fängt den Ball kontrolliert ab" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="steal-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="steal-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense ball-handler" transform="translate(78 133)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(24 63)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player defense" transform="translate(51 91)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><path class="svg-pass" d="M74 128 Q51 95 28 68" marker-end="url(#steal-pass)"></path><path class="svg-move" d="M52 89 Q43 80 35 73" marker-end="url(#steal-move)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 9. Steal" class="visual-container tactics-editor" data-board-number="9"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne einen kontrollierten Steal-Versuch.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="moment" type="button">Im richtigen Moment kontrolliert in den Passweg gehen</button>
 <button class="step-card" data-id="beobachten" type="button">Ball, Gegner und Passwege aufmerksam beobachten</button>
@@ -756,15 +1000,13 @@
 <div class="slide-header"><span class="category-badge teamplay">Teamplay</span><h2>10. Hustle</h2></div>
 <div class="theory-card"><h3>Kurz erklärt</h3><p>Hustle bedeutet, in jeder Situation aufmerksam und mit vollem, aber fairem Einsatz zu spielen. Sprint zurück, kämpfe um freie Bälle, sichere Rebounds und unterstütze deine Mitspieler. Entscheidend ist nicht unkontrollierte Härte, sondern die Bereitschaft, konsequent nachzusetzen und für jeden Ballbesitz des Teams zu arbeiten.</p></div>
 <div class="activity-grid">
-<div aria-label="Zwei Spieler kämpfen kontrolliert um einen freien Ball" class="visual-container"><svg aria-label="Hustle: zwei Spieler sprinten fair zu einem freien Ball" class="court-diagram" role="img" viewbox="0 0 100 180">
-<defs>
-<marker id="hustle-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
-<marker id="hustle-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
-</defs>
-<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
-<g class="svg-player offense" transform="translate(25 115)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player defense" transform="translate(75 115)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><g class="loose-ball" transform="translate(50 91)"><circle r="4.8"></circle><path d="M-3 -3 L3 3 M3 -3 L-3 3"></path></g><path class="svg-move" d="M29 111 Q39 101 46 94" marker-end="url(#hustle-move)"></path><path class="svg-move" d="M71 111 Q61 101 54 94" marker-end="url(#hustle-move)"></path>
-</svg>
-<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div aria-label="Kreatives Taktikfeld für 10. Hustle" class="visual-container tactics-editor" data-board-number="10"><div class="board-toolbar"><div class="board-toolbar-text"><strong>Dein kreatives Taktikfeld</strong><span>5 Angreifer · 5 Verteidiger · 5 Laufwege · 5 Passwege</span></div><button class="board-reset-btn" type="button">Feld zurücksetzen</button></div><div class="tactics-board-stage"></div><div class="board-help">Ziehe Spieler und Ball frei über das Feld. Verschiebe einen Pfeil an seiner Linie. Ziehe die runden Endpunkte, um Richtung und Länge anzupassen.</div><div class="creative-board-legend">
+<span><i class="legend-dot offense"></i>Angreifer 1–5</span>
+<span><i class="legend-dot defense"></i>Verteidiger D1–D5</span>
+<span><i class="legend-line move"></i>5 Laufwege</span>
+<span><i class="legend-line pass"></i>5 Passwege</span>
+<span><i class="legend-ball"></i>Ball</span>
+</div></div>
 <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne eine faire Hustle-Aktion.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
 <button class="step-card" data-id="kaempfen" type="button">Mit vollem, aber regelkonformem Einsatz zum Ball gehen</button>
 <button class="step-card" data-id="erkennen" type="button">Erkennen, dass der Ball frei oder noch erreichbar ist</button>
@@ -948,5 +1190,330 @@
         updateSlider();
         updateProgress();
     </script>
+
+<script>
+(() => {
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const BOARD_W = 100;
+    const BOARD_H = 160;
+    const MARGIN_X = 7;
+    const MARGIN_Y = 6;
+
+    function svgEl(name, attrs = {}) {
+        const element = document.createElementNS(SVG_NS, name);
+        Object.entries(attrs).forEach(([key, value]) => element.setAttribute(key, value));
+        return element;
+    }
+
+    function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+    }
+
+    function toBoardPoint(svg, event) {
+        const point = svg.createSVGPoint();
+        point.x = event.clientX;
+        point.y = event.clientY;
+        const matrix = svg.getScreenCTM();
+        if (!matrix) return { x: 50, y: 80 };
+        const local = point.matrixTransform(matrix.inverse());
+        return {
+            x: clamp(local.x, MARGIN_X, BOARD_W - MARGIN_X),
+            y: clamp(local.y, MARGIN_Y, BOARD_H - MARGIN_Y)
+        };
+    }
+
+    function createCourt(svg) {
+        svg.appendChild(svgEl('rect', { class: 'court-floor', x: 0, y: 0, width: BOARD_W, height: BOARD_H }));
+        svg.appendChild(svgEl('rect', { class: 'court-border', x: 5, y: 4, width: 90, height: 152, rx: 0.5 }));
+        svg.appendChild(svgEl('line', { class: 'court-line', x1: 5, y1: 80, x2: 95, y2: 80 }));
+        svg.appendChild(svgEl('circle', { class: 'court-line', cx: 50, cy: 80, r: 10 }));
+        svg.appendChild(svgEl('circle', { class: 'court-line', cx: 50, cy: 80, r: 1.2 }));
+
+        // Oberer Korb und Zone
+        svg.appendChild(svgEl('rect', { class: 'court-key', x: 35, y: 4, width: 30, height: 29 }));
+        svg.appendChild(svgEl('circle', { class: 'court-line', cx: 50, cy: 33, r: 8 }));
+        svg.appendChild(svgEl('line', { class: 'court-line', x1: 43, y1: 11, x2: 57, y2: 11 }));
+        svg.appendChild(svgEl('circle', { class: 'court-line', cx: 50, cy: 14.5, r: 2.2 }));
+        svg.appendChild(svgEl('path', { class: 'court-arc', d: 'M14 4 L14 29 Q50 64 86 29 L86 4' }));
+
+        // Unterer Korb und Zone
+        svg.appendChild(svgEl('rect', { class: 'court-key', x: 35, y: 127, width: 30, height: 29 }));
+        svg.appendChild(svgEl('circle', { class: 'court-line', cx: 50, cy: 127, r: 8 }));
+        svg.appendChild(svgEl('line', { class: 'court-line', x1: 43, y1: 149, x2: 57, y2: 149 }));
+        svg.appendChild(svgEl('circle', { class: 'court-line', cx: 50, cy: 145.5, r: 2.2 }));
+        svg.appendChild(svgEl('path', { class: 'court-arc', d: 'M14 156 L14 131 Q50 96 86 131 L86 156' }));
+
+        const topLabel = svgEl('text', { class: 'court-label', x: 50, y: 2.7 });
+        topLabel.textContent = 'KORB A';
+        svg.appendChild(topLabel);
+        const bottomLabel = svgEl('text', { class: 'court-label', x: 50, y: 159 });
+        bottomLabel.textContent = 'KORB B';
+        svg.appendChild(bottomLabel);
+    }
+
+    function createPlayer(type, label, x, y) {
+        const group = svgEl('g', {
+            class: `board-piece ${type}`,
+            transform: `translate(${x} ${y})`,
+            'data-x': x,
+            'data-y': y,
+            role: 'img',
+            'aria-label': `${type === 'offense' ? 'Angreifer' : 'Verteidiger'} ${label}`
+        });
+        group.appendChild(svgEl('circle', { class: 'player-main', r: 5.2 }));
+        const text = svgEl('text', { x: 0, y: 0.3 });
+        text.textContent = label;
+        group.appendChild(text);
+        return group;
+    }
+
+    function createBall(x, y) {
+        const group = svgEl('g', {
+            class: 'board-piece board-ball',
+            transform: `translate(${x} ${y})`,
+            'data-x': x,
+            'data-y': y,
+            role: 'img',
+            'aria-label': 'Basketball'
+        });
+        group.appendChild(svgEl('circle', { class: 'ball-main', r: 3.7 }));
+        group.appendChild(svgEl('path', { d: 'M-3.4 0 H3.4 M0 -3.4 V3.4 M-2.5 -2.5 Q0 0 2.5 2.5 M2.5 -2.5 Q0 0 -2.5 2.5' }));
+        return group;
+    }
+
+    function createRoute(type, index, markerId, x1, y1, x2, y2) {
+        const group = svgEl('g', {
+            class: `route ${type}`,
+            'data-x1': x1,
+            'data-y1': y1,
+            'data-x2': x2,
+            'data-y2': y2,
+            'data-route-index': index,
+            'aria-label': `${type === 'move' ? 'Laufweg' : 'Passweg'} ${index}`
+        });
+
+        const line = svgEl('line', {
+            class: 'route-line',
+            x1, y1, x2, y2,
+            'marker-end': `url(#${markerId})`,
+            'data-drag-part': 'line'
+        });
+        const start = svgEl('circle', {
+            class: 'route-handle', cx: x1, cy: y1, r: 2.25,
+            'data-drag-part': 'start'
+        });
+        const end = svgEl('circle', {
+            class: 'route-handle', cx: x2, cy: y2, r: 2.25,
+            'data-drag-part': 'end'
+        });
+        const labelBg = svgEl('circle', { class: 'route-label-bg', r: 3.1 });
+        const label = svgEl('text', { class: 'route-label' });
+        label.textContent = `${type === 'move' ? 'L' : 'P'}${index}`;
+
+        group.append(line, start, end, labelBg, label);
+        updateRoute(group);
+        return group;
+    }
+
+    function updateRoute(group) {
+        const x1 = Number(group.dataset.x1);
+        const y1 = Number(group.dataset.y1);
+        const x2 = Number(group.dataset.x2);
+        const y2 = Number(group.dataset.y2);
+        const line = group.querySelector('.route-line');
+        const start = group.querySelector('[data-drag-part="start"]');
+        const end = group.querySelector('[data-drag-part="end"]');
+        const labelBg = group.querySelector('.route-label-bg');
+        const label = group.querySelector('.route-label');
+        line.setAttribute('x1', x1);
+        line.setAttribute('y1', y1);
+        line.setAttribute('x2', x2);
+        line.setAttribute('y2', y2);
+        start.setAttribute('cx', x1);
+        start.setAttribute('cy', y1);
+        end.setAttribute('cx', x2);
+        end.setAttribute('cy', y2);
+        const mx = (x1 + x2) / 2;
+        const my = (y1 + y2) / 2;
+        labelBg.setAttribute('cx', mx);
+        labelBg.setAttribute('cy', my);
+        label.setAttribute('x', mx);
+        label.setAttribute('y', my + 0.2);
+    }
+
+    function setPiecePosition(piece, x, y) {
+        piece.dataset.x = x.toFixed(2);
+        piece.dataset.y = y.toFixed(2);
+        piece.setAttribute('transform', `translate(${x.toFixed(2)} ${y.toFixed(2)})`);
+    }
+
+    function setRoutePoint(route, part, point, dragState = null) {
+        if (part === 'start') {
+            route.dataset.x1 = point.x.toFixed(2);
+            route.dataset.y1 = point.y.toFixed(2);
+        } else if (part === 'end') {
+            route.dataset.x2 = point.x.toFixed(2);
+            route.dataset.y2 = point.y.toFixed(2);
+        } else if (part === 'line' && dragState) {
+            const dx = point.x - dragState.startPointer.x;
+            const dy = point.y - dragState.startPointer.y;
+            const points = dragState.initialRoute;
+            const minDx = MARGIN_X - Math.min(points.x1, points.x2);
+            const maxDx = BOARD_W - MARGIN_X - Math.max(points.x1, points.x2);
+            const minDy = MARGIN_Y - Math.min(points.y1, points.y2);
+            const maxDy = BOARD_H - MARGIN_Y - Math.max(points.y1, points.y2);
+            const safeDx = clamp(dx, minDx, maxDx);
+            const safeDy = clamp(dy, minDy, maxDy);
+            route.dataset.x1 = (points.x1 + safeDx).toFixed(2);
+            route.dataset.y1 = (points.y1 + safeDy).toFixed(2);
+            route.dataset.x2 = (points.x2 + safeDx).toFixed(2);
+            route.dataset.y2 = (points.y2 + safeDy).toFixed(2);
+        }
+        updateRoute(route);
+    }
+
+    function createBoard(editor, boardIndex) {
+        const stage = editor.querySelector('.tactics-board-stage');
+        const svg = svgEl('svg', {
+            class: 'creative-court',
+            viewBox: `0 0 ${BOARD_W} ${BOARD_H}`,
+            role: 'application',
+            tabindex: '0',
+            'aria-label': 'Freies Basketball-Taktikfeld. Spieler und Pfeile können verschoben werden.'
+        });
+
+        const defs = svgEl('defs');
+        const moveMarkerId = `creative-move-${boardIndex}`;
+        const passMarkerId = `creative-pass-${boardIndex}`;
+        const moveMarker = svgEl('marker', {
+            id: moveMarkerId, markerWidth: 5, markerHeight: 5, viewBox: '0 0 7 7',
+            refX: 6, refY: 3.5, orient: 'auto', markerUnits: 'userSpaceOnUse'
+        });
+        moveMarker.appendChild(svgEl('path', { d: 'M0,0 L7,3.5 L0,7 Z', fill: '#f97316' }));
+        const passMarker = svgEl('marker', {
+            id: passMarkerId, markerWidth: 5, markerHeight: 5, viewBox: '0 0 7 7',
+            refX: 6, refY: 3.5, orient: 'auto', markerUnits: 'userSpaceOnUse'
+        });
+        passMarker.appendChild(svgEl('path', { d: 'M0,0 L7,3.5 L0,7 Z', fill: '#2563eb' }));
+        defs.append(moveMarker, passMarker);
+        svg.appendChild(defs);
+        createCourt(svg);
+
+        const initial = { pieces: [], routes: [] };
+
+        // 5 Laufwege links und 5 Passwege rechts. Sie liegen zunächst hinter den Spielern.
+        for (let i = 0; i < 5; i++) {
+            const y = 42 + i * 18;
+            const route = createRoute('move', i + 1, moveMarkerId, 8, y + 8, 22, y);
+            svg.appendChild(route);
+            initial.routes.push({ element: route, x1: 8, y1: y + 8, x2: 22, y2: y });
+        }
+        for (let i = 0; i < 5; i++) {
+            const y = 42 + i * 18;
+            const route = createRoute('pass', i + 1, passMarkerId, 92, y + 8, 78, y);
+            svg.appendChild(route);
+            initial.routes.push({ element: route, x1: 92, y1: y + 8, x2: 78, y2: y });
+        }
+
+        // 5 Angreifer unten
+        [18, 34, 50, 66, 82].forEach((x, i) => {
+            const piece = createPlayer('offense', String(i + 1), x, 146);
+            svg.appendChild(piece);
+            initial.pieces.push({ element: piece, x, y: 146 });
+        });
+
+        // 5 Verteidiger oben
+        [18, 34, 50, 66, 82].forEach((x, i) => {
+            const piece = createPlayer('defense', `D${i + 1}`, x, 14);
+            svg.appendChild(piece);
+            initial.pieces.push({ element: piece, x, y: 14 });
+        });
+
+        const ball = createBall(50, 136);
+        svg.appendChild(ball);
+        initial.pieces.push({ element: ball, x: 50, y: 136 });
+
+        stage.appendChild(svg);
+
+        let dragState = null;
+
+        svg.addEventListener('pointerdown', event => {
+            const piece = event.target.closest('.board-piece');
+            const routePart = event.target.closest('[data-drag-part]');
+            if (!piece && !routePart) return;
+            event.preventDefault();
+            svg.setPointerCapture(event.pointerId);
+            const pointer = toBoardPoint(svg, event);
+
+            if (piece) {
+                dragState = {
+                    kind: 'piece',
+                    element: piece,
+                    offsetX: pointer.x - Number(piece.dataset.x),
+                    offsetY: pointer.y - Number(piece.dataset.y)
+                };
+                piece.parentNode.appendChild(piece);
+                return;
+            }
+
+            const route = routePart.closest('.route');
+            const part = routePart.dataset.dragPart;
+            dragState = {
+                kind: 'route',
+                element: route,
+                part,
+                startPointer: pointer,
+                initialRoute: {
+                    x1: Number(route.dataset.x1),
+                    y1: Number(route.dataset.y1),
+                    x2: Number(route.dataset.x2),
+                    y2: Number(route.dataset.y2)
+                }
+            };
+            route.parentNode.appendChild(route);
+        });
+
+        svg.addEventListener('pointermove', event => {
+            if (!dragState) return;
+            event.preventDefault();
+            const point = toBoardPoint(svg, event);
+            if (dragState.kind === 'piece') {
+                setPiecePosition(
+                    dragState.element,
+                    clamp(point.x - dragState.offsetX, MARGIN_X, BOARD_W - MARGIN_X),
+                    clamp(point.y - dragState.offsetY, MARGIN_Y, BOARD_H - MARGIN_Y)
+                );
+            } else {
+                setRoutePoint(dragState.element, dragState.part, point, dragState);
+            }
+        });
+
+        function endDrag(event) {
+            if (!dragState) return;
+            if (svg.hasPointerCapture(event.pointerId)) svg.releasePointerCapture(event.pointerId);
+            if (dragState.kind === 'route') {
+                const firstPiece = svg.querySelector('.board-piece');
+                if (firstPiece) svg.insertBefore(dragState.element, firstPiece);
+            }
+            dragState = null;
+        }
+        svg.addEventListener('pointerup', endDrag);
+        svg.addEventListener('pointercancel', endDrag);
+
+        editor.querySelector('.board-reset-btn').addEventListener('click', () => {
+            initial.pieces.forEach(({ element, x, y }) => setPiecePosition(element, x, y));
+            initial.routes.forEach(({ element, x1, y1, x2, y2 }) => {
+                element.dataset.x1 = x1;
+                element.dataset.y1 = y1;
+                element.dataset.x2 = x2;
+                element.dataset.y2 = y2;
+                updateRoute(element);
+            });
+        });
+    }
+
+    document.querySelectorAll('.tactics-editor').forEach((editor, index) => createBoard(editor, index + 1));
+})();
+</script>
 </body>
 </html>
