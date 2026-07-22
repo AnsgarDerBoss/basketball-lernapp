@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Taktik 5vs5 – Basketball Lernapp</title>
-    <link rel="stylesheet" href="css/style.css">
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Taktik 5vs5 – Playbook-Builder | Basketball Lernapp</title>
+<link href="css/style.css" rel="stylesheet"/>
+<style>
         :root {
             --orange: #ff8c00;
             --orange-light: #ffaa33;
@@ -22,7 +23,7 @@
         * { box-sizing: border-box; }
 
         .chapter-header {
-            max-width: 940px;
+            max-width: 1220px;
             margin: 0 auto 1rem;
             text-align: center;
         }
@@ -36,7 +37,7 @@
         }
 
         .progress-wrap {
-            max-width: 940px;
+            max-width: 1220px;
             margin: 1rem auto 1.25rem;
         }
 
@@ -66,7 +67,7 @@
 
         .slider-wrapper {
             position: relative;
-            max-width: 940px;
+            max-width: 1220px;
             margin: 0 auto;
             overflow: hidden;
         }
@@ -81,7 +82,7 @@
             min-width: 100%;
             background: var(--card);
             border-radius: 24px;
-            padding: 2rem;
+            padding: 2.35rem;
             border: 2px solid var(--orange);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             display: flex;
@@ -156,86 +157,144 @@
 
         .activity-grid {
             display: grid;
-            grid-template-columns: minmax(250px, 0.9fr) minmax(0, 1.45fr);
+            grid-template-columns: minmax(400px, 0.95fr) minmax(560px, 1.25fr);
             gap: 1.25rem;
             align-items: stretch;
         }
 
         .visual-container {
-            position: relative;
             width: 100%;
-            min-height: 330px;
-            background-image: url('assets/GanzesFeld.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 14px;
-            background-color: #fff;
+            max-width: 470px;
+            margin: 0 auto;
+            background: #f8fafc;
+            border-radius: 18px;
             border: 4px solid #333;
             overflow: hidden;
+            align-self: start;
         }
 
-        .player-dot {
-            position: absolute;
-            width: 31px;
-            height: 31px;
-            border-radius: 50%;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .court-diagram {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 5 / 9;
+            background: #ffffff;
+        }
+
+        .court-diagram image {
+            pointer-events: none;
+        }
+
+        .svg-player circle {
+            stroke: #ffffff;
+            stroke-width: 1.4;
+        }
+
+        .svg-player.offense circle { fill: #0041cc; }
+        .svg-player.defense circle { fill: #dc2626; }
+        .svg-player.ball-handler circle {
+            stroke: #f59e0b;
+            stroke-width: 3;
+        }
+
+        .svg-player text {
+            fill: #ffffff;
+            font-size: 4.1px;
+            font-family: Arial, sans-serif;
             font-weight: 800;
-            font-size: 0.78rem;
-            border: 2px solid #fff;
-            transform: translate(-50%, -50%);
-            z-index: 5;
+            text-anchor: middle;
+            pointer-events: none;
         }
 
-        .player-dot.blue { background: #0041cc; }
-        .player-dot.red { background: #dc2626; }
-        .player-dot.ball { box-shadow: 0 0 0 3px #f59e0b; }
-
-        .movement-arrow {
-            position: absolute;
-            height: 5px;
-            background: var(--orange);
-            transform-origin: left center;
-            z-index: 4;
+        .svg-move,
+        .svg-pass {
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
-        .movement-arrow::after {
-            content: '';
-            position: absolute;
-            right: -9px;
-            top: -7px;
-            border: 10px solid transparent;
-            border-left-color: var(--orange);
+        .svg-move {
+            stroke: var(--orange);
+            stroke-width: 2.2;
         }
 
-        .pass-arrow {
-            position: absolute;
+        .svg-pass {
+            stroke: #2563eb;
+            stroke-width: 1.8;
+            stroke-dasharray: 4 3;
+        }
+
+        .svg-zone {
+            fill: rgba(255, 140, 0, 0.12);
+            stroke: var(--orange);
+            stroke-width: 1.2;
+            stroke-dasharray: 4 3;
+        }
+
+        .speech {
+            fill: #ffffff;
+            stroke: var(--orange);
+            stroke-width: 1.1;
+        }
+
+        .speech-text {
+            fill: #1f2937;
+            font-family: Arial, sans-serif;
+            font-size: 4px;
+            font-weight: 800;
+            text-anchor: middle;
+        }
+
+        .loose-ball circle {
+            fill: #f59e0b;
+            stroke: #7c2d12;
+            stroke-width: 1;
+        }
+
+        .loose-ball path {
+            stroke: #7c2d12;
+            stroke-width: 0.8;
+        }
+
+        .diagram-legend {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0.45rem 0.8rem;
+            padding: 0.75rem 0.9rem;
+            color: #292524;
+            background: #f3f4f6;
+            border-top: 2px solid #d6d3d1;
+            font-size: 0.82rem;
+            font-weight: 700;
+        }
+
+        .diagram-legend span {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            box-shadow: 0 0 0 1px #78716c;
+            flex: 0 0 auto;
+        }
+
+        .legend-dot.offense { background: #0041cc; }
+        .legend-dot.defense { background: #dc2626; }
+
+        .legend-line {
+            position: relative;
+            width: 24px;
             height: 0;
-            border-top: 4px dashed #2563eb;
-            transform-origin: left center;
-            z-index: 4;
+            flex: 0 0 auto;
         }
 
-        .pass-arrow::after {
-            content: '';
-            position: absolute;
-            right: -10px;
-            top: -8px;
-            border: 9px solid transparent;
-            border-left-color: #2563eb;
-        }
-
-        .zone-highlight {
-            position: absolute;
-            border: 3px dashed var(--orange);
-            background: rgba(255, 140, 0, 0.14);
-            border-radius: 24px;
-            z-index: 2;
-        }
+        .legend-line.move { border-top: 3px solid var(--orange); }
+        .legend-line.pass { border-top: 3px dashed #2563eb; }
 
         .task-intro {
             color: var(--muted) !important;
@@ -250,11 +309,11 @@
         }
 
         .sequence-slot {
-            min-height: 104px;
+            min-height: 126px;
             border: 2px dashed var(--orange);
             border-radius: 14px;
             background: #211f1c;
-            padding: 0.65rem;
+            padding: 0.85rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -304,7 +363,8 @@
             background: #201e1b;
             color: #fff;
             border-radius: 12px;
-            padding: 0.75rem;
+            padding: 0.9rem;
+            min-height: 74px;
             font-weight: 700;
             line-height: 1.35;
             cursor: pointer;
@@ -427,7 +487,7 @@
 
         .completion-box {
             display: none;
-            max-width: 940px;
+            max-width: 1220px;
             margin: 1.5rem auto 0;
             padding: 1.25rem;
             text-align: center;
@@ -440,10 +500,10 @@
 
         .completion-box.show { display: block; }
 
-        @media (max-width: 800px) {
+        @media (max-width: 1080px) {
             .slide { padding: 1.2rem; }
             .activity-grid { grid-template-columns: 1fr; }
-            .visual-container { min-height: 290px; }
+            .visual-container { max-width: 440px; }
             .sequence-board { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
 
@@ -454,247 +514,279 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="chapter-header">
-            <h1>Taktik im 5vs5</h1>
-            <p>
-                Baue zu jeder Taktik den richtigen Spielzug zusammen. Wähle vier von fünf Handlungskarten und ordne sie in der passenden Reihenfolge an. Eine Karte ist jeweils eine taktische Falle und gehört nicht in dein Playbook.
-            </p>
-        </div>
-
-        <div class="progress-wrap">
-            <div class="progress-top">
-                <span id="progressText">0 von 10 Playbooks gelöst</span>
-                <span id="sectionText">Offense</span>
-            </div>
-            <div class="progress-track" aria-label="Lernfortschritt">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-        </div>
-
-        <div class="slider-wrapper">
-            <div class="slides-container" id="slides">
-
-                <!-- 1. Fast-Break -->
-                <section class="slide" data-category="Offense" data-answer="ballgewinn,breite,pass,abschluss">
-                    <div class="slide-header">
-                        <span class="category-badge offense">Offense</span>
-                        <h2>1. Der Fast-Break</h2>
-                    </div>
-                    <div class="theory-card">
-                        <h3>Kurz erklärt</h3>
-                        <p>Erkenne in einer dynamischen Spielsituation die Überzahl deines Teams und dränge schnell zum gegnerischen Korb. Der Fast-Break ist ein Angriff, bei dem es nach einem Ballgewinn mit hohem Tempo auf die andere Spielfeldseite geht. Nutzt freie Laufwege und schnelle Pässe, bevor sich die Verteidigung vollständig aufstellen kann.</p>
-                    </div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Fast-Break mit drei Angreifern gegen zwei Verteidiger">
-                            <div class="player-dot blue ball" style="top:72%; left:55%;">1</div>
-                            <div class="player-dot blue" style="top:62%; left:73%;">2</div>
-                            <div class="player-dot blue" style="top:62%; left:36%;">3</div>
-                            <div class="player-dot red" style="top:39%; left:47%;">D1</div>
-                            <div class="player-dot red" style="top:34%; left:61%;">D2</div>
-                            <div class="movement-arrow" style="top:68%; left:57%; width:37%; transform:rotate(-78deg);"></div>
-                            <div class="movement-arrow" style="top:59%; left:72%; width:35%; transform:rotate(-112deg);"></div>
-                            <div class="movement-arrow" style="top:59%; left:38%; width:34%; transform:rotate(-62deg);"></div>
-                        </div>
-                        <div class="task-card">
-                            <h3>Playbook-Builder</h3>
-                            <p class="task-intro">Wähle die vier richtigen Schritte in der passenden Reihenfolge.</p>
-                            <div class="sequence-board"></div>
-                            <p class="choice-title">Handlungskarten:</p>
-                            <div class="step-bank">
-                                <button class="step-card" type="button" data-id="abschluss">Vor der aufgestellten Defense abschließen</button>
-                                <button class="step-card" type="button" data-id="ballgewinn">Ballgewinn sichern und sofort umschalten</button>
-                                <button class="step-card" type="button" data-id="abwarten">Warten, bis alle Verteidiger zurück sind</button>
-                                <button class="step-card" type="button" data-id="breite">Das Feld schnell und breit besetzen</button>
-                                <button class="step-card" type="button" data-id="pass">Den Ball mit schnellen Pässen nach vorn bringen</button>
-                            </div>
-                            <div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div>
-                            <div class="feedback" aria-live="polite"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 2. Pick and Roll -->
-                <section class="slide" data-category="Offense" data-answer="block,nutzen,rollen,entscheiden">
-                    <div class="slide-header"><span class="category-badge offense">Offense</span><h2>2. Pick and Roll</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Um deinem Mitspieler Raum für einen Wurf oder einen Laufweg zu verschaffen, stellst du einen festen Block am Verteidiger. Bleib stabil stehen, halte die Arme am Körper und vermeide eine aktive Bewegung in den Gegner. Danach rollst du zum Korb, während dein Mitspieler den freien Raum nutzt.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Pick and Roll mit Ballhandler und Blocksteller">
-                            <div class="player-dot blue ball" style="top:55%; left:62%;">1</div><div class="player-dot blue" style="top:48%; left:52%;">5</div><div class="player-dot red" style="top:55%; left:56%;">D1</div><div class="player-dot red" style="top:46%; left:60%;">D5</div>
-                            <div class="movement-arrow" style="top:54%; left:63%; width:25%; transform:rotate(-170deg);"></div><div class="movement-arrow" style="top:48%; left:51%; width:33%; transform:rotate(-110deg);"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Baue die Pick-and-Roll-Abfolge auf.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="rollen">Der Blocksteller rollt anschließend zum Korb</button>
-                            <button class="step-card" type="button" data-id="block">Der Mitspieler stellt einen festen, regelkonformen Block</button>
-                            <button class="step-card" type="button" data-id="weggehen">Der Blocksteller läuft sofort vom Ball weg</button>
-                            <button class="step-card" type="button" data-id="nutzen">Der Ballhandler läuft eng am Block vorbei</button>
-                            <button class="step-card" type="button" data-id="entscheiden">Der Ballhandler entscheidet zwischen Pass, Drive oder Wurf</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 3. Give and Go -->
-                <section class="slide" data-category="Offense" data-answer="pass,cut,blick,rueckpass">
-                    <div class="slide-header"><span class="category-badge offense">Offense</span><h2>3. Give and Go</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Wenn du den Ball schnell abgibst und dich danach sofort weiterbewegst, um an einer neuen Position eine Chance zu erhalten, nennt man das Give and Go. Du spielst den Pass, schneidest anschließend Richtung Korb und bekommst den Ball im besten Fall direkt zurück. Timing und Blickkontakt sind entscheidend.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Give and Go mit Pass und anschließendem Cut">
-                            <div class="player-dot blue ball" style="top:58%; left:68%;">1</div><div class="player-dot blue" style="top:39%; left:51%;">2</div><div class="player-dot red" style="top:57%; left:62%;">D1</div>
-                            <div class="pass-arrow" style="top:55%; left:65%; width:24%; transform:rotate(-145deg);"></div><div class="movement-arrow" style="top:57%; left:66%; width:43%; transform:rotate(-152deg);"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne den Pass-und-Lauf-Spielzug.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="cut">Nach dem Pass sofort Richtung Korb schneiden</button>
-                            <button class="step-card" type="button" data-id="dribbeln">Nach dem Pass stehen bleiben und zurückfordern</button>
-                            <button class="step-card" type="button" data-id="pass">Den Ball schnell zum Mitspieler passen</button>
-                            <button class="step-card" type="button" data-id="rueckpass">Den direkten Rückpass aufnehmen und abschließen</button>
-                            <button class="step-card" type="button" data-id="blick">Beim Cut Blickkontakt mit dem Passgeber halten</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 4. Bewegung -->
-                <section class="slide" data-category="Offense" data-answer="beobachten,bewegen,pass,weiter">
-                    <div class="slide-header"><span class="category-badge offense">Offense</span><h2>4. Bewegung</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Eine Grundregel im Basketball ist das Prinzip der Motion: Stehe niemals dauerhaft still. Bewege dich in bessere Positionen, erkenne freie Laufwege und wäge mögliche Passwege ab. Sei wachsam und schaffe Raum für mehr Spielkreativität. Durch ständige Bewegung wird die Verteidigung beschäftigt und dein Team bleibt schwerer auszurechnen.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Mehrere Spieler wechseln ihre Positionen">
-                            <div class="player-dot blue ball" style="top:61%; left:64%;">1</div><div class="player-dot blue" style="top:31%; left:34%;">2</div><div class="player-dot blue" style="top:75%; left:29%;">3</div><div class="player-dot blue" style="top:27%; left:73%;">4</div>
-                            <div class="movement-arrow" style="top:31%; left:35%; width:31%; transform:rotate(35deg);"></div><div class="movement-arrow" style="top:73%; left:30%; width:34%; transform:rotate(-27deg);"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Baue eine sinnvolle Motion-Abfolge auf.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="weiter">Nach dem Pass sofort eine neue Position suchen</button>
-                            <button class="step-card" type="button" data-id="beobachten">Freie Räume, Mitspieler und Verteidiger beobachten</button>
-                            <button class="step-card" type="button" data-id="still">Nach jedem Pass an derselben Stelle warten</button>
-                            <button class="step-card" type="button" data-id="bewegen">In einen freien Raum laufen und anspielbar werden</button>
-                            <button class="step-card" type="button" data-id="pass">Den Ball zum besser positionierten Mitspieler passen</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 5. Drive -->
-                <section class="slide" data-category="Offense" data-answer="luecke,tempo,schuetzen,entscheidung">
-                    <div class="slide-header"><span class="category-badge offense">Offense</span><h2>5. Drive</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Drive bedeutet, mit entschlossenem Tempo durch die gegnerische Verteidigung zu dribbeln, um selbst einen Punkt zu erzielen oder Mitspieler freizuspielen. Erkenne Lücken in der Abwehr und greife sie in geeigneten Situationen an. Bleib kontrolliert, schütze den Ball mit deinem Körper und entscheide rechtzeitig zwischen Wurf und Pass.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Ballhandler greift eine Lücke in der Verteidigung an">
-                            <div class="player-dot blue ball" style="top:65%; left:62%;">1</div><div class="player-dot red" style="top:53%; left:51%;">D1</div><div class="player-dot red" style="top:48%; left:36%;">D5</div><div class="movement-arrow" style="top:63%; left:61%; width:45%; transform:rotate(-150deg);"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die Entscheidungen eines kontrollierten Drives.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="entscheidung">Rechtzeitig zwischen Wurf und Pass entscheiden</button>
-                            <button class="step-card" type="button" data-id="tempo">Die erkannte Lücke mit entschlossenem Tempo angreifen</button>
-                            <button class="step-card" type="button" data-id="luecke">Eine offene Lücke in der Verteidigung erkennen</button>
-                            <button class="step-card" type="button" data-id="blind">Ohne Blick auf die Mitspieler zum Korb dribbeln</button>
-                            <button class="step-card" type="button" data-id="schuetzen">Den Ball kontrollieren und mit dem Körper schützen</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 6. Kommunikation -->
-                <section class="slide" data-category="Teamplay" data-answer="sehen,rufen,konkret,reagieren">
-                    <div class="slide-header"><span class="category-badge teamplay">Teamplay</span><h2>6. Kommunikation</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Das A und O im Basketball sind Ausrufe und klare Kommunikation in Verteidigung und Angriff: „Hilfe“, „Er steht frei“, „Achtung, Block von links“ oder Aufforderungen wie „Wirf!“ und „Zieh durch!“ steigern die Teammoral und sorgen für eine abgestimmte, aufmerksame und bewusstere Spielweise.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Team kommuniziert bei einem Block">
-                            <div class="player-dot blue ball" style="top:58%; left:65%;">1</div><div class="player-dot blue" style="top:40%; left:46%;">2</div><div class="player-dot red" style="top:56%; left:58%;">D1</div><div class="player-dot red" style="top:45%; left:51%;">D2</div><div class="zone-highlight" style="top:31%; left:31%; width:43%; height:37%;"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne eine wirksame Kommunikationskette.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="konkret">Eine konkrete Information geben: „Block von links!“</button>
-                            <button class="step-card" type="button" data-id="sehen">Die entstehende Spielsituation früh erkennen</button>
-                            <button class="step-card" type="button" data-id="schweigen">Schweigen, damit der Gegner nichts hört</button>
-                            <button class="step-card" type="button" data-id="reagieren">Als Team sofort auf den Zuruf reagieren</button>
-                            <button class="step-card" type="button" data-id="rufen">Laut und rechtzeitig auf sich aufmerksam machen</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 7. Hilfe -->
-                <section class="slide" data-category="Defense" data-answer="geschlagen,helfen,stoppen,recover">
-                    <div class="slide-header"><span class="category-badge defense">Defense</span><h2>7. Hilfe</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Solltest du den gegnerischen Drive nicht aufhalten können, weil du ausgespielt wurdest, scheue dich nicht, deine Mitspieler um Hilfe zu bitten. Als Help-Defense bezeichnet man die Unterstützung durch andere Verteidiger in einer Spielsituation, in der ein Mitspieler Hilfe benötigt. Gemeinsam erschwert ihr den Abschluss.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Help-Defense stoppt einen Drive">
-                            <div class="player-dot blue ball" style="top:55%; left:54%;">1</div><div class="player-dot red" style="top:59%; left:62%;">D1</div><div class="player-dot red" style="top:43%; left:39%;">D5</div><div class="movement-arrow" style="top:43%; left:39%; width:24%; transform:rotate(38deg);"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die Help-Defense vom Problem bis zur Rückkehr.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="stoppen">Den Drive gemeinsam stoppen oder den Abschluss erschweren</button>
-                            <button class="step-card" type="button" data-id="helfen">Ein Mitspieler rückt kontrolliert in den Fahrweg</button>
-                            <button class="step-card" type="button" data-id="geschlagen">Der direkte Verteidiger wird beim Drive ausgespielt</button>
-                            <button class="step-card" type="button" data-id="alle">Alle fünf Verteidiger laufen gleichzeitig zum Ball</button>
-                            <button class="step-card" type="button" data-id="recover">Danach zum eigenen Gegenspieler zurückkehren</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 8. Zonenverteidigung -->
-                <section class="slide" data-category="Defense" data-answer="bereich,verschieben,uebernehmen,zurueck">
-                    <div class="slide-header"><span class="category-badge defense">Defense</span><h2>8. Zonenverteidigung</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Eine weitere Form der Verteidigung ist die Zone-Defense, also die Zonenverteidigung. Hier hat jeder der fünf Verteidiger einen bestimmten Zuständigkeitsbereich, den er aufmerksam decken muss. Die Spieler verschieben sich gemeinsam zur Ballseite, sichern freie Räume ab und helfen einander, sobald ein Angreifer in ihre Zone eindringt.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Fünf Verteidiger verteilen sich in Zonen">
-                            <div class="zone-highlight" style="top:22%; left:25%; width:50%; height:58%;"></div><div class="player-dot red" style="top:35%; left:42%;">D1</div><div class="player-dot red" style="top:35%; left:59%;">D2</div><div class="player-dot red" style="top:53%; left:35%;">D3</div><div class="player-dot red" style="top:53%; left:65%;">D4</div><div class="player-dot red" style="top:61%; left:50%;">D5</div><div class="player-dot blue ball" style="top:58%; left:73%;">1</div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die gemeinsame Bewegung einer Zone.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="verschieben">Alle Verteidiger verschieben sich gemeinsam zur Ballseite</button>
-                            <button class="step-card" type="button" data-id="bereich">Jeder Verteidiger hält zunächst seinen Zuständigkeitsbereich</button>
-                            <button class="step-card" type="button" data-id="verfolgen">Jeder verfolgt dauerhaft nur einen bestimmten Angreifer</button>
-                            <button class="step-card" type="button" data-id="zurueck">Nach einem Pass werden Räume neu besetzt und abgesichert</button>
-                            <button class="step-card" type="button" data-id="uebernehmen">Eindringende Angreifer werden in der eigenen Zone übernommen</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 9. Steal -->
-                <section class="slide" data-category="Defense" data-answer="beobachten,fehler,moment,umschalten">
-                    <div class="slide-header"><span class="category-badge defense">Defense</span><h2>9. Steal</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Solltest du einem Angreifer geschickt und ohne Foulspiel den Ball abnehmen, wird dir ein Steal zugesprochen. Beobachte dafür den Ball, erkenne ungenaue Pässe und nutze Fehler der Gegner zu deinen Gunsten. Sei vorsichtig: Ein verfehlter Versuch kann deinem Gegenspieler einen freien Weg zum Korb ermöglichen oder in einem Foul-Pfiff enden.</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Verteidiger liest einen Pass und fängt ihn ab">
-                            <div class="player-dot blue ball" style="top:56%; left:70%;">1</div><div class="player-dot blue" style="top:36%; left:35%;">2</div><div class="player-dot red" style="top:44%; left:52%;">D2</div><div class="pass-arrow" style="top:54%; left:67%; width:36%; transform:rotate(-145deg);"></div><div class="movement-arrow" style="top:45%; left:52%; width:19%; transform:rotate(-164deg);"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne einen kontrollierten Steal-Versuch.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="moment">Im richtigen Moment kontrolliert in den Passweg gehen</button>
-                            <button class="step-card" type="button" data-id="beobachten">Ball, Gegner und Passwege aufmerksam beobachten</button>
-                            <button class="step-card" type="button" data-id="greifen">Bei jedem Dribbling blind nach dem Ball greifen</button>
-                            <button class="step-card" type="button" data-id="umschalten">Nach dem Ballgewinn sofort auf Angriff umschalten</button>
-                            <button class="step-card" type="button" data-id="fehler">Einen ungenauen Pass oder offenen Ball erkennen</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-
-                <!-- 10. Hustle -->
-                <section class="slide" data-category="Teamplay" data-answer="erkennen,reagieren,kaempfen,sichern">
-                    <div class="slide-header"><span class="category-badge teamplay">Teamplay</span><h2>10. Hustle</h2></div>
-                    <div class="theory-card"><h3>Kurz erklärt</h3><p>Abschließend zu unserer Einführung in die Welt des Basketballs wollen wir dir eines mitgeben: Spring nach jedem Ball, kämpfe um den Ballbesitz und laste dich vollständig aus. Dein Angriff will punkten, deine Verteidigung will Punkte verhindern. Sei deshalb fair zu dir und den Zuschauern und hustle in jeder Situation für dein Team!</p></div>
-                    <div class="activity-grid">
-                        <div class="visual-container" aria-label="Zwei Spieler kämpfen kontrolliert um einen freien Ball">
-                            <div class="player-dot blue" style="top:55%; left:37%;">2</div><div class="player-dot red" style="top:57%; left:64%;">D2</div><div class="player-dot ball" style="top:56%; left:50%; background:#f59e0b;">●</div><div class="movement-arrow" style="top:55%; left:39%; width:18%; transform:rotate(2deg);"></div><div class="movement-arrow" style="top:57%; left:62%; width:18%; transform:rotate(180deg);"></div>
-                        </div>
-                        <div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne eine faire Hustle-Aktion.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
-                            <button class="step-card" type="button" data-id="kaempfen">Mit vollem, aber regelkonformem Einsatz zum Ball gehen</button>
-                            <button class="step-card" type="button" data-id="erkennen">Erkennen, dass der Ball frei oder noch erreichbar ist</button>
-                            <button class="step-card" type="button" data-id="foulen">Den Gegner wegstoßen, um zuerst am Ball zu sein</button>
-                            <button class="step-card" type="button" data-id="sichern">Den Ball kontrollieren und für das Team sichern</button>
-                            <button class="step-card" type="button" data-id="reagieren">Ohne Zögern und aufmerksam reagieren</button>
-                        </div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div class="feedback" aria-live="polite"></div></div>
-                    </div>
-                </section>
-            </div>
-        </div>
-
-        <div class="slider-nav">
-            <button class="nav-btn-circle" id="prevBtn" type="button" disabled>❮</button>
-            <span class="slide-counter" id="slideCounter">Aufgabe 1 von 10</span>
-            <button class="nav-btn-circle" id="nextBtn" type="button" disabled>❯</button>
-        </div>
-
-        <div class="completion-box" id="completionBox">
+<div class="container">
+<div class="chapter-header">
+<h1>🧠 Taktik im 5vs5</h1>
+<p>Baue zu jeder Taktik den richtigen Spielzug zusammen. Lies die Erklärung, untersuche das Spielfeld von unten nach oben und ordne vier passende Handlungskarten. Eine Karte ist jeweils eine taktische Falle und gehört nicht in dein Playbook.</p>
+</div>
+<div class="progress-wrap">
+<div class="progress-top">
+<span id="progressText">0 von 10 Playbooks gelöst</span>
+<span id="sectionText">Offense</span>
+</div>
+<div aria-label="Lernfortschritt" class="progress-track">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+</div>
+<div class="slider-wrapper">
+<div class="slides-container" id="slides">
+<!-- 1. Fast-Break -->
+<section class="slide" data-answer="ballgewinn,breite,pass,abschluss" data-category="Offense">
+<div class="slide-header">
+<span class="category-badge offense">Offense</span>
+<h2>1. Der Fast-Break</h2>
+</div>
+<div class="theory-card">
+<h3>Kurz erklärt</h3>
+<p>Erkenne nach einem Ballgewinn sofort, ob dein Team in Überzahl ist. Beim Fast-Break greift ihr mit hohem Tempo an, bevor sich die gegnerische Verteidigung vollständig aufstellen kann. Besetzt die Breite des Feldes, lauft freie Bahnen an und bringt den Ball mit schnellen, sicheren Pässen nach vorn.</p>
+</div>
+<div class="activity-grid">
+<div aria-label="Fast-Break mit drei Angreifern gegen zwei Verteidiger" class="visual-container"><svg aria-label="Fast-Break: drei Angreifer laufen von unten nach oben gegen zwei Verteidiger" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="fb-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="fb-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(50 148)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(24 136)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player offense" transform="translate(76 136)"><circle r="5.6"></circle><text x="0" y="1.8">3</text></g><g class="svg-player defense" transform="translate(42 72)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(59 62)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><path class="svg-move" d="M50 139 L50 43" marker-end="url(#fb-move)"></path><path class="svg-move" d="M24 127 Q24 82 31 43" marker-end="url(#fb-move)"></path><path class="svg-move" d="M76 127 Q76 82 69 43" marker-end="url(#fb-move)"></path><path class="svg-pass" d="M50 137 Q62 112 72 93" marker-end="url(#fb-pass)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card">
+<h3>Playbook-Builder</h3>
+<p class="task-intro">Wähle die vier richtigen Schritte in der passenden Reihenfolge.</p>
+<div class="sequence-board"></div>
+<p class="choice-title">Handlungskarten:</p>
+<div class="step-bank">
+<button class="step-card" data-id="abschluss" type="button">Vor der aufgestellten Defense abschließen</button>
+<button class="step-card" data-id="ballgewinn" type="button">Ballgewinn sichern und sofort umschalten</button>
+<button class="step-card" data-id="abwarten" type="button">Warten, bis alle Verteidiger zurück sind</button>
+<button class="step-card" data-id="breite" type="button">Das Feld schnell und breit besetzen</button>
+<button class="step-card" data-id="pass" type="button">Den Ball mit schnellen Pässen nach vorn bringen</button>
+</div>
+<div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div>
+<div aria-live="polite" class="feedback"></div>
+</div>
+</div>
+</section>
+<!-- 2. Pick and Roll -->
+<section class="slide" data-answer="block,nutzen,rollen,entscheiden" data-category="Offense">
+<div class="slide-header"><span class="category-badge offense">Offense</span><h2>2. Pick and Roll</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Beim Pick and Roll stellt ein Mitspieler einen festen, regelkonformen Block am Verteidiger des Ballhandlers. Der Ballhandler läuft eng am Block vorbei und nutzt den entstandenen Raum. Anschließend rollt der Blocksteller zum Korb. Je nach Reaktion der Defense entsteht ein Drive, ein Wurf oder ein Pass zum abrollenden Spieler.</p></div>
+<div class="activity-grid">
+<div aria-label="Pick and Roll mit Ballhandler und Blocksteller" class="visual-container"><svg aria-label="Pick and Roll: Block, Nutzung des Blocks und Abrollen zum oberen Korb" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="pnr-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="pnr-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(69 122)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(54 111)"><circle r="5.6"></circle><text x="0" y="1.8">5</text></g><g class="svg-player defense" transform="translate(63 119)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(47 101)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><path class="svg-move" d="M68 116 Q61 102 50 96 Q42 88 41 72" marker-end="url(#pnr-move)"></path><path class="svg-move" d="M54 105 Q54 76 50 43" marker-end="url(#pnr-move)"></path><path class="svg-pass" d="M44 76 Q49 63 51 48" marker-end="url(#pnr-pass)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Baue die Pick-and-Roll-Abfolge auf.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="rollen" type="button">Der Blocksteller rollt anschließend zum Korb</button>
+<button class="step-card" data-id="block" type="button">Der Mitspieler stellt einen festen, regelkonformen Block</button>
+<button class="step-card" data-id="weggehen" type="button">Der Blocksteller läuft sofort vom Ball weg</button>
+<button class="step-card" data-id="nutzen" type="button">Der Ballhandler läuft eng am Block vorbei</button>
+<button class="step-card" data-id="entscheiden" type="button">Der Ballhandler entscheidet zwischen Pass, Drive oder Wurf</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 3. Give and Go -->
+<section class="slide" data-answer="pass,cut,blick,rueckpass" data-category="Offense">
+<div class="slide-header"><span class="category-badge offense">Offense</span><h2>3. Give and Go</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Beim Give and Go passt du den Ball zu einem Mitspieler und bewegst dich sofort weiter. Du schneidest nach dem Pass entschlossen zum Korb, hältst Blickkontakt und erhältst den Ball im besten Fall direkt zurück. Entscheidend sind ein schneller Pass, gutes Timing und ein Laufweg, der die Verteidigung überrascht.</p></div>
+<div class="activity-grid">
+<div aria-label="Give and Go mit Pass und anschließendem Cut" class="visual-container"><svg aria-label="Give and Go: Pass, Cut zum oberen Korb und Rückpass" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="gng-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="gng-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(72 130)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(38 94)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player defense" transform="translate(64 124)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><path class="svg-pass" d="M68 126 L42 98" marker-end="url(#gng-pass)"></path><path class="svg-move" d="M70 123 Q60 91 51 47" marker-end="url(#gng-move)"></path><path class="svg-pass" d="M41 91 Q47 70 51 52" marker-end="url(#gng-pass)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne den Pass-und-Lauf-Spielzug.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="cut" type="button">Nach dem Pass sofort Richtung Korb schneiden</button>
+<button class="step-card" data-id="dribbeln" type="button">Nach dem Pass stehen bleiben und zurückfordern</button>
+<button class="step-card" data-id="pass" type="button">Den Ball schnell zum Mitspieler passen</button>
+<button class="step-card" data-id="rueckpass" type="button">Den direkten Rückpass aufnehmen und abschließen</button>
+<button class="step-card" data-id="blick" type="button">Beim Cut Blickkontakt mit dem Passgeber halten</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 4. Bewegung -->
+<section class="slide" data-answer="beobachten,bewegen,pass,weiter" data-category="Offense">
+<div class="slide-header"><span class="category-badge offense">Offense</span><h2>4. Bewegung</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Motion bedeutet, dass die Spieler im Angriff nicht dauerhaft stehen bleiben. Beobachte den Ball, freie Räume und die Positionen der Verteidiger. Schneide zum Korb, besetze frei gewordene Bereiche und bewege dich nach jedem Pass weiter. So bleibt die Defense beschäftigt und dein Team wird schwerer auszurechnen.</p></div>
+<div class="activity-grid">
+<div aria-label="Mehrere Spieler wechseln ihre Positionen" class="visual-container"><svg aria-label="Motion-Offense: Spieler wechseln freie Räume auf dem vertikal ausgerichteten Feld" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="mot-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="mot-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(50 145)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(23 112)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player offense" transform="translate(77 112)"><circle r="5.6"></circle><text x="0" y="1.8">3</text></g><g class="svg-player offense" transform="translate(25 62)"><circle r="5.6"></circle><text x="0" y="1.8">4</text></g><g class="svg-player offense" transform="translate(75 62)"><circle r="5.6"></circle><text x="0" y="1.8">5</text></g><path class="svg-move" d="M23 104 Q36 88 45 79" marker-end="url(#mot-move)"></path><path class="svg-move" d="M77 104 Q64 88 55 79" marker-end="url(#mot-move)"></path><path class="svg-move" d="M25 55 Q37 43 48 40" marker-end="url(#mot-move)"></path><path class="svg-move" d="M75 55 Q63 43 52 40" marker-end="url(#mot-move)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Baue eine sinnvolle Motion-Abfolge auf.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="weiter" type="button">Nach dem Pass sofort eine neue Position suchen</button>
+<button class="step-card" data-id="beobachten" type="button">Freie Räume, Mitspieler und Verteidiger beobachten</button>
+<button class="step-card" data-id="still" type="button">Nach jedem Pass an derselben Stelle warten</button>
+<button class="step-card" data-id="bewegen" type="button">In einen freien Raum laufen und anspielbar werden</button>
+<button class="step-card" data-id="pass" type="button">Den Ball zum besser positionierten Mitspieler passen</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 5. Drive -->
+<section class="slide" data-answer="luecke,tempo,schuetzen,entscheidung" data-category="Offense">
+<div class="slide-header"><span class="category-badge offense">Offense</span><h2>5. Drive</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Bei einem Drive greifst du mit kontrolliertem Tempo eine Lücke in der Verteidigung an. Schütze den Ball mit deinem Körper und beobachte die Hilfeverteidigung. Bleibt der Weg frei, schließt du am Korb ab. Rückt ein Verteidiger zur Hilfe ein, spielst du den Ball rechtzeitig zu einem freien Mitspieler.</p></div>
+<div class="activity-grid">
+<div aria-label="Ballhandler greift eine Lücke in der Verteidigung an" class="visual-container"><svg aria-label="Drive: Ballhandler greift eine Lücke an und kann zum freien Mitspieler passen" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="drv-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="drv-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(68 137)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(23 55)"><circle r="5.6"></circle><text x="0" y="1.8">3</text></g><g class="svg-player defense" transform="translate(57 102)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(45 73)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><path class="svg-move" d="M66 130 Q60 105 53 82 Q51 64 50 45" marker-end="url(#drv-move)"></path><path class="svg-pass" d="M55 84 Q37 69 26 57" marker-end="url(#drv-pass)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die Entscheidungen eines kontrollierten Drives.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="entscheidung" type="button">Rechtzeitig zwischen Wurf und Pass entscheiden</button>
+<button class="step-card" data-id="tempo" type="button">Die erkannte Lücke mit entschlossenem Tempo angreifen</button>
+<button class="step-card" data-id="luecke" type="button">Eine offene Lücke in der Verteidigung erkennen</button>
+<button class="step-card" data-id="blind" type="button">Ohne Blick auf die Mitspieler zum Korb dribbeln</button>
+<button class="step-card" data-id="schuetzen" type="button">Den Ball kontrollieren und mit dem Körper schützen</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 6. Kommunikation -->
+<section class="slide" data-answer="sehen,rufen,konkret,reagieren" data-category="Teamplay">
+<div class="slide-header"><span class="category-badge teamplay">Teamplay</span><h2>6. Kommunikation</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Klare Kommunikation verbindet Angriff und Verteidigung. Kurze, deutliche Ausrufe wie „Hilfe!“, „Block links!“, „Er steht frei!“ oder „Wirf!“ geben deinem Team wichtige Informationen. Sprecht frühzeitig und verständlich, damit alle Spieler reagieren, ihre Aufgaben abstimmen und gemeinsam bessere Entscheidungen treffen können.</p></div>
+<div class="activity-grid">
+<div aria-label="Team kommuniziert bei einem Block" class="visual-container"><svg aria-label="Kommunikation: Verteidiger warnen sich vor einem Block und fordern Hilfe" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="com-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="com-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(69 122)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(54 108)"><circle r="5.6"></circle><text x="0" y="1.8">5</text></g><g class="svg-player defense" transform="translate(63 119)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(45 92)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><rect class="speech" height="14" rx="5" width="38" x="9" y="44"></rect><text class="speech-text" x="28" y="53">BLOCK LINKS!</text><rect class="speech" height="14" rx="5" width="35" x="53" y="67"></rect><text class="speech-text" x="70.5" y="76">HILFE!</text><path class="svg-move" d="M45 87 Q52 91 57 100" marker-end="url(#com-move)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne eine wirksame Kommunikationskette.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="konkret" type="button">Eine konkrete Information geben: „Block von links!“</button>
+<button class="step-card" data-id="sehen" type="button">Die entstehende Spielsituation früh erkennen</button>
+<button class="step-card" data-id="schweigen" type="button">Schweigen, damit der Gegner nichts hört</button>
+<button class="step-card" data-id="reagieren" type="button">Als Team sofort auf den Zuruf reagieren</button>
+<button class="step-card" data-id="rufen" type="button">Laut und rechtzeitig auf sich aufmerksam machen</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 7. Hilfe -->
+<section class="slide" data-answer="geschlagen,helfen,stoppen,recover" data-category="Defense">
+<div class="slide-header"><span class="category-badge defense">Defense</span><h2>7. Hilfe</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Wird ein Verteidiger beim Drive ausgespielt, unterstützt ihn ein Mitspieler durch Help-Defense. Der helfende Verteidiger verlässt kurz seinen Gegenspieler, schließt den Weg zum Korb und erschwert den Abschluss. Gleichzeitig müssen die übrigen Verteidiger rotieren, freie Angreifer übernehmen und nach der Aktion wieder geordnet zurückkehren.</p></div>
+<div class="activity-grid">
+<div aria-label="Help-Defense stoppt einen Drive" class="visual-container"><svg aria-label="Help-Defense: Ein Verteidiger stoppt den Drive, während das Team rotiert" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="help-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="help-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(68 132)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player defense" transform="translate(74 124)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(31 76)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><g class="svg-player defense" transform="translate(25 52)"><circle r="5.6"></circle><text x="0" y="1.8">D3</text></g><path class="svg-move" d="M66 125 Q59 103 53 83" marker-end="url(#help-move)"></path><path class="svg-move" d="M34 76 Q44 78 52 84" marker-end="url(#help-move)"></path><path class="svg-move" d="M27 54 Q38 60 45 68" marker-end="url(#help-move)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die Help-Defense vom Problem bis zur Rückkehr.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="stoppen" type="button">Den Drive gemeinsam stoppen oder den Abschluss erschweren</button>
+<button class="step-card" data-id="helfen" type="button">Ein Mitspieler rückt kontrolliert in den Fahrweg</button>
+<button class="step-card" data-id="geschlagen" type="button">Der direkte Verteidiger wird beim Drive ausgespielt</button>
+<button class="step-card" data-id="alle" type="button">Alle fünf Verteidiger laufen gleichzeitig zum Ball</button>
+<button class="step-card" data-id="recover" type="button">Danach zum eigenen Gegenspieler zurückkehren</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 8. Zonenverteidigung -->
+<section class="slide" data-answer="bereich,verschieben,uebernehmen,zurueck" data-category="Defense">
+<div class="slide-header"><span class="category-badge defense">Defense</span><h2>8. Zonenverteidigung</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Bei der Zonenverteidigung deckt jeder Verteidiger einen bestimmten Raum statt dauerhaft nur einen Gegenspieler. Das Team verschiebt sich gemeinsam zur Ballseite, übernimmt eindringende Angreifer und sichert gefährliche Bereiche. Entscheidend sind Absprachen, geschlossene Laufwege und schnelles Zurückverschieben nach Pässen auf die andere Seite.</p></div>
+<div class="activity-grid">
+<div aria-label="Fünf Verteidiger verteilen sich in Zonen" class="visual-container"><svg aria-label="Zonenverteidigung: fünf Verteidiger verschieben sich gemeinsam zur Ballseite" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="zone-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="zone-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<path class="svg-zone" d="M17 45 Q50 25 83 45 L83 105 Q50 120 17 105 Z"></path><g class="svg-player defense" transform="translate(35 58)"><circle r="5.6"></circle><text x="0" y="1.8">D1</text></g><g class="svg-player defense" transform="translate(65 58)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><g class="svg-player defense" transform="translate(25 91)"><circle r="5.6"></circle><text x="0" y="1.8">D3</text></g><g class="svg-player defense" transform="translate(75 91)"><circle r="5.6"></circle><text x="0" y="1.8">D4</text></g><g class="svg-player defense" transform="translate(50 101)"><circle r="5.6"></circle><text x="0" y="1.8">D5</text></g><g class="svg-player offense ball-handler" transform="translate(83 133)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><path class="svg-move" d="M35 58 Q50 66 63 72" marker-end="url(#zone-move)"></path><path class="svg-move" d="M50 101 Q63 105 72 112" marker-end="url(#zone-move)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne die gemeinsame Bewegung einer Zone.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="verschieben" type="button">Alle Verteidiger verschieben sich gemeinsam zur Ballseite</button>
+<button class="step-card" data-id="bereich" type="button">Jeder Verteidiger hält zunächst seinen Zuständigkeitsbereich</button>
+<button class="step-card" data-id="verfolgen" type="button">Jeder verfolgt dauerhaft nur einen bestimmten Angreifer</button>
+<button class="step-card" data-id="zurueck" type="button">Nach einem Pass werden Räume neu besetzt und abgesichert</button>
+<button class="step-card" data-id="uebernehmen" type="button">Eindringende Angreifer werden in der eigenen Zone übernommen</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 9. Steal -->
+<section class="slide" data-answer="beobachten,fehler,moment,umschalten" data-category="Defense">
+<div class="slide-header"><span class="category-badge defense">Defense</span><h2>9. Steal</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Ein Steal entsteht, wenn du dem Gegner den Ball kontrolliert und ohne Foul abnimmst. Beobachte Ball, Passwege und ungenaue Zuspiele. Greife nur im passenden Moment an, denn ein überhasteter Versuch öffnet den Weg zum Korb oder führt zu einem Foul. Nach dem Ballgewinn schaltest du sofort auf Angriff um.</p></div>
+<div class="activity-grid">
+<div aria-label="Verteidiger liest einen Pass und fängt ihn ab" class="visual-container"><svg aria-label="Steal: Verteidiger liest den Passweg und fängt den Ball kontrolliert ab" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="steal-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="steal-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense ball-handler" transform="translate(78 133)"><circle r="5.6"></circle><text x="0" y="1.8">1</text></g><g class="svg-player offense" transform="translate(24 63)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player defense" transform="translate(51 91)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><path class="svg-pass" d="M74 128 Q51 95 28 68" marker-end="url(#steal-pass)"></path><path class="svg-move" d="M52 89 Q43 80 35 73" marker-end="url(#steal-move)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne einen kontrollierten Steal-Versuch.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="moment" type="button">Im richtigen Moment kontrolliert in den Passweg gehen</button>
+<button class="step-card" data-id="beobachten" type="button">Ball, Gegner und Passwege aufmerksam beobachten</button>
+<button class="step-card" data-id="greifen" type="button">Bei jedem Dribbling blind nach dem Ball greifen</button>
+<button class="step-card" data-id="umschalten" type="button">Nach dem Ballgewinn sofort auf Angriff umschalten</button>
+<button class="step-card" data-id="fehler" type="button">Einen ungenauen Pass oder offenen Ball erkennen</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+<!-- 10. Hustle -->
+<section class="slide" data-answer="erkennen,reagieren,kaempfen,sichern" data-category="Teamplay">
+<div class="slide-header"><span class="category-badge teamplay">Teamplay</span><h2>10. Hustle</h2></div>
+<div class="theory-card"><h3>Kurz erklärt</h3><p>Hustle bedeutet, in jeder Situation aufmerksam und mit vollem, aber fairem Einsatz zu spielen. Sprint zurück, kämpfe um freie Bälle, sichere Rebounds und unterstütze deine Mitspieler. Entscheidend ist nicht unkontrollierte Härte, sondern die Bereitschaft, konsequent nachzusetzen und für jeden Ballbesitz des Teams zu arbeiten.</p></div>
+<div class="activity-grid">
+<div aria-label="Zwei Spieler kämpfen kontrolliert um einen freien Ball" class="visual-container"><svg aria-label="Hustle: zwei Spieler sprinten fair zu einem freien Ball" class="court-diagram" role="img" viewbox="0 0 100 180">
+<defs>
+<marker id="hustle-move" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#ff8c00"></path></marker>
+<marker id="hustle-pass" markerheight="7" markerunits="strokeWidth" markerwidth="7" orient="auto" refx="6" refy="3.5"><path d="M0,0 L7,3.5 L0,7 Z" fill="#2563eb"></path></marker>
+</defs>
+<image height="100" href="assets/GanzesFeld.png" preserveaspectratio="xMidYMid meet" transform="rotate(90 50 90)" width="180" x="-40" y="40"/>
+<g class="svg-player offense" transform="translate(25 115)"><circle r="5.6"></circle><text x="0" y="1.8">2</text></g><g class="svg-player defense" transform="translate(75 115)"><circle r="5.6"></circle><text x="0" y="1.8">D2</text></g><g class="loose-ball" transform="translate(50 91)"><circle r="4.8"></circle><path d="M-3 -3 L3 3 M3 -3 L-3 3"></path></g><path class="svg-move" d="M29 111 Q39 101 46 94" marker-end="url(#hustle-move)"></path><path class="svg-move" d="M71 111 Q61 101 54 94" marker-end="url(#hustle-move)"></path>
+</svg>
+<div class="diagram-legend"><span><i class="legend-dot offense"></i>Angriff</span><span><i class="legend-dot defense"></i>Verteidigung</span><span><i class="legend-line move"></i>Laufweg</span><span><i class="legend-line pass"></i>Passweg</span></div></div>
+<div class="task-card"><h3>Playbook-Builder</h3><p class="task-intro">Ordne eine faire Hustle-Aktion.</p><div class="sequence-board"></div><p class="choice-title">Handlungskarten:</p><div class="step-bank">
+<button class="step-card" data-id="kaempfen" type="button">Mit vollem, aber regelkonformem Einsatz zum Ball gehen</button>
+<button class="step-card" data-id="erkennen" type="button">Erkennen, dass der Ball frei oder noch erreichbar ist</button>
+<button class="step-card" data-id="foulen" type="button">Den Gegner wegstoßen, um zuerst am Ball zu sein</button>
+<button class="step-card" data-id="sichern" type="button">Den Ball kontrollieren und für das Team sichern</button>
+<button class="step-card" data-id="reagieren" type="button">Ohne Zögern und aufmerksam reagieren</button>
+</div><div class="task-actions"><button class="task-btn check-btn" type="button">Playbook prüfen</button><button class="task-btn reset-btn" type="button">Neu ordnen</button></div><div aria-live="polite" class="feedback"></div></div>
+</div>
+</section>
+</div>
+</div>
+<div class="slider-nav">
+<button class="nav-btn-circle" disabled="" id="prevBtn" type="button">❮</button>
+<span class="slide-counter" id="slideCounter">Aufgabe 1 von 10</span>
+<button class="nav-btn-circle" disabled="" id="nextBtn" type="button">❯</button>
+</div>
+<div class="completion-box" id="completionBox">
             Stark! Du hast alle zehn 5-vs-5-Playbooks richtig aufgebaut. Damit bist du bereit, die Taktiken im nächsten Kapitel in dynamischen Spielsituationen anzuwenden.
         </div>
-
-        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
-    </div>
-
-    <script>
+<a class="back-link" href="index.html">← Zurück zur Übersicht</a>
+</div>
+<script>
         const slidesContainer = document.getElementById('slides');
         const slideElements = Array.from(document.querySelectorAll('.slide'));
         const prevBtn = document.getElementById('prevBtn');
