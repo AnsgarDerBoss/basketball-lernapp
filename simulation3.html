@@ -1,1 +1,769 @@
+<!DOCTYPE html>
+<html lang="de">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frage 3 – Give and Go | Basketball Lernapp</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* --- Spezifische Styles für die Simulation --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Tieferes Blau statt Grün, um den "Anwendungs"-Bereich zu kennzeichnen */
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            color: #f5f5f5;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 1rem;
+        }
+
+        /* Wrapper für Button und Container nebeneinander */
+        .simulation-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1600px;
+            position: relative;
+        }
+
+        .container {
+            flex: 1;
+            max-width: 1300px;
+            min-height: 97vh;
+            display: flex;
+            flex-direction: column;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            border-radius: 40px;
+            padding: 1rem 3rem 2rem 3rem;
+            border: 2px solid #4db8ff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 20px rgba(77, 184, 255, 0.15);
+            text-align: center;
+            opacity: 0;
+            animation: slideInFromRight 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        /* Vertikale Überschrift links */
+        .vertical-title {
+            display: flex;
+            gap: 0.5rem;
+            writing-mode: vertical-lr;
+            text-orientation: mixed;
+            color: rgba(77, 184, 255, 0.4);
+            font-weight: 900;
+            font-size: 4.5rem;
+            text-transform: uppercase;
+            line-height: 0.8;
+            pointer-events: none;
+            user-select: none;
+            margin-left: 1rem;
+            opacity: 0;
+            /* Wird durch Animation auf 1 gesetzt */
+            animation: flyInFromRight 1s cubic-bezier(0.23, 1, 0.32, 1) 0.3s forwards;
+        }
+
+        .vertical-title div {
+            letter-spacing: 5px;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+            max-width: 1200px;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .intro-flex {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            text-align: left;
+            margin-top: 1rem;
+        }
+
+        .intro-column {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 16px;
+            border-top: 3px solid #4db8ff;
+            font-size: 1rem;
+        }
+
+        /* Platzhalter für das Interface */
+        .sim-interface-mockup {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(77, 184, 255, 0.3);
+            border-radius: 24px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 600px;
+            background-image: url('assets/GanzesFeld.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: #fff;
+        }
+
+        /* Spieler-Marker */
+        .player {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: white;
+            transition: all 0.5s ease-in-out;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .offense {
+            background: #0041cc;
+            border: 2px solid white;
+        }
+
+        /* Team A: Blau */
+        .defense {
+            background: #dc2626;
+            border: 2px solid white;
+        }
+
+        /* Team B: Rot */
+
+        /* Ballführender Spieler Hervorhebung */
+        .player.has-ball {
+            box-shadow: 0 0 0 3px #F08A24, 0 0 15px 5px rgba(240, 138, 36, 0.7);
+            border-color: #F08A24 !important;
+            transform: scale(1.15);
+            z-index: 12;
+        }
+
+        .ball {
+            width: 15px;
+            height: 15px;
+            background: #F08A24;
+            /* Ball: Orange-gelb */
+            border-radius: 50%;
+            position: absolute;
+            z-index: 11;
+            box-shadow: 0 0 10px #F08A24;
+            transition: all 0.5s ease-in-out;
+        }
+
+        /* Bereich für die interaktiven Quadrate */
+        .selection-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            text-align: left;
+            padding: 0 2rem;
+        }
+
+        .selection-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            cursor: pointer;
+        }
+
+        .square-btn {
+            width: 50px;
+            height: 50px;
+            background: #4db8ff;
+            border-radius: 12px;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(77, 184, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #020617;
+        }
+
+        /* Bestätigungs-Button */
+        .action-btn {
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: #4db8ff;
+            color: #020617;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            opacity: 0.5;
+            pointer-events: none;
+            width: fit-content;
+            align-self: center;
+        }
+
+        .action-btn.ready {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .action-btn:hover {
+            background: #fff;
+            transform: translateY(-3px);
+        }
+
+        .selection-item:hover .square-btn {
+            transform: scale(1.1);
+            background: #fff;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+
+        /* Das Kreuz erscheint nur, wenn das Item die Klasse 'active' hat */
+        .selection-item.active .square-btn::after {
+            content: '✕';
+            font-weight: bold;
+        }
+
+        .selection-text {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+        }
+
+        /* Feedback-Box Styling für den Bereich der Auswahlmöglichkeiten. */
+        #feedback-text {
+            margin: 1rem 2rem;
+            padding: 2rem;
+            border-radius: 24px;
+            font-size: 1.2rem;
+            line-height: 1.5;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes flyInFromRight {
+            0% {
+                transform: translateX(50px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #4db8ff;
+            font-weight: bold;
+            border: 2px solid #4db8ff;
+            padding: 1rem 3rem;
+            font-size: 1.3rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            align-self: flex-start;
+            position: sticky;
+            top: 2rem;
+            opacity: 0;
+            animation: flyInFromTop 1s cubic-bezier(0.23, 1, 0.32, 1) 0.2s forwards;
+        }
+
+        .back-link:hover {
+            background: #4db8ff;
+            color: #0f172a;
+            box-shadow: 0 0 20px rgba(77, 184, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        @keyframes flyInFromTop {
+            0% {
+                transform: translateY(-150%);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .simulation-wrapper {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .back-link {
+                position: static;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="simulation-wrapper">
+        <a href="index.html" class="back-link">← Zurück</a>
+
+        <div class="container">
+            <div class="intro-text" id="situation-description">
+                <div class="intro-flex">
+                    <div class="intro-column">
+                        <strong>Mission:</strong><br>
+                        <span id="mission-text"></span>
+                    </div>
+                    <div class="intro-column">
+                        <strong>Ausgangslage:</strong><br>
+                        <span id="starting-text"></span>
+                    </div>
+                    <div class="intro-column">
+                        <strong>Die Herausforderung:</strong><br>
+                        <span id="challenge-text"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sim-interface-mockup">
+                <!--
+                    ANPASSEN 1: STARTPOSITIONEN
+                    top = Position von oben, left = Position von links.
+                    Die Prozentwerte können für ein neues Szenario verändert werden.
+                -->
+
+                <!-- Offense Team A (Blau) -->
+                <div class="player offense has-ball" id="p1" style="top: 52%; left: 58%;">1</div>
+                <div class="player offense" id="p2" style="top: 34%; left: 40%;">2</div>
+                <div class="player offense" id="p3" style="top: 80%; left: 42%;">3</div>
+                <div class="player offense" id="p4" style="top: 18%; left: 16%;">4</div>
+                <div class="player offense" id="p5" style="top: 66%; left: 20%;">5</div>
+
+                <!-- Defense Team B (Rot) -->
+                <div class="player defense" id="d1" style="top: 52%; left: 53%;">D1</div>
+                <div class="player defense" id="d2" style="top: 36%; left: 36%;">D2</div>
+                <div class="player defense" id="d3" style="top: 76%; left: 38%;">D3</div>
+                <div class="player defense" id="d4" style="top: 23%; left: 20%;">D4</div>
+                <div class="player defense" id="d5" style="top: 60%; left: 16%;">D5</div>
+
+                <!-- Ball -->
+                <div class="ball" id="ball" style="top: 53%; left: 59%;"></div>
+            </div>
+
+            <div class="selection-area">
+                <div class="selection-item" id="opt1">
+                    <div class="square-btn"></div>
+                    <p class="selection-text" id="option-text-1"></p>
+                </div>
+
+                <div class="selection-item" id="opt2">
+                    <div class="square-btn"></div>
+                    <p class="selection-text" id="option-text-2"></p>
+                </div>
+
+                <div class="selection-item" id="opt3">
+                    <div class="square-btn"></div>
+                    <p class="selection-text" id="option-text-3"></p>
+                </div>
+            </div>
+
+            <div id="feedback-text" style="display: none;"></div>
+
+            <button id="action-btn" class="action-btn">Bitte Option wählen</button>
+        </div>
+
+        <div class="vertical-title">
+            <div>Taktik</div>
+            <div>Simulation</div>
+        </div>
+    </div>
+
+    <script>
+        /*
+        ============================================================
+        ANPASSEN 2: HIER TAUSCHST DU DIE INHALTE DER NEUEN FRAGE AUS
+        ============================================================
+
+        Für ein weiteres Szenario musst du hauptsächlich diesen Block
+        ändern. Das Design, die Auswahlmechanik und das Feedback-System
+        können unverändert bleiben.
+        */
+        const scenarioContent = {
+            mission:
+                "Nutze das Give and Go, um die Mann-Deckung auszuspielen! Du bist Team A (Blau) im Angriff.",
+
+            startingPosition:
+                "Spieler 1 hat den Ball auf der rechten Seite. D1 verteidigt ihn eng. Spieler 2 ist als sichere Passstation anspielbar.",
+
+            challenge:
+                "Nach dem Pass richtet D1 seinen Blick auf den Ball. Wie nutzt Spieler 1 diesen kurzen Moment am besten?",
+
+            options: {
+                opt1: {
+                    heading: "Option A (Sehr gut):",
+                    text: "Spieler 1 passt zu Spieler 2 und schneidet sofort hinter D1 zum Korb. Spieler 2 spielt den Ball direkt in den Lauf zurück.",
+                    feedback: "Hervorragend! Beim Give and Go folgt auf den Pass sofort der Cut zum Korb. D1 verliert Spieler 1 beim Blick zum Ball und der direkte Rückpass ermöglicht einen freien Korbleger.",
+                    color: "#22c55e"
+                },
+
+                opt2: {
+                    heading: "Option B (Sicher):",
+                    text: "Spieler 1 passt zu Spieler 2, bleibt danach aber auf seiner Position stehen und wartet auf einen möglichen Rückpass.",
+                    feedback: "Der Ball bleibt sicher, aber die Chance wird nicht genutzt. Ohne den anschließenden Cut kann D1 seine Position wieder einnehmen und die Verteidigung bleibt vollständig geordnet.",
+                    color: "#eab308"
+                },
+
+                opt3: {
+                    heading: "Option C (Schlecht):",
+                    text: "Spieler 1 behält den Ball und dribbelt zwischen D1 und D2 in die Mitte, obwohl beide Verteidiger den Weg schließen.",
+                    feedback: "Ballverlust! Der erzwungene Drive führt direkt in zwei Verteidiger. Ein schneller Pass mit anschließendem Cut wäre wirkungsvoller gewesen und hätte die Mann-Deckung in Bewegung gebracht.",
+                    color: "#ef4444"
+                }
+            }
+        };
+
+        /*
+        ============================================================
+        ANPASSEN 3: NÄCHSTE SEITE
+        ============================================================
+
+        Leer lassen, wenn nach dieser Frage nur „Zurücksetzen“ erscheinen soll.
+        Für eine dritte Frage beispielsweise:
+        const NEXT_PAGE = "simulation3.html";
+        */
+        const NEXT_PAGE = "simulation4.html";
+        const NEXT_BUTTON_TEXT = "Weiter zu Frage 4";
+
+        const selectionItems = document.querySelectorAll(".selection-item");
+        const actionBtn = document.getElementById("action-btn");
+        const feedbackBox = document.getElementById("feedback-text");
+
+        let selectedOption = null;
+        let buttonMode = "start";
+
+        // Alle Spieler und den Ball erfassen.
+        const elements = {
+            p1: document.getElementById("p1"),
+            p2: document.getElementById("p2"),
+            p3: document.getElementById("p3"),
+            p4: document.getElementById("p4"),
+            p5: document.getElementById("p5"),
+            d1: document.getElementById("d1"),
+            d2: document.getElementById("d2"),
+            d3: document.getElementById("d3"),
+            d4: document.getElementById("d4"),
+            d5: document.getElementById("d5"),
+            ball: document.getElementById("ball")
+        };
+
+        /*
+        ANPASSEN 4: STARTPOSITIONEN AUCH HIER EINTRAGEN,
+        wenn du die Positionen oben im HTML veränderst.
+        Diese Werte werden für „Zurücksetzen“ benötigt.
+        */
+        const initialPos = {
+            p1: { top: "52%", left: "58%" },
+            p2: { top: "34%", left: "40%" },
+            p3: { top: "80%", left: "42%" },
+            p4: { top: "18%", left: "16%" },
+            p5: { top: "66%", left: "20%" },
+            d1: { top: "52%", left: "53%" },
+            d2: { top: "36%", left: "36%" },
+            d3: { top: "76%", left: "38%" },
+            d4: { top: "23%", left: "20%" },
+            d5: { top: "60%", left: "16%" },
+            ball: { top: "53%", left: "59%" }
+        };
+
+        function renderScenarioText() {
+            document.getElementById("mission-text").textContent =
+                scenarioContent.mission;
+
+            document.getElementById("starting-text").textContent =
+                scenarioContent.startingPosition;
+
+            document.getElementById("challenge-text").textContent =
+                scenarioContent.challenge;
+
+            document.getElementById("option-text-1").innerHTML =
+                `<strong>${scenarioContent.options.opt1.heading}</strong> ${scenarioContent.options.opt1.text}`;
+
+            document.getElementById("option-text-2").innerHTML =
+                `<strong>${scenarioContent.options.opt2.heading}</strong> ${scenarioContent.options.opt2.text}`;
+
+            document.getElementById("option-text-3").innerHTML =
+                `<strong>${scenarioContent.options.opt3.heading}</strong> ${scenarioContent.options.opt3.text}`;
+        }
+
+        function setBallHandler(player) {
+            document
+                .querySelectorAll(".player")
+                .forEach(p => p.classList.remove("has-ball"));
+
+            if (player) {
+                player.classList.add("has-ball");
+            }
+        }
+
+        selectionItems.forEach(item => {
+            item.addEventListener("click", () => {
+                if (buttonMode !== "start") {
+                    return;
+                }
+
+                selectionItems.forEach(i => i.classList.remove("active"));
+                item.classList.add("active");
+
+                selectedOption = item.id;
+                actionBtn.classList.add("ready");
+                actionBtn.textContent = "Simulation starten";
+            });
+        });
+
+        actionBtn.addEventListener("click", () => {
+            if (buttonMode === "reset") {
+                resetSim();
+                return;
+            }
+
+            if (buttonMode === "next") {
+                window.location.href = NEXT_PAGE;
+                return;
+            }
+
+            if (selectedOption) {
+                runSimulation(selectedOption);
+            }
+        });
+
+        function runSimulation(option) {
+            actionBtn.classList.remove("ready");
+            actionBtn.style.opacity = "0.5";
+            actionBtn.style.pointerEvents = "none";
+
+            /*
+            ========================================================
+            ANPASSEN 5: ANIMATIONEN DER DREI ANTWORTMÖGLICHKEITEN
+            ========================================================
+
+            Frage 3 zeigt das Give and Go:
+            Pass spielen, sofort zum Korb schneiden und den Rückpass erhalten.
+            */
+
+            if (option === "opt1") {
+                // OPTION A: Give and Go – beste Entscheidung
+
+                // Phase 1: P1 passt zu P2.
+                setBallHandler(null);
+                elements.ball.style.transitionDuration = "0.65s";
+                elements.ball.style.left = "41%";
+                elements.ball.style.top = "35%";
+
+                // D1 schaut zum Ball und verschiebt sich leicht nach oben.
+                elements.d1.style.left = "49%";
+                elements.d1.style.top = "47%";
+
+                setTimeout(() => {
+                    // P2 erhält den Pass.
+                    setBallHandler(elements.p2);
+
+                    // Phase 2: P1 schneidet sofort hinter D1 zum Korb.
+                    elements.p1.style.transitionDuration = "1.25s";
+                    elements.p1.style.left = "17%";
+                    elements.p1.style.top = "47%";
+
+                    // D1 reagiert verspätet und läuft hinterher.
+                    elements.d1.style.transitionDuration = "1.25s";
+                    elements.d1.style.left = "29%";
+                    elements.d1.style.top = "49%";
+
+                    // D5 rückt zur Hilfe ein, erreicht den Laufweg aber nicht rechtzeitig.
+                    elements.d5.style.transitionDuration = "1.25s";
+                    elements.d5.style.left = "13%";
+                    elements.d5.style.top = "55%";
+
+                    setTimeout(() => {
+                        // Phase 3: P2 spielt den direkten Rückpass in den Lauf.
+                        setBallHandler(null);
+                        elements.ball.style.transitionDuration = "0.65s";
+                        elements.ball.style.left = "18%";
+                        elements.ball.style.top = "48%";
+
+                        setTimeout(() => {
+                            // P1 nimmt den Ball auf und zieht zum Korb.
+                            setBallHandler(elements.p1);
+                            elements.p1.style.left = "10%";
+                            elements.p1.style.top = "48%";
+                            elements.ball.style.left = "11%";
+                            elements.ball.style.top = "49%";
+
+                            setTimeout(() => {
+                                // Korbleger zum linken Korb.
+                                setBallHandler(null);
+                                elements.ball.style.transitionDuration = "0.45s";
+                                elements.ball.style.left = "6.5%";
+                                elements.ball.style.top = "48.5%";
+
+                                setTimeout(() => {
+                                    showFeedback(
+                                        scenarioContent.options.opt1.feedback,
+                                        scenarioContent.options.opt1.color
+                                    );
+                                    finishSim();
+                                }, 550);
+                            }, 700);
+                        }, 700);
+                    }, 1300);
+                }, 700);
+
+            } else if (option === "opt2") {
+                // OPTION B: Pass spielen und stehen bleiben – sichere Entscheidung
+
+                setBallHandler(null);
+                elements.ball.style.left = "41%";
+                elements.ball.style.top = "35%";
+
+                // D2 schließt zu P2, während D1 bei P1 bleibt.
+                elements.d2.style.left = "39%";
+                elements.d2.style.top = "34%";
+                elements.d1.style.left = "54%";
+                elements.d1.style.top = "52%";
+
+                setTimeout(() => {
+                    setBallHandler(elements.p2);
+
+                    showFeedback(
+                        scenarioContent.options.opt2.feedback,
+                        scenarioContent.options.opt2.color
+                    );
+                    finishSim();
+                }, 750);
+
+            } else if (option === "opt3") {
+                // OPTION C: Erzwungener Drive gegen zwei Verteidiger
+
+                // P1 dribbelt in die Mitte.
+                elements.p1.style.left = "47%";
+                elements.p1.style.top = "44%";
+                elements.ball.style.left = "48%";
+                elements.ball.style.top = "45%";
+
+                // D1 und D2 schließen die Lücke.
+                elements.d1.style.left = "45%";
+                elements.d1.style.top = "46%";
+                elements.d2.style.left = "43%";
+                elements.d2.style.top = "40%";
+
+                setTimeout(() => {
+                    // D2 schlägt den Ball heraus und übernimmt ihn.
+                    setBallHandler(elements.d2);
+                    elements.ball.style.left = "44%";
+                    elements.ball.style.top = "41%";
+
+                    // D2 startet in die Gegenrichtung.
+                    elements.d2.style.left = "59%";
+                    elements.d2.style.top = "35%";
+                    elements.ball.style.left = "60%";
+                    elements.ball.style.top = "36%";
+
+                    setTimeout(() => {
+                        showFeedback(
+                            scenarioContent.options.opt3.feedback,
+                            scenarioContent.options.opt3.color
+                        );
+                        finishSim();
+                    }, 800);
+                }, 650);
+            }
+        }
+
+        function showFeedback(text, color) {
+            const selectionArea = document.querySelector(".selection-area");
+            selectionArea.style.display = "none";
+
+            feedbackBox.textContent = text;
+            feedbackBox.style.backgroundColor = color + "22";
+            feedbackBox.style.border = `2px solid ${color}`;
+            feedbackBox.style.color = color;
+            feedbackBox.style.display = "block";
+        }
+
+        function finishSim() {
+            setTimeout(() => {
+                actionBtn.style.opacity = "1";
+                actionBtn.style.pointerEvents = "auto";
+                actionBtn.classList.add("ready");
+
+                if (NEXT_PAGE) {
+                    buttonMode = "next";
+                    actionBtn.textContent = NEXT_BUTTON_TEXT;
+                } else {
+                    buttonMode = "reset";
+                    actionBtn.textContent = "Zurücksetzen";
+                }
+            }, 1000);
+        }
+
+        function resetSim() {
+            setBallHandler(elements.p1);
+
+            // Übergänge kurz abschalten, damit alle Elemente sauber zurückspringen.
+            Object.values(elements).forEach(element => {
+                element.style.transition = "none";
+            });
+
+            Object.entries(initialPos).forEach(([id, position]) => {
+                elements[id].style.top = position.top;
+                elements[id].style.left = position.left;
+            });
+
+            // Standard-Animationsdauer wiederherstellen.
+            setTimeout(() => {
+                Object.values(elements).forEach(element => {
+                    element.style.transition = "all 0.5s ease-in-out";
+                    element.style.transitionDuration = "0.5s";
+                });
+            }, 50);
+
+            document.querySelector(".selection-area").style.display = "flex";
+            feedbackBox.style.display = "none";
+
+            selectionItems.forEach(item => item.classList.remove("active"));
+
+            selectedOption = null;
+            buttonMode = "start";
+            actionBtn.textContent = "Bitte Option wählen";
+            actionBtn.classList.remove("ready");
+            actionBtn.style.opacity = "";
+            actionBtn.style.pointerEvents = "";
+        }
+
+        renderScenarioText();
+    </script>
+</body>
+
+</html>
