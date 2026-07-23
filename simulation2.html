@@ -350,11 +350,7 @@
             </div>
 
             <div class="sim-interface-mockup">
-                <!--
-                    ANPASSEN 1: STARTPOSITIONEN
-                    top = Position von oben, left = Position von links.
-                    Die Prozentwerte können für ein neues Szenario verändert werden.
-                -->
+                
 
                 <!-- Offense Team A (Blau) -->
                 <div class="player offense has-ball" id="p1" style="top: 50%; left: 58%;">1</div>
@@ -403,15 +399,7 @@
     </div>
 
     <script>
-        /*
-        ============================================================
-        ANPASSEN 2: HIER TAUSCHST DU DIE INHALTE DER NEUEN FRAGE AUS
-        ============================================================
-
-        Für ein weiteres Szenario musst du hauptsächlich diesen Block
-        ändern. Das Design, die Auswahlmechanik und das Feedback-System
-        können unverändert bleiben.
-        */
+        
         const scenarioContent = {
             mission:
                 "Erkenne den freien Weg zum Korb! Du bist Team A (Blau) im Angriff.",
@@ -446,15 +434,7 @@
             }
         };
 
-        /*
-        ============================================================
-        ANPASSEN 3: NÄCHSTE SEITE
-        ============================================================
-
-        Leer lassen, wenn nach dieser Frage nur „Zurücksetzen“ erscheinen soll.
-        Für eine dritte Frage beispielsweise:
-        const NEXT_PAGE = "simulation3.html";
-        */
+        
         const NEXT_PAGE = "simulation3.html";
 
         const selectionItems = document.querySelectorAll(".selection-item");
@@ -479,11 +459,7 @@
             ball: document.getElementById("ball")
         };
 
-        /*
-        ANPASSEN 4: STARTPOSITIONEN AUCH HIER EINTRAGEN,
-        wenn du die Positionen oben im HTML veränderst.
-        Diese Werte werden für „Zurücksetzen“ benötigt.
-        */
+        
         const initialPos = {
             p1: { top: "50%", left: "58%" },
             p2: { top: "28%", left: "38%" },
@@ -564,14 +540,7 @@
             actionBtn.style.opacity = "0.5";
             actionBtn.style.pointerEvents = "none";
 
-            /*
-            ========================================================
-            ANPASSEN 5: ANIMATIONEN DER DREI ANTWORTMÖGLICHKEITEN
-            ========================================================
-
-            top und left bestimmen die Zielposition.
-            setTimeout bestimmt, wann die nächste Phase beginnt.
-            */
+            
 
             if (option === "opt1") {
                 // OPTION A: Backdoor-Cut – beste Entscheidung
