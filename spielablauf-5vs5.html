@@ -153,9 +153,8 @@
             border-radius: 16px;
             background: #24211e;
             display: grid;
-            grid-template-columns: 54px minmax(0, 1fr);
+            grid-template-columns: 1fr;
             align-items: center;
-            gap: 0.9rem;
             text-align: left;
             transition: transform 0.18s ease, border-color 0.18s ease;
         }
@@ -163,16 +162,6 @@
         .learning-box:hover {
             transform: translateY(-2px);
             border-color: #ffaa33;
-        }
-
-        .box-symbol {
-            width: 50px;
-            height: 50px;
-            border-radius: 14px;
-            background: rgba(255, 140, 0, 0.13);
-            display: grid;
-            place-items: center;
-            font-size: 1.8rem;
         }
 
         .box-content strong {
@@ -287,17 +276,6 @@
         }
 
         @media (max-width: 430px) {
-            .learning-box {
-                grid-template-columns: 44px minmax(0, 1fr);
-                gap: 0.7rem;
-            }
-
-            .box-symbol {
-                width: 42px;
-                height: 42px;
-                font-size: 1.5rem;
-            }
-
             .slide-counter {
                 min-width: 110px;
                 font-size: 0.9rem;
@@ -685,7 +663,6 @@
 
             learningBoxes.innerHTML = card.boxes.map(box => `
                 <div class="learning-box">
-                    <div class="box-symbol">${box[0]}</div>
                     <div class="box-content">
                         <strong>${box[1]}</strong>
                         <span>${box[2]}</span>
