@@ -6,288 +6,727 @@
     <title>Spielablauf 5vs5 - Basketball Lernapp</title>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Slider-Container */
-        .slider-wrapper {
-            position: relative;
-            max-width: 850px;
-            margin: 1rem auto;
-            overflow: hidden;
-        }
-
-        /* Bereich, der alle Slides nebeneinander hält */
-        .slides-container {
-            display: flex;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        /* Einzelne Inhaltskarte */
-        .slide {
-            min-width: 100%;
-            background: #2d2a26;
-            border-radius: 24px;
-            padding: 2rem;
-            border: 2px solid #ff8c00;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
+        * {
             box-sizing: border-box;
         }
 
-        .slide h2 {
-            color: #ffaa33;
-            font-size: 1.8rem;
+        body {
             margin: 0;
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at top, rgba(255, 140, 0, 0.12), transparent 34rem),
+                #171411;
+            color: #f5f5f5;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            width: min(1120px, calc(100% - 2rem));
+            margin: 0 auto;
+            padding: 2rem 0 3rem;
             text-align: center;
         }
 
-        .slide p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #e0e0e0;
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
+        h1 {
+            margin: 0;
+            color: #ffaa33;
+            font-size: clamp(2rem, 4vw, 3rem);
         }
 
-        /* Container für das Spielfeld-Visual */
-        .visual-container {
-            position: relative;
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            aspect-ratio: 2 / 1; /* Hält das Feld im Format 1:2 */
-            background-image: url('assets/GanzesFeld.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            border-radius: 12px;
-            background-color: #ffffff;
-            border: 4px solid #333;
+        .chapter-intro {
+            max-width: 820px;
+            margin: 0.8rem auto 1.4rem;
+            color: #d8d3ce;
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+
+        .progress-track {
+            width: min(100%, 1040px);
+            height: 9px;
+            margin: 0 auto 1rem;
             overflow: hidden;
+            border: 1px solid #554c44;
+            border-radius: 999px;
+            background: #35302b;
         }
 
-        /* Steuerung (Pfeile unten) */
+        .progress-fill {
+            width: 0;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #ff8c00, #ffaa33);
+            transition: width 0.35s ease;
+        }
+
+        .slider-wrapper {
+            width: 100%;
+            max-width: 1040px;
+            margin: 0 auto;
+        }
+
+        .slide {
+            min-height: 680px;
+            padding: clamp(1.4rem, 3vw, 2.5rem);
+            border: 2px solid #ff8c00;
+            border-radius: 26px;
+            background: #2d2a26;
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.48);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .slide-category {
+            width: fit-content;
+            margin: 0 auto -0.3rem;
+            padding: 0.45rem 0.95rem;
+            border: 1px solid rgba(255, 170, 51, 0.65);
+            border-radius: 999px;
+            background: rgba(255, 140, 0, 0.12);
+            color: #ffaa33;
+            font-size: 0.92rem;
+            font-weight: 800;
+        }
+
+        .slide h2 {
+            margin: 0;
+            color: #ffaa33;
+            font-size: clamp(1.5rem, 3vw, 2.05rem);
+            line-height: 1.3;
+        }
+
+        .learning-text {
+            width: min(100%, 900px);
+            margin: 0 auto;
+            padding: clamp(1.15rem, 2vw, 1.6rem);
+            border: 1px solid #5c534b;
+            border-radius: 18px;
+            background: #37322e;
+            text-align: left;
+        }
+
+        .learning-text p,
+        .learning-text li {
+            color: #f1efec;
+            font-size: clamp(1.02rem, 1.55vw, 1.15rem);
+            line-height: 1.78;
+        }
+
+        .learning-text p {
+            margin: 0;
+        }
+
+        .learning-text p + p {
+            margin-top: 0.9rem;
+        }
+
+        .learning-text ul {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .learning-text li + li {
+            margin-top: 0.55rem;
+        }
+
+        .box-heading {
+            margin: 0.15rem 0 -0.15rem;
+            color: #d8d3ce;
+            font-size: 1rem;
+            font-weight: 700;
+        }
+
+        .learning-boxes {
+            width: min(100%, 900px);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1rem;
+        }
+
+        .learning-box {
+            min-height: 145px;
+            padding: 1.15rem;
+            border: 1px solid #655c53;
+            border-left: 5px solid #ff8c00;
+            border-radius: 16px;
+            background: #24211e;
+            display: grid;
+            grid-template-columns: 54px minmax(0, 1fr);
+            align-items: center;
+            gap: 0.9rem;
+            text-align: left;
+            transition: transform 0.18s ease, border-color 0.18s ease;
+        }
+
+        .learning-box:hover {
+            transform: translateY(-2px);
+            border-color: #ffaa33;
+        }
+
+        .box-symbol {
+            width: 50px;
+            height: 50px;
+            border-radius: 14px;
+            background: rgba(255, 140, 0, 0.13);
+            display: grid;
+            place-items: center;
+            font-size: 1.8rem;
+        }
+
+        .box-content strong {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: #ffaa33;
+            font-size: 1.13rem;
+            line-height: 1.3;
+        }
+
+        .box-content span {
+            color: #e1ddd8;
+            font-size: 0.98rem;
+            line-height: 1.55;
+        }
+
         .slider-nav {
             display: flex;
             justify-content: center;
+            align-items: center;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1.45rem;
         }
 
         .nav-btn-circle {
+            width: 52px;
+            height: 52px;
+            border: none;
+            border-radius: 50%;
             background: #ff8c00;
             color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
             font-size: 1.5rem;
             cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
+            display: grid;
+            place-items: center;
+            transition: transform 0.18s ease, background 0.18s ease;
         }
 
-        .nav-btn-circle:hover {
+        .nav-btn-circle:hover:not(:disabled) {
             background: #ffaa33;
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .nav-btn-circle:disabled {
             background: #555;
+            color: #bbb;
             cursor: not-allowed;
         }
 
-        /* --- BASIS-STYLES FÜR GRAFISCHE ELEMENTE --- */
-        .marker {
-            position: absolute;
-            background: #e63946;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            transform: translate(-50%, -50%); /* Sorgt dafür, dass der Punkt genau auf der Koordinate sitzt */
-            z-index: 5;
-        }
-        .dot { width: 18px; height: 18px; } /* Größe der roten Punkte */
-        .pulse { animation: pulse-ring 1.5s infinite; }
-
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0px rgba(230, 57, 70, 0.7); }
-            100% { box-shadow: 0 0 0 20px rgba(230, 57, 70, 0); }
+        .slide-counter {
+            min-width: 135px;
+            color: #d8d3ce;
+            font-weight: 800;
         }
 
-        /* Pfeil-Linie: Länge wird über 'width' gesteuert, Richtung über 'rotate' */
-        .arrow-line {
-            position: absolute;
-            height: 5px;
-            background: #e63946;
-            transform-origin: left center;
-            z-index: 4;
-        }
-        /* Pfeil-Spitze: Erzeugt das Dreieck am Ende der Linie */
-        .arrow-line::after {
-            content: '';
-            position: absolute;
-            right: -8px;
-            top: -7px;
-            border: 10px solid transparent;
-            border-left-color: #e63946;
-        }
-
-        /* Hervorgehobene Flächen: Nutzt border-radius für Rundungen */
-        .zone-highlight {
-            position: absolute;
-            border: 3px dashed #ff8c00;
-            background: rgba(255, 140, 0, 0.15);
-            z-index: 3;
-        }
-
-        /* Text-Box über dem Feld (z.B. Spielende) */
-        .overlay-text {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #000;
-            color: #ff8c00;
-            padding: 10px 14px;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 1.05rem;
+        .back-link {
+            display: block;
+            width: fit-content;
+            margin: 1.6rem auto 0;
+            padding: 0.8rem 1.2rem;
             border: 2px solid #ff8c00;
-            border-radius: 8px;
-            z-index: 10;
-            text-align: center;
-            max-width: 280px;
-            width: auto;
-            line-height: 1.3;
+            border-radius: 999px;
+            color: #ffaa33;
+            text-decoration: none;
+            font-weight: 800;
+            transition: 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: #ff8c00;
+            color: #171411;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 720px) {
+            .container {
+                width: min(100% - 1rem, 1120px);
+                padding-top: 1rem;
+            }
+
+            .slide {
+                min-height: 0;
+                padding: 1.1rem;
+                border-radius: 20px;
+            }
+
+            .learning-text {
+                padding: 1rem;
+            }
+
+            .learning-boxes {
+                grid-template-columns: 1fr;
+            }
+
+            .learning-box {
+                min-height: 125px;
+            }
+        }
+
+        @media (max-width: 430px) {
+            .learning-box {
+                grid-template-columns: 44px minmax(0, 1fr);
+                gap: 0.7rem;
+            }
+
+            .box-symbol {
+                width: 42px;
+                height: 42px;
+                font-size: 1.5rem;
+            }
+
+            .slide-counter {
+                min-width: 110px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1> Spielablauf 5vs5</h1>
+    <main class="container">
+        <h1>Spielablauf 5vs5</h1>
 
-        <div class="slider-wrapper"> 
-            <div class="slides-container" id="slides"> 
+        <p class="chapter-intro">
+            Lies zuerst den ausführlichen Lerntext. Die vier Lernboxen fassen danach
+            die wichtigsten Aussagen jeder Karte übersichtlich zusammen.
+        </p>
 
-                <!-- 1. Spielbeginn und Sprungball -->
-                <div class="slide">
-                    <h2> Spielbeginn und Sprungball</h2>
-                    <p> Das Spiel beginnt mit einem <strong> Sprungball</strong>, bei dem zwei gegnerische Spieler im Mittelkreis versuchen, den vom Schiedsrichter hochgeworfenen Ball für ihr Team zu gewinnen. Der Spieler, der den Ball zuerst berührt, gibt ihn an einen Mitspieler weiter, um den Angriff einzuleiten.</p>
-                    <div class="visual-container">    
-                        <!-- Punkt: Startposition Sprungball (Mitte des Spielfelds)-->
-                        <div class="marker dot pulse" style="top: 50%; left: 50%;"></div>
-                        <!-- Pfeil: Spieler gewinnt Ball für seine Mannschaft. -->
-                        <div class="arrow-line" style="top: 50%; left: 50%; width: 75px; transform: rotate(0deg);"> </div>
-                        <!-- Pfeil: Spieler gewinnt Ball für seine Mannschaft -->
-                        <div class="arrow-line" style="top: 50%; left: 50%; width: 75px; transform: rotate(180deg);"> </div>
-                    </div>
-                </div>
-        
-                <!-- 2. Angriff und Wurfuhr -->
-                <div class="slide">
-                    <h2> Angriff und Wurfuhr</h2>
-                    <p> Nach dem Sprungball beginnt das angreifende Team, den Ball in Richtung des gegnerischen Korbs zu bewegen. Die <strong>Wurfuhr</strong> (Shot Clock) gibt dem Team <strong>24 Sekunden</strong> Zeit, um einen Wurfversuch zu starten. Das Team muss innerhalb dieser Zeit einen Wurf abgeben, sonst verliert es den Ballbesitz.</p>
-                    <div class="visual-container">
-                        <!-- Punkt: Startposition Angriff (Mitte des Spielfelds) -->
-                        <div class="marker dot" style="top: 50%; left: 50%;"></div>
-                        <!-- Pfeil: Angriffslinie -->
-                        <div class="arrow-line" style="top: 49%; left: 50%; width: 175px; transform: rotate(0deg);"> </div>
-                    </div>
-                </div> 
-                
-                <!-- 3. Einwurf und 5-Sekundenregel -->
-                <div class="slide">
-                    <h2> Einwurf und 5-Sekundenregel</h2>
-                    <p>Ein Einwurf erfolgt von der Grundlinie oder der Seitenlinie und muss innerhalb von <strong>5 Sekunden</strong> durchgeführt werden. </p>
-                    <div class="visual-container">
-                        <!-- Pfeile: zeigen die Einwurfmöglichkeiten -->
-                        <div class="arrow-line" style="top:1%; left: 60%; width: 85px; transform: rotate(90deg);"> </div>
-                        <div class="arrow-line" style="top: 49%; left: 97%; width: 110px; transform: rotate(180deg);"> </div>
-                    </div>
-                </div>  
+        <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
 
-                <!-- 4. 8-Sekundenregel--> 
-                <div class="slide">
-                    <h2> 8-Sekundenregel</h2>
-                    <p>Bekommt eine Mannschaft den Ball, muss sie es schaffen ihn innerhalb von <strong>8 Sekunden</strong> aus der eigenen Hälfte in das Spielfeld des Gegners zu befördern.</p>
-                    <div class="visual-container">
-                        <!-- Punkt: Startposition Angriff aus eigener Hälfte -->
-                        <div class="marker dot" style="top: 50%; left: 75%;"></div>
-                        <!-- Pfeil: Umschaltspiel -->
-                        <div class="arrow-line" style="top: 50%; left: 75%; width: 175px; transform: rotate(180deg);"> </div>
-                        <!-- Zone: Gegnerische Hälfe -->
-                        <div class="zone-highlight" style="bottom: 1%; left: 2%; width: 48%; height: 99%;"></div>
-                    </div>
-                </div> 
-
-                <!-- 5. 3-Sekundenregel -->
-                <div class="slide">
-                    <h2> 3-Sekundenregel</h2>
-                    <p>Bei einem Angriff dürfen sich die angreifenden Spieler maximal <strong>3 Sekunden</strong> lang in der <strong>gegnerischen Zone</strong> befinden. Dabei spielt es keine Rolle, ob sie in Ballbesitz sind oder nicht.</p>
-                    <div class="visual-container">
-                        <!-- Zone: Gegnerische Zone -->
-                        <div class="zone-highlight" style="bottom: 34%; left: 3%; width: 20%; height: 32%;"></div>
-                    </div>
-                </div>
-
-                <!-- 6. Spielende -->
-                <div class="slide">
-                    <h2>Spielende</h2>
-                    <p>Ein Spiel dauert insgesamt <strong>40 Minuten</strong> und ist in 4 Viertel a 10 Minuten eingeteilt (FIBA). Die Mannschaft mit den <strong>meisten Punkten gewinnt</strong>. Bei Gleichstand kommt es zu einer Verlänergung (Overtime) von 5 Minuten.</p>
-                    <div class="visual-container">
-                        <!-- OVERLAY: Textbox für die End-Resultate -->
-                        <div class="overlay-text">
-                            <strong>ZIEL: Die meisten PUNKTE</strong><br>
-                            <hr style="margin: 10px 0; border: 0; border-top: 1px solid #444;">
-                            <span style="font-size: 1rem; color: #bbb; line-height: 1.4; display: block;">
-                                Zeitlimit: 40 Min.<br>
-                                Bei Gleichstand (Overtime):<br>
-                                Wer nach 5 Minuten mehr Punkte hat, gewinnt!
-                            </span>
-                        </div>
-                    </div>
-                </div> 
-
-            </div>  
-        </div>       
+        <section class="slider-wrapper">
+            <article class="slide" id="slide">
+                <div class="slide-category" id="category"></div>
+                <h2 id="title"></h2>
+                <div class="learning-text" id="learningText"></div>
+                <p class="box-heading">Das Wichtigste auf einen Blick</p>
+                <div class="learning-boxes" id="learningBoxes"></div>
+            </article>
+        </section>
 
         <div class="slider-nav">
-            <button class="nav-btn-circle" id="prevBtn" disabled>❮</button>
-            <button class="nav-btn-circle" id="nextBtn">❯</button>
-        </div>         
+            <button class="nav-btn-circle" id="prevBtn" type="button" disabled>❮</button>
+            <div class="slide-counter" id="slideCounter">Karte 1 von 17</div>
+            <button class="nav-btn-circle" id="nextBtn" type="button">❯</button>
+        </div>
 
         <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
-    </div>
+    </main>
 
     <script>
-        const slides = document.getElementById('slides');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        let currentIndex = 0;
-        const totalSlides = 6;
+        const cards = [
+            {
+                category: "Grundlagen",
+                title: "1. Das Spielfeld und seine Markierungen",
+                text: `
+                    <p>
+                        Das Basketballfeld besteht aus Seitenlinien, Endlinien und einer
+                        Mittellinie, die die verschiedenen Spielbereiche begrenzen. Die
+                        Dreipunktlinie trennt Zwei- und Dreipunktewürfe. An der Freiwurflinie
+                        werden Freiwürfe ausgeführt.
+                    </p>
+                `,
+                boxes: [
+                    ["📏", "Seiten- und Endlinien", "Sie markieren die äußeren Grenzen des Spielfeldes."],
+                    ["↔️", "Mittellinie", "Sie trennt das Spielfeld in Vorderfeld und Rückfeld."],
+                    ["3️⃣", "Dreipunktlinie", "Außerhalb der Linie zählt ein Treffer drei Punkte."],
+                    ["🎯", "Freiwurflinie", "Von dieser Linie werden Freiwürfe ausgeführt."]
+                ]
+            },
+            {
+                category: "Grundlagen",
+                title: "2. Spielerzahl und Auswechslungen",
+                text: `
+                    <p>
+                        Pro Mannschaft stehen fünf Spieler gleichzeitig auf dem Feld.
+                        Auswechslungen sind grundsätzlich während einer Spielunterbrechung
+                        möglich, nachdem der Wechsel vom Kampfgericht bestätigt wurde.
+                        Trainer können verletzte Spieler ersetzen und beliebig oft taktisch
+                        auf unterschiedliche Spielsituationen reagieren.
+                    </p>
+                `,
+                boxes: [
+                    ["5️⃣", "Fünf Spieler", "Jede Mannschaft spielt gleichzeitig mit fünf Personen."],
+                    ["⏸️", "Spielunterbrechung", "Auswechslungen erfolgen normalerweise während einer Unterbrechung."],
+                    ["🔄", "Beliebig oft", "Spieler dürfen mehrfach ein- und ausgewechselt werden."],
+                    ["🧠", "Taktische Reaktion", "Trainer passen ihre Aufstellung an die Spielsituation an."]
+                ]
+            },
+            {
+                category: "Grundlagen",
+                title: "3. Offense und Defense",
+                text: `
+                    <p>
+                        Die Mannschaft mit Ballbesitz spielt Offense und versucht, Punkte zu
+                        erzielen oder den Ball in knappen Spielsituationen zu schützen. Die
+                        Mannschaft ohne Ballbesitz befindet sich in der Defense. Sie schützt
+                        den eigenen Korb und erschwert den Angreifern freie Würfe und Laufwege.
+                        Nach einem Ballbesitzwechsel müssen beide Teams sofort umschalten.
+                    </p>
+                `,
+                boxes: [
+                    ["🏀", "Offense", "Die Mannschaft mit Ballbesitz versucht Punkte zu erzielen."],
+                    ["🛡️", "Defense", "Die Mannschaft ohne Ball schützt den eigenen Korb."],
+                    ["🔁", "Umschalten", "Nach einem Ballwechsel ändern sich sofort die Aufgaben."],
+                    ["🤝", "Teamarbeit", "Angriff und Verteidigung funktionieren nur gemeinsam."]
+                ]
+            },
+            {
+                category: "Grundlagen",
+                title: "4. Spielstart",
+                text: `
+                    <p>
+                        Das Spiel beginnt im Mittelkreis mit einem Sprungball. Der Schiedsrichter
+                        wirft den Ball senkrecht zwischen zwei Gegenspielern hoch. Beide versuchen,
+                        den Ball zu einem Mitspieler zu tippen. Der Ball darf beim Sprungball nicht
+                        direkt festgehalten werden.
+                    </p>
+                `,
+                boxes: [
+                    ["⭕", "Mittelkreis", "Der erste Sprungball findet in der Spielfeldmitte statt."],
+                    ["⬆️", "Hochwurf", "Der Schiedsrichter wirft den Ball zwischen zwei Spielern hoch."],
+                    ["✋", "Tippen", "Der Ball wird zu einem Mitspieler weitergetippt."],
+                    ["🏁", "Spielbeginn", "Mit der ersten erlaubten Berührung beginnt das Spiel."]
+                ]
+            },
+            {
+                category: "Punkte und Spielfluss",
+                title: "5. Punktesystem: 1, 2 und 3 Punkte",
+                text: `
+                    <ul>
+                        <li>Ein erfolgreicher Freiwurf zählt einen Punkt.</li>
+                        <li>Würfe innerhalb der Dreipunktlinie bringen zwei Punkte.</li>
+                        <li>Würfe von außerhalb der Dreipunktlinie bringen drei Punkte.</li>
+                        <li>Berührt der Werfer beim Absprung die Dreipunktlinie, zählt der Treffer nur zwei Punkte.</li>
+                    </ul>
+                `,
+                boxes: [
+                    ["1️⃣", "Ein Punkt", "Ein erfolgreicher Freiwurf zählt einen Punkt."],
+                    ["2️⃣", "Zwei Punkte", "Ein Treffer innerhalb der Dreipunktlinie zählt zwei Punkte."],
+                    ["3️⃣", "Drei Punkte", "Ein Treffer außerhalb der Dreipunktlinie zählt drei Punkte."],
+                    ["👟", "Absprungposition", "Die Position der Füße beim Absprung entscheidet."]
+                ]
+            },
+            {
+                category: "Punkte und Spielfluss",
+                title: "6. Out-of-bounds und Einwurf",
+                text: `
+                    <p>
+                        Der Ball ist im Aus, sobald er eine Seitenlinie, Endlinie, eine Person
+                        oder einen Gegenstand außerhalb des Feldes berührt. Meist erhält die
+                        Mannschaft den Einwurf, die den Ball nicht zuletzt berührt hat. Der
+                        Einwerfer hat fünf Sekunden Zeit und darf die Begrenzungslinie beim
+                        Abspiel nicht mit einem Fuß übertreten.
+                    </p>
+                `,
+                boxes: [
+                    ["🚫", "Ball im Aus", "Eine Berührung außerhalb des Feldes beendet den Spielzug."],
+                    ["👆", "Letzte Berührung", "Die andere Mannschaft erhält normalerweise den Einwurf."],
+                    ["5️⃣", "Fünf Sekunden", "Der Einwurf muss innerhalb von fünf Sekunden erfolgen."],
+                    ["📏", "Begrenzungslinie", "Der Einwerfer darf die Linie beim Abspiel nicht übertreten."]
+                ]
+            },
+            {
+                category: "Punkte und Spielfluss",
+                title: "7. Was passiert nach einem Korb oder Fehlwurf?",
+                text: `
+                    <p>
+                        Nach einem erfolgreichen Korb bringt die gegnerische Mannschaft den Ball
+                        von hinter der Endlinie wieder ins Spiel. Nach einem Fehlwurf bleibt der
+                        Ball frei und beide Teams kämpfen um den Rebound. Sichert die Defense den
+                        Ball, wechselt der Angriff. Holt die Offense den Rebound, erhält sie
+                        normalerweise 14 Sekunden für einen neuen Abschluss.
+                    </p>
+                `,
+                boxes: [
+                    ["✅", "Nach einem Korb", "Die gegnerische Mannschaft wirft von der Endlinie ein."],
+                    ["❌", "Nach einem Fehlwurf", "Der Ball bleibt frei und kann gereboundet werden."],
+                    ["🛡️", "Defensivrebound", "Die verteidigende Mannschaft wird zur neuen Offense."],
+                    ["14", "Offensivrebound", "Für einen neuen Angriff stehen meist 14 Sekunden bereit."]
+                ]
+            },
+            {
+                category: "Ballregeln",
+                title: "8. Dribbling und Doppeldribbling",
+                text: `
+                    <p>
+                        Beim Dribbling wird der Ball wiederholt mit einer Hand auf den Boden
+                        geprellt. Sobald du ihn mit beiden Händen festhältst oder auf einer Hand
+                        ruhen lässt, ist das Dribbling beendet. Beginnst du danach erneut zu
+                        dribbeln, begehst du ein Doppeldribbling. Die gegnerische Mannschaft
+                        erhält anschließend einen Einwurf.
+                    </p>
+                `,
+                boxes: [
+                    ["🏀", "Dribbling", "Der Ball wird wiederholt mit einer Hand geprellt."],
+                    ["✋", "Ballaufnahme", "Mit beiden Händen endet das Dribbling."],
+                    ["🔁", "Erneuter Beginn", "Nach der Aufnahme darf nicht wieder gedribbelt werden."],
+                    ["📣", "Doppeldribbling", "Der Verstoß führt zu Ballbesitz für den Gegner."]
+                ]
+            },
+            {
+                category: "Ballregeln",
+                title: "9. Schrittfehler",
+                text: `
+                    <p>
+                        Ein Schrittfehler entsteht, wenn du dich mit dem Ball unerlaubt bewegst.
+                        Nach der Ballaufnahme musst du deine erlaubten Schritte und deinen
+                        Standfuß beachten. Beim Sternschritt bleibt der Standfuß am Boden. Hebst
+                        du ihn an, muss der Ball vor dem erneuten Bodenkontakt gepasst oder
+                        geworfen werden.
+                    </p>
+                `,
+                boxes: [
+                    ["👣", "Erlaubte Schritte", "Nach der Ballaufnahme ist die Schrittzahl begrenzt."],
+                    ["🦶", "Standfuß", "Der festgelegte Fuß darf nicht unerlaubt versetzt werden."],
+                    ["↻", "Sternschritt", "Der freie Fuß bewegt sich um den Standfuß."],
+                    ["📣", "Regelverstoß", "Eine unerlaubte Bewegung führt zum Ballverlust."]
+                ]
+            },
+            {
+                category: "Ballregeln",
+                title: "10. Rückspiel",
+                text: `
+                    <p>
+                        Hat deine Mannschaft den Ball kontrolliert in das Vorfeld gebracht,
+                        darf sie ihn nicht selbst wieder in das Rückfeld spielen. Berührt dort
+                        anschließend zuerst ein Mitspieler den Ball, liegt ein Rückspiel vor.
+                        Die gegnerische Mannschaft erhält danach einen Einwurf.
+                    </p>
+                `,
+                boxes: [
+                    ["➡️", "Vorfeld", "Der Ball wurde kontrolliert über die Mittellinie gebracht."],
+                    ["⬅️", "Rückfeld", "Das eigene Team darf den Ball nicht zurückspielen."],
+                    ["👆", "Erste Berührung", "Ein Mitspieler berührt den Ball zuerst im Rückfeld."],
+                    ["🔄", "Ballwechsel", "Der Gegner erhält nach dem Pfiff einen Einwurf."]
+                ]
+            },
+            {
+                category: "Ballregeln",
+                title: "11. Fußspiel",
+                text: `
+                    <p>
+                        Absichtliches Berühren des Balls mit Fuß oder Bein ist eine
+                        Regelübertretung. Trifft der Ball zufällig ein Bein, läuft das Spiel
+                        normalerweise weiter. Nach einem absichtlichen Fußspiel erhält die
+                        gegnerische Mannschaft einen Einwurf nahe der Stelle, an der der
+                        Fehler geschah.
+                    </p>
+                `,
+                boxes: [
+                    ["🦶🏀", "Absichtliches Fußspiel", "Gezielter Kontakt mit Fuß oder Bein ist verboten."],
+                    ["🏀↘️🦵", "Zufälliger Kontakt", "Unbeabsichtigter Kontakt wird meist nicht gepfiffen."],
+                    ["📍", "Ort des Einwurfs", "Der Einwurf erfolgt nahe der Stelle des Verstoßes."],
+                    ["↔️", "Ballbesitz", "Die gegnerische Mannschaft erhält den Ball."]
+                ]
+            },
+            {
+                category: "Fouls",
+                title: "12. Was ist ein persönliches Foul?",
+                text: `
+                    <p>
+                        Ein persönliches Foul entsteht durch unerlaubten Körperkontakt mit einem
+                        Gegenspieler. Dazu gehören Stoßen, Halten, Schlagen, Rempeln oder ein
+                        falsches Blockieren. Nicht jeder Kontakt ist automatisch ein Foul.
+                        Entscheidend ist, ob ein Spieler unfair behindert wird oder ein
+                        körperlicher Vorteil entsteht.
+                    </p>
+                `,
+                boxes: [
+                    ["✋", "Halten", "Ein Gegenspieler wird unerlaubt festgehalten."],
+                    ["💥", "Stoßen", "Ein Spieler wird aus seiner Position gedrängt."],
+                    ["🚧", "Falscher Block", "Eine nicht regelgerechte Blockstellung verursacht Kontakt."],
+                    ["⚖️", "Bewertung", "Nicht jeder Körperkontakt ist automatisch ein Foul."]
+                ]
+            },
+            {
+                category: "Fouls",
+                title: "13. Was passiert nach einem Foul und was ist die Foulgrenze?",
+                text: `
+                    <p>
+                        Nach einem Foul hängt die Strafe von der Spielsituation ab. Bei einem
+                        Wurf gibt es meist zwei oder drei Freiwürfe. Fällt der Korb trotz Foul,
+                        folgt ein zusätzlicher Freiwurf, das sogenannte And-one. Mit fünf
+                        persönlichen Fouls muss ein Spieler das Spiel verlassen.
+                    </p>
+                `,
+                boxes: [
+                    ["2️⃣", "Zwei Freiwürfe", "Bei einem Foul während eines Zwei-Punkte-Wurfes."],
+                    ["3️⃣", "Drei Freiwürfe", "Bei einem Foul während eines Drei-Punkte-Wurfes."],
+                    ["🏀+1", "And-one", "Der Korb zählt und ein zusätzlicher Freiwurf folgt."],
+                    ["5️⃣", "Foulgrenze", "Nach fünf persönlichen Fouls ist das Spiel beendet."]
+                ]
+            },
+            {
+                category: "Fouls",
+                title: "14. Unsportliches Verhalten",
+                text: `
+                    <p>
+                        Technische Fouls betreffen meist Verhalten ohne direkten Körperkontakt,
+                        etwa Beleidigungen, Spielverzögerung oder respektloses Verhalten.
+                        Unsportliche Fouls entstehen durch übermäßigen oder nicht
+                        basketballtypischen Kontakt. Wiederholte schwere Verstöße können zur
+                        Disqualifikation und zum sofortigen Ausschluss führen.
+                    </p>
+                `,
+                boxes: [
+                    ["🗯️", "Technisches Foul", "Beleidigungen oder Spielverzögerung können bestraft werden."],
+                    ["💢", "Unsportliches Foul", "Übermäßiger oder nicht basketballtypischer Kontakt."],
+                    ["🎯", "Freiwürfe", "Unsportliches Verhalten kann Freiwürfe verursachen."],
+                    ["🚪", "Disqualifikation", "Schwere Wiederholungen können zum Ausschluss führen."]
+                ]
+            },
+            {
+                category: "Abschluss",
+                title: "15. Wichtige Spielbegriffe und Statistiken",
+                text: `
+                    <p>
+                        Wichtige Spielbegriffe helfen dabei, Basketballleistungen genauer zu
+                        beschreiben. Ein Assist ist ein Pass, der direkt zu einem Korb führt.
+                        Rebounds sichern Fehlwürfe, Steals gewinnen den Ball und Turnover
+                        bezeichnen Ballverluste. Statistiken zeigen nur einen Teil der
+                        tatsächlichen Leistung eines Spielers.
+                    </p>
+                `,
+                boxes: [
+                    ["🎯", "Assist", "Ein Pass führt direkt zu einem erfolgreichen Korb."],
+                    ["🙌", "Rebound", "Ein Fehlwurf wird von einem Spieler gesichert."],
+                    ["🫳", "Steal", "Der Ball wird der gegnerischen Mannschaft abgenommen."],
+                    ["↩️", "Turnover", "Die angreifende Mannschaft verliert den Ball."]
+                ]
+            },
+            {
+                category: "Abschluss",
+                title: "16. Fairplay auf dem Spielfeld",
+                text: `
+                    <p>
+                        Fairplay bedeutet, Regeln, Gegner, Mitspieler und Schiedsrichter zu
+                        respektieren. Spiele körperlich und ehrgeizig, aber kontrolliert.
+                        Beleidigungen, Schwalben und gefährliche Aktionen haben auf dem
+                        Basketballfeld nichts verloren. Ein guter Spieler bleibt auch bei
+                        Rückstand, Niederlage oder Streit sportlich.
+                    </p>
+                `,
+                boxes: [
+                    ["🤝", "Respekt", "Gegner, Mitspieler und Schiedsrichter fair behandeln."],
+                    ["💪", "Ehrgeiz", "Körperlich und entschlossen, aber kontrolliert spielen."],
+                    ["🛡️", "Sicherheit", "Gefährliche Aktionen und unnötige Risiken vermeiden."],
+                    ["🏅", "Sportlichkeit", "Auch bei Rückstand oder Niederlage fair bleiben."]
+                ]
+            },
+            {
+                category: "Abschluss",
+                title: "17. Spielzeit, Viertel und Spielende",
+                text: `
+                    <p>
+                        Ein Spiel besteht aus vier Vierteln mit jeweils zehn Minuten Spielzeit.
+                        Zwischen dem zweiten und dritten Viertel liegt die Halbzeitpause. Bei
+                        Gleichstand folgen fünfminütige Verlängerungen, bis ein Sieger feststeht.
+                        Bei Unterbrechungen stoppt die Spieluhr. Für einen Angriff stehen
+                        normalerweise höchstens 24 Sekunden zur Verfügung.
+                    </p>
+                `,
+                boxes: [
+                    ["4️⃣", "Vier Viertel", "Ein Spiel besteht aus vier Spielabschnitten."],
+                    ["🔟", "Zehn Minuten", "Jedes Viertel dauert zehn Minuten."],
+                    ["5️⃣", "Verlängerung", "Bei Gleichstand folgen Abschnitte von fünf Minuten."],
+                    ["24", "Wurfuhr", "Innerhalb von 24 Sekunden muss ein Wurfversuch erfolgen."]
+                ]
+            }
+        ];
 
-        /* Berechnet die Verschiebung des Sliders basierend auf dem Index */
-        function updateSlider() {
-            slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+        const slide = document.getElementById("slide");
+        const category = document.getElementById("category");
+        const title = document.getElementById("title");
+        const learningText = document.getElementById("learningText");
+        const learningBoxes = document.getElementById("learningBoxes");
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const slideCounter = document.getElementById("slideCounter");
+        const progressFill = document.getElementById("progressFill");
+
+        let currentIndex = 0;
+
+        function renderCard() {
+            const card = cards[currentIndex];
+
+            slide.classList.remove("fade-in");
+            void slide.offsetWidth;
+            slide.classList.add("fade-in");
+
+            category.textContent = card.category;
+            title.textContent = card.title;
+            learningText.innerHTML = card.text;
+
+            learningBoxes.innerHTML = card.boxes.map(box => `
+                <div class="learning-box">
+                    <div class="box-symbol">${box[0]}</div>
+                    <div class="box-content">
+                        <strong>${box[1]}</strong>
+                        <span>${box[2]}</span>
+                    </div>
+                </div>
+            `).join("");
+
+            slideCounter.textContent = `Karte ${currentIndex + 1} von ${cards.length}`;
+            progressFill.style.width = `${((currentIndex + 1) / cards.length) * 100}%`;
+
             prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex === totalSlides - 1;
+            nextBtn.disabled = currentIndex === cards.length - 1;
         }
 
-        nextBtn.addEventListener('click', () => {
-            if (currentIndex < totalSlides - 1) {
-                currentIndex++;
-                updateSlider();
+        prevBtn.addEventListener("click", () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
             }
         });
 
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                updateSlider();
+        nextBtn.addEventListener("click", () => {
+            if (currentIndex < cards.length - 1) {
+                currentIndex++;
+                renderCard();
             }
         });
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "ArrowLeft" && currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+
+            if (event.key === "ArrowRight" && currentIndex < cards.length - 1) {
+                currentIndex++;
+                renderCard();
+            }
+        });
+
+        renderCard();
     </script>
 </body>
 </html>
