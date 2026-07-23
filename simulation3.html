@@ -403,15 +403,7 @@
     </div>
 
     <script>
-        /*
-        ============================================================
-        ANPASSEN 2: HIER TAUSCHST DU DIE INHALTE DER NEUEN FRAGE AUS
-        ============================================================
-
-        Für ein weiteres Szenario musst du hauptsächlich diesen Block
-        ändern. Das Design, die Auswahlmechanik und das Feedback-System
-        können unverändert bleiben.
-        */
+        
         const scenarioContent = {
             mission:
                 "Nutze das Give and Go, um die Mann-Deckung auszuspielen! Du bist Team A (Blau) im Angriff.",
@@ -446,15 +438,7 @@
             }
         };
 
-        /*
-        ============================================================
-        ANPASSEN 3: NÄCHSTE SEITE
-        ============================================================
-
-        Leer lassen, wenn nach dieser Frage nur „Zurücksetzen“ erscheinen soll.
-        Für eine dritte Frage beispielsweise:
-        const NEXT_PAGE = "simulation3.html";
-        */
+        
         const NEXT_PAGE = "simulation4.html";
         const NEXT_BUTTON_TEXT = "Weiter zu Frage 4";
 
@@ -480,11 +464,7 @@
             ball: document.getElementById("ball")
         };
 
-        /*
-        ANPASSEN 4: STARTPOSITIONEN AUCH HIER EINTRAGEN,
-        wenn du die Positionen oben im HTML veränderst.
-        Diese Werte werden für „Zurücksetzen“ benötigt.
-        */
+        
         const initialPos = {
             p1: { top: "52%", left: "58%" },
             p2: { top: "34%", left: "40%" },
@@ -565,14 +545,7 @@
             actionBtn.style.opacity = "0.5";
             actionBtn.style.pointerEvents = "none";
 
-            /*
-            ========================================================
-            ANPASSEN 5: ANIMATIONEN DER DREI ANTWORTMÖGLICHKEITEN
-            ========================================================
-
-            Frage 3 zeigt das Give and Go:
-            Pass spielen, sofort zum Korb schneiden und den Rückpass erhalten.
-            */
+            
 
             if (option === "opt1") {
                 // OPTION A: Give and Go – beste Entscheidung
